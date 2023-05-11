@@ -1,7 +1,11 @@
 import { Controller } from "@hotwired/stimulus"
 
-// Connects to data-controller="search"
 export default class extends Controller {
-  connect() {
+  static targets = ["query", "results"]
+
+  async search() {
+    const response = await fetch(`/movies/search?query=${this.queryTarget.value}`, { headers: { accept: "application/javascript" } })
+    const html = await response.text()
+    this.resultsTarget.innerHTML = html
   }
 }

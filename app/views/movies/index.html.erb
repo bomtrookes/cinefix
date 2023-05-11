@@ -1,3 +1,13 @@
 <div class="container">
-  <h1>Movies#index</h1>
+
+  <div data-controller="movies-search">
+    <%= form_with(url: "/movies/search", method: "get", data: { action: "submit->movies-search#search" }) do |form| %>
+      <%= form.label :query, "Search for a movie:" %>
+      <%= form.text_field :query, data: { target: "movies-search.query" } %>
+      <%= form.submit "Search" %>
+    <% end %>
+
+    <div data-target="movies-search.results"></div>
+  </div>
+
 </div>
