@@ -1,8 +1,6 @@
 <div class="container mt-5">
-  <h1>Search Results</h1>
-  <ul>
-    <% @movies.each do |movie| %>
-      <li><%= movie.title %></li>
-    <% end %>
-  </ul>
+  <h1><%= @movie.title %> (<%= @movie.year %>)</h1>
+  <p><%= @movie.synopsis %></p>
+  <img src="<%= @movie.poster_url %>" alt="">
+
 </div>

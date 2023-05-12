@@ -6,20 +6,12 @@ class MoviesController < ApplicationController
   end
 
   def show
-    if params[:id] == 'search'
-      @movies = Movie.search(params[:query])
-      render 'index'
-    else
-      @movie = Movie.find(params[:id])
-    end
-  end
-
-  def search
-    query = params[:query]
-    @results = Tmdb::Movie.find(query)
-    respond_to do |format|
-      format.js # render a JavaScript response for AJAX requests
-    end
+    @movie = Movie.new
+    result = HTTParty.get("https://api.themoviedb.org/3/movie/#{params[:id]}?api_key=#{ENV['API_KEY']}")
+    @movie.title = result["original_title"]
+    @movie.synopsis = result["overview"]
+    @movie.year = result["release_date"]
+    @movie.poster_url = "https://www.themoviedb.org/t/p/w600_and_h900_bestv2#{result["poster_path"]}"
   end
 
 end

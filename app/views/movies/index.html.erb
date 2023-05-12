@@ -10,7 +10,7 @@
 
     <ul class="mt-5">
       <% @results['results'].each do |result| %>
-        <li><%= result['original_title'] %></li>
+        <li><%= link_to result["original_title"], movie_path(result["id"].to_i) %></li>
       <% end %>
     </ul>
 
