@@ -1,3 +1,17 @@
-<div class="container">
-  <h1>Movies#index</h1>
+<div class="container mt-5">
+
+  <%= form_with url: movies_path, method: :get, class: "d-flex" do %>
+    <%= text_field_tag :query,
+      params[:query],
+      class: "form-control",
+      placeholder: "Search..." %>
+    <%= submit_tag "Search", class: "btn btn-dark" %>
+  <% end %>
+
+    <ul class="mt-5">
+      <% @results['results'].each do |result| %>
+        <li><%= link_to result["original_title"], movie_path(result["id"].to_i) %></li>
+      <% end %>
+    </ul>
+
 </div>
