@@ -1,13 +1,17 @@
-<div class="container">
+<div class="container mt-5">
 
-  <div data-controller="movies-search">
-    <%= form_with(url: "/movies/search", method: "get", data: { action: "submit->movies-search#search" }) do |form| %>
-      <%= form.label :query, "Search for a movie:" %>
-      <%= form.text_field :query, data: { target: "movies-search.query" } %>
-      <%= form.submit "Search" %>
-    <% end %>
+  <%= form_with url: movies_path, method: :get, class: "d-flex" do %>
+    <%= text_field_tag :query,
+      params[:query],
+      class: "form-control",
+      placeholder: "Search..." %>
+    <%= submit_tag "Search", class: "btn btn-dark" %>
+  <% end %>
 
-    <div data-target="movies-search.results"></div>
-  </div>
+    <ul class="mt-5">
+      <% @results['results'].each do |result| %>
+        <li><%= result['original_title'] %></li>
+      <% end %>
+    </ul>
 
 </div>
