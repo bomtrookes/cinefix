@@ -1,0 +1,27 @@
+# app/views/movies/new.html.erb
+<%= form_with model: @movie do |form| %>
+  <%= form.label :title %>
+  <%= form.text_field :title %>
+
+  <%= form.fields_for :ratings do |rating_form| %>
+    <%= rating_form.label :story %>
+    <%= rating_form.select :story, options_for_select([1, 2, 3, 4, 5]) %>
+
+    <%= rating_form.label :acting %>
+    <%= rating_form.select :acting, options_for_select([1, 2, 3, 4, 5]) %>
+
+      <%# story
+      acting
+      dialog
+      cinematography
+      soundtrack
+      style
+      pacing
+      originality
+      characters
+      enjoyment %>
+
+  <% end %>
+
+  <%= form.submit %>
+<% end %>

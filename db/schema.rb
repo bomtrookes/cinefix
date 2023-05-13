@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_10_184001) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_12_233007) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,6 +20,21 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_10_184001) do
     t.text "synopsis"
     t.string "poster_url"
     t.string "genre"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "rankings", force: :cascade do |t|
+    t.integer "story"
+    t.integer "acting"
+    t.integer "dialog"
+    t.integer "cinematography"
+    t.integer "soundtrack"
+    t.integer "style"
+    t.integer "pacing"
+    t.integer "originality"
+    t.integer "characters"
+    t.integer "enjoyment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
