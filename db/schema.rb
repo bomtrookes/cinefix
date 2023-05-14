@@ -10,19 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_14_090742) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_14_092615) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "movie_ratings", force: :cascade do |t|
     t.bigint "movie_id", null: false
-    t.bigint "ranking_id", null: false
+    t.bigint "rating_id", null: false
     t.float "rating"
     t.text "review"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
     t.index ["movie_id"], name: "index_movie_ratings_on_movie_id"
-    t.index ["ranking_id"], name: "index_movie_ratings_on_ranking_id"
+    t.index ["rating_id"], name: "index_movie_ratings_on_rating_id"
+    t.index ["user_id"], name: "index_movie_ratings_on_user_id"
   end
 
   create_table "movies", force: :cascade do |t|
@@ -35,7 +37,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_14_090742) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "rankings", force: :cascade do |t|
+  create_table "ratings", force: :cascade do |t|
     t.integer "story"
     t.integer "acting"
     t.integer "dialog"
@@ -63,5 +65,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_14_090742) do
   end
 
   add_foreign_key "movie_ratings", "movies"
-  add_foreign_key "movie_ratings", "rankings"
+  add_foreign_key "movie_ratings", "ratings"
+  add_foreign_key "movie_ratings", "users"
 end

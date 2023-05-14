@@ -1,5 +1,7 @@
 class Movie < ApplicationRecord
 
+  has_many :movie_ratings
+
   validates :title, presence: true
   validates :year, presence: true
   validates :genre, presence: true
