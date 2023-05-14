@@ -1,0 +1,20 @@
+<div class="container mt-5">
+  <h1>Rating <%= @movie.title %></h1>
+
+    <%= simple_form_for [@movie, @rating] do |f| %>
+      <%= f.input :story, label: false, placeholder: "Story?" %>
+      <%= f.input :acting, label: false, placeholder: "Acting?" %>
+      <%= f.input :dialog, label: false, placeholder: "Dialogue?" %>
+      <%= f.input :cinematography, label: false, placeholder: "Cinematography?" %>
+      <%= f.input :soundtrack, label: false, placeholder: "Soundtrack?" %>
+      <%= f.input :style, label: false, placeholder: "Aesthetics?" %>
+      <%= f.input :pacing, label: false, placeholder: "Pacing?" %>
+      <%= f.input :originality, label: false, placeholder: "Originality?" %>
+      <%= f.input :characters, label: false, placeholder: "Characters?" %>
+      <%= f.input :enjoyment, label: false, placeholder: "Enjoyment?" %>
+      <%= f.hidden_field :movie_id, value: @movie.id %>
+      <%= f.submit %>
+    <% end %>
+  </div>
+
+</div>
