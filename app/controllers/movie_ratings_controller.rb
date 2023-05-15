@@ -1,5 +1,6 @@
 class MovieRatingsController < ApplicationController
   def index
-    @movie_ratings = MovieRating.includes(:user, :movie, :rating).all
+    @user = current_user
+    @movie_ratings = Movie.all
   end
 end

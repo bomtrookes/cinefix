@@ -1,18 +1,13 @@
 class Movie < ApplicationRecord
 
-  has_many :movie_ratings
+  has_many :ratings
 
   validates :title, presence: true
   validates :year, presence: true
 
 
-  def total_score
-    sum = [:story, :acting, :dialog,
-          :cinematography, :soundtrack,
-          :style, :pacing, :originality,
-          :characters, :enjoyment]
-          .sum { |attr| ranking.try(attr) || 0 }
-    sum.to_f / 10
+  def self.with_ratings(user)
+    joins(:ratings).where("reviews.user_id = ? AND NOT rating IS NULL", user.id).distinct
   end
 
 end
