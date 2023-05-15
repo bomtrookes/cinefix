@@ -3,14 +3,11 @@ Rails.application.routes.draw do
 
   root 'movies#index'
 
-  resources :users do
-    resources :ratings, only: [:index]
-    resources :movie_ratings, only: [:index]
-  end
-
   resources :movies, only: [:index, :show] do
     resources :ratings, only: [:index, :new, :create]
   end
 
-  resources :ratings, only: [:index, :new, :create]
+  resources :ratings, only: [:index, :new, :create] do
+    resources :movie_ratings, only: [:index]
+  end
 end

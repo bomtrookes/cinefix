@@ -2,6 +2,7 @@ class Rating < ApplicationRecord
 
   belongs_to :user
   belongs_to :movie
+  has_many :movie_ratings
 
 
   validates :story,
@@ -19,16 +20,16 @@ class Rating < ApplicationRecord
                   less_than_or_equal_to: 10 }
 
   def total_score
-    sum = story +
-      acting +
-      dialog +
-      cinematography +
-      soundtrack +
-      style +
-      pacing +
-      originality +
-      characters +
-      enjoyment
-    movie.update(rating: sum.to_f / 10)
+    sum = self.story +
+      self.acting +
+      self.dialog +
+      self.cinematography +
+      self.soundtrack +
+      self.style +
+      self.pacing +
+      self.originality +
+      self.characters +
+      self.enjoyment
+    return (sum / 10).to_f
   end
 end
