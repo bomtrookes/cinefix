@@ -30,6 +30,6 @@ class Rating < ApplicationRecord
       self.originality +
       self.characters +
       self.enjoyment
-    return (sum / 10).to_f
+    return sum.to_f / 10
   end
 end

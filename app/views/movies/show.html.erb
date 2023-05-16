@@ -1,9 +1,11 @@
 <div class="container mt-5">
-  <h1><%= @movie.title %> (<%= @movie.year %>)</h1>
+  <h1><%= @movie.title %> (<%= @movie.year.strftime('%Y') %>)</h1>
   <p><%= @movie.synopsis %></p>
   <img src="<%= @movie.poster_url %>" alt="">
 
   <hr>
   <br>
-  <%= link_to "New Rating", new_movie_rating_path(@movie), class: "btn btn-primary" %>
+  <% if current_user.movie_ids.exclude?(@movie.id) %>
+    <%= link_to "New Rating", new_movie_rating_path(@movie), class: "btn btn-primary" %>
+  <% end %>
 </div>

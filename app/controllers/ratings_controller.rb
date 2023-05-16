@@ -1,18 +1,13 @@
 class RatingsController < ApplicationController
   before_action :set_user
 
-  # def index
-  #   @user_ratings = Rating.where(user_id: current_user.id)
-  #   @movie_ratings = @user_ratings.map { |rating| rating.movie }
-  # end
-
   def index
     @movie_ratings = current_user.ratings.map do |rating|
       {
         movie: rating.movie,
-        user_rating: rating.total_score.to_f
+        user_rating: rating.total_score
       }
-    end
+    end.sort_by { |movie_rating| -movie_rating[:user_rating] }
   end
 
 
