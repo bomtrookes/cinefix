@@ -31,22 +31,6 @@ class MoviesController < ApplicationController
     end
   end
 
-  # def update
-  #   @movie = Movie.find_by(title: params[:movie][:title], year: params[:movie][:release_date])
-
-  #   if @movie
-  #     if @movie.update(movie_params)
-  #       redirect_to new_movie_rating_path(@movie)
-  #     else
-  #       render 'show'
-  #     end
-  #   else
-  #     render 'show'
-  #   end
-  # end
-
-
-
   private
 
   def movie_params
