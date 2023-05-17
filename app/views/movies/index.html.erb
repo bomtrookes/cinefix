@@ -14,7 +14,7 @@
       <div class="film__detail">
         <span class="title__wrapper">
           <%= link_to "#{movie['original_title']}", movie_path(movie["id"].to_i), class: "card__link" %>
-          <small><%= movie['release_date'] %></small>
+          <small><%= format_date(movie['release_date']) %></small>
         </span>
       </div>
 
