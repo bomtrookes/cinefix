@@ -1,0 +1,26 @@
+.list__card {
+  display: flex;
+  border-top: 1px solid #b4b4b4;
+  border-bottom: 1px solid #b4b4b4;
+  margin: 1rem 0;
+  padding: 0.5rem 0;
+  img {
+    height: 105px;
+    aspect-ratio: auto 70 / 105;
+    width: 70px;
+    border-radius: 4px;
+    margin-right: 1rem;
+  }
+}
+
+.card__link {
+  color: black;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.film__detail {
+  width: 100%;
+
+}

@@ -1,11 +1,13 @@
-<div class="container mt-5">
-  <h1><%= @movie.title %> (<%= @movie.year.strftime('%Y') %>)</h1>
+<div class="movie-cover" style="height: 300px; background: url(<%= @movie.cover %>) center/cover no-repeat"></div>
+
+<div class="container mt-3">
+  <h1><%= @movie.title %> (<%= format_date(@movie.year) %>)</h1>
   <p><%= @movie.synopsis %></p>
   <img src="<%= @movie.poster_url %>" alt="">
 
-  <hr>
-  <br>
-  <% if current_user.movie_ids.exclude?(@movie.id) %>
-    <%= link_to "New Rating", new_movie_rating_path(@movie), class: "btn btn-primary" %>
-  <% end %>
+  <div class="my-3">
+    <% if user_signed_in? && current_user.movie_ids.exclude?(@movie.id) %>
+      <%= link_to "New Rating", new_movie_rating_path(@movie), class: "btn btn-primary" %>
+    <% end %>
+  </div>
 </div>

@@ -1,9 +1,14 @@
 class MoviesController < ApplicationController
 
   def index
-    query = params[:query].presence || " "
-    response = HTTParty.get("https://api.themoviedb.org/3/search/movie?api_key=#{ENV['API_KEY']}&query=#{query}")
-    @results = response.parsed_response
+     if params[:query].present?
+      query = params[:query].presence || " "
+      response = HTTParty.get("https://api.themoviedb.org/3/search/movie?api_key=#{ENV['API_KEY']}&query=#{query}")
+      @movies = response.parsed_response
+    else
+      response = HTTParty.get("https://api.themoviedb.org/3/movie/popular?api_key=#{ENV['API_KEY']}")
+      @movies = response.parsed_response
+    end
   end
 
   def show
@@ -16,6 +21,7 @@ class MoviesController < ApplicationController
         title: result["original_title"],
         synopsis: result["overview"],
         year: result["release_date"],
+        cover: "https://www.themoviedb.org/t/p/w1920_and_h1080_bestv2#{result["backdrop_path"]}",
         poster_url: "https://www.themoviedb.org/t/p/w600_and_h900_bestv2#{result["poster_path"]}"
       )
     end
@@ -30,22 +36,6 @@ class MoviesController < ApplicationController
       render 'show'
     end
   end
-
-  # def update
-  #   @movie = Movie.find_by(title: params[:movie][:title], year: params[:movie][:release_date])
-
-  #   if @movie
-  #     if @movie.update(movie_params)
-  #       redirect_to new_movie_rating_path(@movie)
-  #     else
-  #       render 'show'
-  #     end
-  #   else
-  #     render 'show'
-  #   end
-  # end
-
-
 
   private
 
