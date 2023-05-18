@@ -5,6 +5,7 @@ class Movie < ApplicationRecord
 
   validates :title, presence: true
   validates :year, presence: true
+  attribute :genres, :string, array: true
 
 
   def self.with_ratings(user)

@@ -1,20 +1,24 @@
 .list__card {
   display: flex;
-  border-top: 1px solid #b4b4b4;
-  border-bottom: 1px solid #b4b4b4;
-  margin: 1rem 0;
+  border-top: 1px solid #5a5a5a;
+  border-bottom: 1px solid #5a5a5a;
+  background-color: #383838;
+  margin: 0.4rem 0;
   padding: 0.5rem 0;
-  img {
+  .img__wrapper {
+    margin-right: 1rem;
     height: 105px;
     aspect-ratio: auto 70 / 105;
     width: 70px;
+  }
+  img {
     border-radius: 4px;
-    margin-right: 1rem;
+    border: 1px solid #d3d3d333;
   }
 }
 
 .card__link {
-  color: black;
+  color: white;
   text-decoration: none;
   font-weight: bold;
   font-size: 1.2rem;

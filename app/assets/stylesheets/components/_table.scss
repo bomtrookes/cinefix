@@ -1,0 +1,15 @@
+table {
+  background: white;
+  border-radius: 8px;
+  tr:last-child {
+    border-bottom: unset;
+  }
+  a {
+    text-decoration: none;
+    color: black;
+    &:hover {
+      text-decoration: underline;
+      color: grey;
+    }
+  }
+}
