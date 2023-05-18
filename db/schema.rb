@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_16_120150) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_18_211250) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -32,7 +32,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_16_120150) do
     t.date "year"
     t.text "synopsis"
     t.string "poster_url"
-    t.string "genre"
+    t.string "genres", default: [], array: true
     t.integer "api_id"
     t.float "rating"
     t.datetime "created_at", null: false

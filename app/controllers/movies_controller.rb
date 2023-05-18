@@ -22,8 +22,11 @@ class MoviesController < ApplicationController
         synopsis: result["overview"],
         year: result["release_date"],
         cover: "https://www.themoviedb.org/t/p/w1920_and_h1080_bestv2#{result["backdrop_path"]}",
-        poster_url: "https://www.themoviedb.org/t/p/w600_and_h900_bestv2#{result["poster_path"]}"
+        poster_url: "https://www.themoviedb.org/t/p/w600_and_h900_bestv2#{result["poster_path"]}",
+        genres: []
       )
+      result["genres"].each { |g| @movie.genres << g["name"] }
+      @movie.save
     end
   end
 

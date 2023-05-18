@@ -3,6 +3,8 @@
 <div class="container mt-3">
   <h1><%= @movie.title %> (<%= format_date(@movie.year) %>)</h1>
   <p><%= @movie.synopsis %></p>
+  <p><%= @movie.genres.join(", ") %></p>
+
   <img src="<%= @movie.poster_url %>" alt="">
 
   <div class="my-3">
