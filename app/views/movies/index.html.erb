@@ -8,17 +8,18 @@
     <%= submit_tag "Search", class: "btn btn-dark" %>
   <% end %>
 
-  <% @movies['results'].each do |movie| %>
-    <div class="list__card">
-      <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2<%= movie['poster_path'] %>" alt="<%= movie['original_title'] %>">
-      <div class="film__detail">
-        <span class="title__wrapper">
-          <%= link_to "#{movie['original_title']}", movie_path(movie["id"].to_i), class: "card__link" %>
-          <small><%= format_date(movie['release_date']) %></small>
-        </span>
+  <div class="mt-3">
+    <% @movies['results'].each do |movie| %>
+      <div class="list__card">
+        <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2<%= movie['poster_path'] %>" alt="<%= movie['original_title'] %>">
+        <div class="film__detail">
+          <span class="title__wrapper">
+            <%= link_to "#{movie['original_title']}", movie_path(movie["id"].to_i), class: "card__link" %>
+            <small><%= format_date(movie['release_date']) %></small>
+          </span>
+        </div>
       </div>
-
-    </div>
-  <% end %>
+    <% end %>
+  </div>
 
 </div>
