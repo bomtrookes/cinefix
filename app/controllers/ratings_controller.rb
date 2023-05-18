@@ -5,7 +5,8 @@ class RatingsController < ApplicationController
     @movie_ratings = current_user.ratings.map do |rating|
       {
         movie: rating.movie,
-        user_rating: rating.total_score
+        user_rating: rating.total_score,
+        api_id: rating.movie_id
       }
     end.sort_by { |movie_rating| -movie_rating[:user_rating] }
   end
