@@ -1,5 +1,14 @@
 .movie-cover {
+  position: relative;
+  height: 300px;
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
+}
+.movie-options {
+  display: flex;
+  justify-content: space-around;
+  margin: 1rem 0;
+  border-top: 1px solid lightgrey;
+  border-bottom: 1px solid lightgrey;
 }

@@ -41,10 +41,11 @@ gem "bootsnap", require: false
 
 # Use Sass to process CSS
 gem "sassc-rails"
-gem "themoviedb"
+gem "themoviedb-api"
 gem "simple_form"
 gem "bootstrap"
 gem "devise"
+gem "httparty"
 gem "dotenv-rails", groups: [:development, :test]
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]

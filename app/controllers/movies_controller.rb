@@ -12,22 +12,26 @@ class MoviesController < ApplicationController
   end
 
   def show
-    result = HTTParty.get("https://api.themoviedb.org/3/movie/#{params[:id]}?api_key=#{ENV['API_KEY']}")
-    if @movie = Movie.find_by(api_id: result["id"])
+    movie_result = HTTParty.get("https://api.themoviedb.org/3/movie/#{params[:id]}?api_key=#{ENV['API_KEY']}")
+    credits_result = HTTParty.get("https://api.themoviedb.org/3/movie/#{params[:id]}/credits?api_key=#{ENV['API_KEY']}")
+    if @movie = Movie.find_by(api_id: movie_result["id"])
       @movie
     else
       @movie = Movie.create(
-        api_id: result["id"],
-        title: result["original_title"],
-        synopsis: result["overview"],
-        year: result["release_date"],
-        cover: "https://www.themoviedb.org/t/p/w1920_and_h1080_bestv2#{result["backdrop_path"]}",
-        poster_url: "https://www.themoviedb.org/t/p/w600_and_h900_bestv2#{result["poster_path"]}",
+        api_id: movie_result["id"],
+        title: movie_result["original_title"],
+        synopsis: movie_result["overview"],
+        year: movie_result["release_date"],
+        cover: "https://www.themoviedb.org/t/p/w1920_and_h1080_bestv2#{movie_result["backdrop_path"]}",
+        poster_url: "https://www.themoviedb.org/t/p/w600_and_h900_bestv2#{movie_result["poster_path"]}",
         genres: []
       )
-      result["genres"].each { |g| @movie.genres << g["name"] }
+      movie_result["genres"].each { |g| @movie.genres << g["name"] }
       @movie.save
     end
+    @tmdb_movie = Tmdb::Movie.detail(params[:id])
+    @tmdb_cast = Tmdb::Movie.cast(params[:id])
+    @tmdb_crew = Tmdb::Movie.crew(params[:id])
   end
 
   def create
