@@ -29,9 +29,9 @@ class MoviesController < ApplicationController
       movie_result["genres"].each { |g| @movie.genres << g["name"] }
       @movie.save
     end
-    # @movie = Tmdb::Movie.detail(params[:id])
-    @cast = Tmdb::Movie.cast(params[:id])
-    @crew = Tmdb::Movie.crew(params[:id])
+    @tmdb_movie = Tmdb::Movie.detail(params[:id])
+    @tmdb_cast = Tmdb::Movie.cast(params[:id])
+    @tmdb_crew = Tmdb::Movie.crew(params[:id])
   end
 
   def create

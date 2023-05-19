@@ -1,31 +1,54 @@
-<div class="movie-cover" style="height: 300px; background: url(<%= @movie.cover %>) center/cover no-repeat"></div>
-
-<div class="container mt-3">
-  <h1><%= @movie.title %> (<%= format_date(@movie.year) %>)</h1>
-  <p><%= @movie.synopsis %></p>
-  <p><%= @movie.genres.join(", ") if @movie.genres %></p>
-
-  <div class="container my-3">
-  <h3>Cast</h3>
-    <% @cast.first(5).each do |cast| %>
-      <p><%= cast.name %> - <%= cast.character %></p>
-    <% end %>
-  </div>
-
-  <div class="container my-3">
-  <h3>Crew</h3>
-    <% @crew.each do |crew| %>
-      <% if crew.job == "Director" %>
-        <p><%= crew.job %>: <%= crew.name %></p>
-      <% end %>
-    <% end %>
-  </div>
-
-  <img src="<%= @movie.poster_url %>" alt="">
-
-  <div class="my-3">
+<div class="movie-cover" style="background: linear-gradient(180deg,rgba(20,24,28,0) 0,rgba(20,24,28,0) 50%,rgba(20,24,28,.75) 75%,#14181c),url(<%= @movie.cover %>) center/cover no-repeat">
     <% if user_signed_in? && current_user.movie_ids.exclude?(@movie.id) %>
-      <%= link_to "New Rating", new_movie_rating_path(@movie), class: "btn btn-primary" %>
+      <%= link_to "Rate", new_movie_rating_path(@movie), id: "rating", class: "btn btn-primary" %>
     <% end %>
-  </div>
 </div>
+
+<section class="film__header d-flex justify-content-between p-2">
+  <div>
+    <h1><%= @movie.title %></h1>
+    <small><%= format_date(@movie.year) %> | DIRECTED BY</small>
+      <div class="mb-2">
+        <% @tmdb_crew.each do |crew| %>
+          <% if crew.job == "Director" %>
+            <%= crew.name %><br>
+          <% end %>
+        <% end %>
+      </div>
+  </div>
+  <img src="<%= @movie.poster_url %>" alt="" class="poster-show">
+</section>
+
+<section class="p-2">
+  <% if @tmdb_movie.tagline %>
+    <strong><%= @tmdb_movie.tagline.upcase %></strong>
+  <% end %>
+  <p><%= @movie.synopsis %></p>
+</section>
+
+
+<div class="movie-options d-flex justify-content-evenly">
+  <small>Cast</small>
+  <small>Crew</small>
+  <small>Genres</small>
+</div>
+
+
+<section class="p-2 genres">
+  <h4>Genres</h4>
+  <p><%= @movie.genres.join(", ") if @movie.genres %></p>
+</section>
+
+<section class="p-2 cast">
+  <h4>Cast</h4>
+  <% @tmdb_cast.first(5).each do |cast| %>
+    <p><%= cast.name %> - <%= cast.character %></p>
+  <% end %>
+</section>
+
+<section class="p-2 crew">
+  <h4>Crew</h4>
+  <% @tmdb_crew.each do |crew| %>
+    <p><%= crew.job %> - <%= crew.name %></p>
+  <% end %>
+</section>
