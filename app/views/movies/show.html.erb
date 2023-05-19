@@ -3,7 +3,23 @@
 <div class="container mt-3">
   <h1><%= @movie.title %> (<%= format_date(@movie.year) %>)</h1>
   <p><%= @movie.synopsis %></p>
-  <p><%= @movie.genres.join(", ") %></p>
+  <p><%= @movie.genres.join(", ") if @movie.genres %></p>
+
+  <div class="container my-3">
+  <h3>Cast</h3>
+    <% @cast.first(5).each do |cast| %>
+      <p><%= cast.name %> - <%= cast.character %></p>
+    <% end %>
+  </div>
+
+  <div class="container my-3">
+  <h3>Crew</h3>
+    <% @crew.each do |crew| %>
+      <% if crew.job == "Director" %>
+        <p><%= crew.job %>: <%= crew.name %></p>
+      <% end %>
+    <% end %>
+  </div>
 
   <img src="<%= @movie.poster_url %>" alt="">
 
