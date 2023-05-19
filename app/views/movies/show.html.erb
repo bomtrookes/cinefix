@@ -27,28 +27,30 @@
 </section>
 
 
-<div class="movie-options d-flex justify-content-evenly">
-  <small>Cast</small>
-  <small>Crew</small>
-  <small>Genres</small>
+<div data-controller="tabs">
+  <header class="movie-options">
+    <small data-action="click->tabs#showCast">Cast</small>
+    <small data-action="click->tabs#showCrew">Crew</small>
+    <small data-action="click->tabs#showGenres">Genres</small>
+  </header>
+
+
+  <section class="genres" data-tabs-target="genres">
+    <h4>Genres</h4>
+    <p><%= @movie.genres.join(", ") if @movie.genres %></p>
+  </section>
+
+  <section class="cast" data-tabs-target="cast">
+    <h4>Cast</h4>
+    <% @tmdb_cast.first(10).each do |cast| %>
+      <p><%= cast.name %> - <%= cast.character %></p>
+    <% end %>
+  </section>
+
+  <section class="crew" data-tabs-target="crew">
+    <h4>Crew</h4>
+    <% @tmdb_crew.each do |crew| %>
+      <p><%= crew.job %> - <%= crew.name %></p>
+    <% end %>
+  </section>
 </div>
-
-
-<section class="p-2 genres">
-  <h4>Genres</h4>
-  <p><%= @movie.genres.join(", ") if @movie.genres %></p>
-</section>
-
-<section class="p-2 cast">
-  <h4>Cast</h4>
-  <% @tmdb_cast.first(5).each do |cast| %>
-    <p><%= cast.name %> - <%= cast.character %></p>
-  <% end %>
-</section>
-
-<section class="p-2 crew">
-  <h4>Crew</h4>
-  <% @tmdb_crew.each do |crew| %>
-    <p><%= crew.job %> - <%= crew.name %></p>
-  <% end %>
-</section>
