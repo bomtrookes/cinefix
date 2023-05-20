@@ -1,6 +1,6 @@
 <div class="movie-cover" style="background: linear-gradient(180deg,rgba(20,24,28,0) 0,rgba(20,24,28,0) 50%,rgba(20,24,28,.75) 75%,#14181c),url(https://www.themoviedb.org/t/p/w1920_and_h1080_bestv2<%= @movie.backdrop_path %>) center/cover no-repeat">
-    <% if user_signed_in? && current_user.movie_ids.exclude?(@movie.id) %>
-      <%= link_to "Rate", new_movie_rating_path(@movie), id: "rating", class: "btn btn-primary" %>
+    <% if user_signed_in? && current_user.ratings.exclude?(@movie.id) %>
+      <%= link_to "Rate", new_rating_path(api_id: @movie.id), id: "rating", class: "btn btn-primary" %>
     <% end %>
 </div>
 
@@ -23,7 +23,7 @@
   <% if @movie.tagline %>
     <strong><%= @movie.tagline.upcase %></strong>
   <% end %>
-  <p><%= @movie.synopsis %></p>
+  <p><%= @movie.overview %></p>
 </section>
 
 

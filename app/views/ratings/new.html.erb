@@ -1,7 +1,7 @@
 <div class="container mt-5">
   <h1>Rating <%= @movie.title %></h1>
 
-    <%= simple_form_for [@movie, @rating] do |f| %>
+    <%= simple_form_for @rating do |f| %>
       <%= f.input :story, label: false, placeholder: "Story?" %>
       <%= f.input :acting, label: false, placeholder: "Acting?" %>
       <%= f.input :dialog, label: false, placeholder: "Dialogue?" %>
@@ -12,7 +12,7 @@
       <%= f.input :originality, label: false, placeholder: "Originality?" %>
       <%= f.input :characters, label: false, placeholder: "Characters?" %>
       <%= f.input :enjoyment, label: false, placeholder: "Enjoyment?" %>
-      <%= f.hidden_field :api_id, value: @movie.api_id %>
+      <%= f.hidden_field :api_id, value: @movie.id %>
       <%= f.hidden_field :user_id, value: current_user.id %>
       <%= f.submit %>
     <% end %>

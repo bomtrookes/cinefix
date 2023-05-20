@@ -1,5 +1,5 @@
 class RatingsController < ApplicationController
-  before_action :set_user
+  before_action :set_user, only: :create
 
   def index
     @ratings = Rating.all
@@ -7,15 +7,13 @@ class RatingsController < ApplicationController
   end
 
   def new
-    @movie = Movie.find(params[:movie_id])
+    @movie = Tmdb::Movie.detail(params[:api_id])
     @rating = Rating.new
   end
 
   def create
-    @movie = Movie.find(params[:movie_id])
+    @movie = Tmdb::Movie.detail(params[:rating][:api_id])
     @rating = Rating.new(rating_params)
-    @rating.user_id = current_user.id
-
     if @rating.save
       redirect_to ratings_path
     else
@@ -32,11 +30,7 @@ class RatingsController < ApplicationController
         :story, :acting, :dialog,
         :cinematography, :soundtrack,
         :style, :pacing, :originality,
-        :characters, :enjoyment, :movie_id, :user_id)
-  end
-
-  def movie_rating_params
-    params.require(:movie_rating).permit(:user_rating)
+        :characters, :enjoyment, :api_id, :user_id)
   end
 
   def set_user

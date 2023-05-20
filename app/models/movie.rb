@@ -1,7 +1,8 @@
 class Movie < ApplicationRecord
 
   has_many :users
-  has_many :ratings
+
+  accepts_nested_attributes_for :ratings
 
   validates :title, presence: true
   validates :year, presence: true
