@@ -2,20 +2,13 @@ class RatingsController < ApplicationController
   before_action :set_user
 
   def index
-    @movie_ratings = current_user.ratings.map do |rating|
-      {
-        movie: rating.movie,
-        user_rating: rating.total_score,
-        api_id: rating.movie_id
-      }
-    end.sort_by { |movie_rating| -movie_rating[:user_rating] }
+    @ratings = Rating.all
+    @movie_ids = @ratings.pluck(:api_id)
   end
-
 
   def new
     @movie = Movie.find(params[:movie_id])
     @rating = Rating.new
-    @movie_rating = MovieRating.new
   end
 
   def create
@@ -24,13 +17,6 @@ class RatingsController < ApplicationController
     @rating.user_id = current_user.id
 
     if @rating.save
-      @movie_rating = MovieRating.create!(
-        movie_id: @movie.id,
-        rating_id: @rating.id,
-        user_id: current_user.id,
-        user_rating: @rating.total_score.to_f
-      )
-      # redirect_to movie_ratings_path
       redirect_to ratings_path
     else
       render :new

@@ -12,7 +12,7 @@
       <%= f.input :originality, label: false, placeholder: "Originality?" %>
       <%= f.input :characters, label: false, placeholder: "Characters?" %>
       <%= f.input :enjoyment, label: false, placeholder: "Enjoyment?" %>
-      <%= f.hidden_field :movie_id, value: @movie.id %>
+      <%= f.hidden_field :api_id, value: @movie.api_id %>
       <%= f.hidden_field :user_id, value: current_user.id %>
       <%= f.submit %>
     <% end %>

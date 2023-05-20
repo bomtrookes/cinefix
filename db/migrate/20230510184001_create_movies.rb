@@ -5,8 +5,8 @@ class CreateMovies < ActiveRecord::Migration[7.0]
       t.date :year
       t.text :synopsis
       t.string :poster_url
-      t.string :genre
-      t.integer :api_id
+      t.string :genres, array: true, default: [], using: "(string_to_array(genres, ','))"
+      t.string :cover
       t.float :rating
       t.timestamps
     end

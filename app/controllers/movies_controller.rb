@@ -3,11 +3,12 @@ class MoviesController < ApplicationController
   def index
      if params[:query].present?
       query = params[:query].presence || " "
-      response = HTTParty.get("https://api.themoviedb.org/3/search/movie?api_key=#{ENV['API_KEY']}&query=#{query}")
+      # response = HTTParty.get("https://api.themoviedb.org/3/search/movie?api_key=#{ENV['API_KEY']}&query=#{query}")
       @movies = response.parsed_response
+      @movies = Tmdb::Search.movie(query)
     else
-      response = HTTParty.get("https://api.themoviedb.org/3/movie/popular?api_key=#{ENV['API_KEY']}")
-      @movies = response.parsed_response
+      # response = HTTParty.get("https://api.themoviedb.org/3/movie/popular?api_key=#{ENV['API_KEY']}")
+      @movies = Tmdb::Search.movie("John Wick")
     end
   end
 
@@ -29,7 +30,7 @@ class MoviesController < ApplicationController
       movie_result["genres"].each { |g| @movie.genres << g["name"] }
       @movie.save
     end
-    @tmdb_movie = Tmdb::Movie.detail(params[:id])
+    # @tmdb_movie = Tmdb::Movie.detail(params[:id])
     @tmdb_cast = Tmdb::Movie.cast(params[:id])
     @tmdb_crew = Tmdb::Movie.crew(params[:id])
   end

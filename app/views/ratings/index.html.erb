@@ -10,12 +10,12 @@
       </tr>
     </thead>
     <tbody>
-      <% @movie_ratings.each_with_index do |movie, index| %>
+      <% @ratings.each_with_index do |rating, index| %>
         <tr>
           <td><%= index + 1 %></td>
-          <td><%= link_to movie[:movie][:title], movie_path(movie[:movie][:api_id]) %></td>
-          <td><%= movie[:movie][:year].strftime('%Y') %></td>
-          <td><%= movie[:user_rating] %></td>
+          <td><%= link_to tmdb_movie(rating.api_id).title, movie_path(find_movie(rating.api_id)) %></td>
+          <td><%= tmdb_movie(rating.api_id).release_date.strftime('%Y') %></td>
+          <td><%= rating.total_score %></td>
         </tr>
       <% end %>
     </tbody>
