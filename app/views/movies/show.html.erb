@@ -1,4 +1,4 @@
-<div class="movie-cover" style="background: linear-gradient(180deg,rgba(20,24,28,0) 0,rgba(20,24,28,0) 50%,rgba(20,24,28,.75) 75%,#14181c),url(<%= @movie.cover %>) center/cover no-repeat">
+<div class="movie-cover" style="background: linear-gradient(180deg,rgba(20,24,28,0) 0,rgba(20,24,28,0) 50%,rgba(20,24,28,.75) 75%,#14181c),url(https://www.themoviedb.org/t/p/w1920_and_h1080_bestv2<%= @movie.backdrop_path %>) center/cover no-repeat">
     <% if user_signed_in? && current_user.movie_ids.exclude?(@movie.id) %>
       <%= link_to "Rate", new_movie_rating_path(@movie), id: "rating", class: "btn btn-primary" %>
     <% end %>
@@ -7,7 +7,7 @@
 <section class="film__header d-flex justify-content-between p-2">
   <div>
     <h1><%= @movie.title %></h1>
-    <small><%= format_date(@movie.year) %> | DIRECTED BY</small>
+    <small><%= format_date(@movie.release_date) %> | DIRECTED BY</small>
       <div class="mb-2">
         <% @tmdb_crew.each do |crew| %>
           <% if crew.job == "Director" %>
@@ -16,12 +16,12 @@
         <% end %>
       </div>
   </div>
-  <img src="<%= @movie.poster_url %>" alt="" class="poster-show">
+  <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2<%= @movie.poster_path %>" alt="" class="poster-show">
 </section>
 
 <section class="p-2">
-  <% if @tmdb_movie.tagline %>
-    <strong><%= @tmdb_movie.tagline.upcase %></strong>
+  <% if @movie.tagline %>
+    <strong><%= @movie.tagline.upcase %></strong>
   <% end %>
   <p><%= @movie.synopsis %></p>
 </section>
@@ -37,7 +37,9 @@
 
   <section class="genres" data-tabs-target="genres">
     <h4>Genres</h4>
-    <p><%= @movie.genres.join(", ") if @movie.genres %></p>
+      <% @movie.genres.each do |genre| %>
+        <%= genre.name %>
+      <% end %>
   </section>
 
   <section class="cast" data-tabs-target="cast">
