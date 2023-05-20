@@ -1,9 +1,6 @@
 class Rating < ApplicationRecord
 
   belongs_to :user
-  belongs_to :movie
-  has_many :movie_ratings
-
 
   validates :story,
   :acting,

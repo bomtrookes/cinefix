@@ -10,22 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_18_211250) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_20_202625) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "movie_ratings", force: :cascade do |t|
-    t.bigint "movie_id", null: false
-    t.bigint "rating_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "user_id", null: false
-    t.float "user_rating"
-    t.index ["movie_id", "user_id", "rating_id"], name: "index_movie_ratings_on_movie_id_and_user_id_and_rating_id", unique: true
-    t.index ["movie_id"], name: "index_movie_ratings_on_movie_id"
-    t.index ["rating_id"], name: "index_movie_ratings_on_rating_id"
-    t.index ["user_id"], name: "index_movie_ratings_on_user_id"
-  end
 
   create_table "movies", force: :cascade do |t|
     t.string "title"
@@ -33,11 +20,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_18_211250) do
     t.text "synopsis"
     t.string "poster_url"
     t.string "genres", default: [], array: true
-    t.integer "api_id"
+    t.string "cover"
     t.float "rating"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "cover"
   end
 
   create_table "ratings", force: :cascade do |t|
@@ -51,11 +37,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_18_211250) do
     t.integer "originality"
     t.integer "characters"
     t.integer "enjoyment"
+    t.integer "api_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "movie_id", null: false
     t.bigint "user_id", null: false
-    t.index ["movie_id"], name: "index_ratings_on_movie_id"
     t.index ["user_id"], name: "index_ratings_on_user_id"
   end
 
@@ -71,9 +56,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_18_211250) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "movie_ratings", "movies"
-  add_foreign_key "movie_ratings", "ratings"
-  add_foreign_key "movie_ratings", "users"
-  add_foreign_key "ratings", "movies"
   add_foreign_key "ratings", "users"
 end

@@ -11,6 +11,7 @@ class CreateRatings < ActiveRecord::Migration[7.0]
       t.integer :originality
       t.integer :characters
       t.integer :enjoyment
+      t.integer :api_id
       t.timestamps
     end
   end

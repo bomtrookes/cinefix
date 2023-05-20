@@ -9,15 +9,15 @@
   <% end %>
 
   <div class="mt-3">
-    <% @movies['results'].each do |movie| %>
+    <% @movies.each do |movie| %>
       <div class="list__card">
         <div class="img__wrapper">
-          <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2<%= movie['poster_path'] %>" alt="<%= movie['original_title'] %>">
+          <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2<%= movie.poster_path %>" alt="<%= movie.title %>">
         </div>
         <div class="film__detail">
           <span class="title__wrapper">
-            <%= link_to "#{movie['original_title']}", movie_path(movie["id"].to_i), class: "card__link" %>
-            <small><%= format_date(movie['release_date']) %></small>
+            <%= link_to movie.title, movie_path(movie.id), class: "card__link" %>
+            <small><%= format_date(movie.release_date) %></small>
           </span>
         </div>
       </div>
