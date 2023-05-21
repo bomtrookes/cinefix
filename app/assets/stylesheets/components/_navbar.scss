@@ -5,4 +5,11 @@ nav {
     height: 30px;
     aspect-ratio: 1/1;
   }
+  .menu {
+    display: grid;
+    place-items: center;
+    height: 2rem;
+    aspect-ratio: 1 / 1;
+    font-size: 2rem;
+  }
 }
