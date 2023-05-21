@@ -1,6 +1,25 @@
-<nav class="d-flex justify-content-between p-3">
+<header class="navbar d-flex justify-content-between p-3" data-controller="navigation">
   <%= link_to "CINEFIX", root_path, class: "btn btn-dark" %>
-  <div class="menu">
+  <div class="navbar-menu" data-action="click->navigation#toggleMenu">
     <i class="bi bi-list"></i>
   </div>
-</nav>
+
+  <nav>
+    <span id="close-menu" data-action="click->navigation#toggleMenu">
+      <i class="bi bi-x-circle"></i>
+    </span>
+    <ul>
+      <li>Search</li>
+      <li><%= link_to "Ratings", ratings_path%></li>
+      <li>Watchlist</li>
+      <li>
+        <% if user_signed_in? %>
+          <%= link_to "Log out", destroy_user_session_path, data: {turbo_method: :delete} %>
+        <% else %>
+          <%= link_to "Log in", new_user_session_path %>
+        <% end %>
+      </li>
+    </ul>
+  </nav>
+
+</header>

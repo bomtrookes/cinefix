@@ -1,15 +1,53 @@
-nav {
+.navbar {
   background-color: #181818;
   border-bottom: 1px solid #5a5a5a;
   img {
     height: 30px;
     aspect-ratio: 1/1;
   }
-  .menu {
+  .navbar-menu {
     display: grid;
     place-items: center;
     height: 2rem;
     aspect-ratio: 1 / 1;
     font-size: 2rem;
+    cursor: pointer;
   }
+}
+
+nav {
+  position: fixed;
+  top: 0;
+  left: -100dvw;
+  background: rgb(35, 53, 53);
+  height: 100dvh;
+  width: 100dvw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: left 0.2s ease-in-out;
+  text-align: center;
+  font-size: 1.5rem;
+  ul {
+    list-style: none;
+    padding: 0;
+    li {
+      padding: 1rem;
+      cursor: pointer;
+    }
+  }
+  a {
+    color: white;
+    text-decoration: none;
+  }
+}
+.is-active {
+  left: 0;
+}
+#close-menu {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 1rem;
+  cursor: pointer;
 }
