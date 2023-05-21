@@ -1,5 +1,6 @@
 class RatingsController < ApplicationController
   before_action :set_user, only: :create
+  before_action :authenticate_user!, only: [:new, :create, :index]
 
   def index
     @ratings = Rating.where(user_id: current_user).sort_by { |r| -r.total_score }
