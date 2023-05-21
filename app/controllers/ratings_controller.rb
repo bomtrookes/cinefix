@@ -2,7 +2,7 @@ class RatingsController < ApplicationController
   before_action :set_user, only: :create
 
   def index
-    @ratings = Rating.all.sort_by { |r| -r.total_score }
+    @ratings = Rating.where(user_id: current_user).sort_by { |r| -r.total_score }
     # @movie_ids = @ratings.pluck(:api_id)
   end
 
