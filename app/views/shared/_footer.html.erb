@@ -1,0 +1,12 @@
+<footer>
+    <% if user_signed_in? %>
+      <%= link_to destroy_user_session_path, data: {turbo_method: :delete}, class: "btn btn-danger
+" do %>
+        <i class="bi bi-box-arrow-right"></i>
+      <% end %>
+    <% else %>
+      <%= link_to new_user_session_path, class: "btn btn-primary" do %>
+        <i class="bi bi-person-circle"></i>
+      <% end %>
+    <% end %>
+</footer>
