@@ -2,9 +2,10 @@ class RatingsController < ApplicationController
   before_action :set_user, only: :create
 
   def index
-    @ratings = Rating.all
-    @movie_ids = @ratings.pluck(:api_id)
+    @ratings = Rating.all.sort_by { |r| -r.total_score }
+    # @movie_ids = @ratings.pluck(:api_id)
   end
+
 
   def new
     @movie = Tmdb::Movie.detail(params[:api_id])

@@ -29,4 +29,5 @@ class Rating < ApplicationRecord
       self.enjoyment
     return sum.to_f / 10
   end
+
 end
