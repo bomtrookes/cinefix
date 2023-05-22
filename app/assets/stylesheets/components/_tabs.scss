@@ -1,4 +1,24 @@
-.cast {
+.person-round {
+  border-radius: 8px;
+}
+.movie-options {
+  display: flex;
+  justify-content: space-around;
+  margin: 1rem 0;
+  border-top: 1px solid lightgrey;
+  border-bottom: 1px solid lightgrey;
+  small {
+    cursor: pointer;
+  }
+}
+.genres, .cast, .crew {
+  padding: 0.5rem;
+  max-height: 20rem;
+  overflow-x: scroll;
+  scroll-behavior: smooth;
+}
+
+.cast, .crew {
   display: flex;
   .person-card {
     display: grid;
@@ -15,6 +35,6 @@
     object-fit: cover;
   }
 }
-#person-round {
-  border-radius: 8px;
+.hidden {
+  display: none;
 }
