@@ -5,7 +5,7 @@ export default class extends Controller {
 
   connect() {
     console.log("Tabs Controller Connected")
-    this.castTarget.classList.add("hidden");
+    this.genresTarget.classList.add("hidden");
     this.crewTarget.classList.add("hidden");
   }
   showCast() {
