@@ -29,9 +29,9 @@
 
 <div data-controller="tabs">
   <header class="movie-options">
-    <small data-action="click->tabs#showCast">Cast</small>
-    <small data-action="click->tabs#showCrew">Crew</small>
-    <small data-action="click->tabs#showGenres">Genres</small>
+    <small id="cast-tab" data-action="click->tabs#showCast">Cast</small>
+    <small id="crew-tab" data-action="click->tabs#showCrew">Crew</small>
+    <small id="genre-tab" data-action="click->tabs#showGenres">Genres</small>
   </header>
 
 
@@ -43,16 +43,26 @@
   </section>
 
   <section class="cast" data-tabs-target="cast">
-    <h4>Cast</h4>
-    <% @tmdb_cast.first(10).each do |cast| %>
-      <p><%= cast.name %> - <%= cast.character %></p>
+    <% @tmdb_cast.each do |cast| %>
+      <div class="person-card">
+        <img class="person-round" src="https://www.themoviedb.org/t/p/w276_and_h350_face/<%= cast.profile_path %>" alt="" loading="lazy">
+        <p>
+        <span><%= cast.name %></span><br>
+        <%= cast.character %>
+        </p>
+      </div>
     <% end %>
   </section>
 
   <section class="crew" data-tabs-target="crew">
-    <h4>Crew</h4>
     <% @tmdb_crew.each do |crew| %>
-      <p><%= crew.job %> - <%= crew.name %></p>
+      <div class="person-card">
+        <img class="person-round" src="https://www.themoviedb.org/t/p/w276_and_h350_face/<%= crew.profile_path %>" alt="" loading="lazy">
+        <p>
+        <span><%= crew.name %></span><br>
+        <%= crew.job %>
+        </p>
+      </div>
     <% end %>
   </section>
 </div>
