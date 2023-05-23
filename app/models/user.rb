@@ -3,6 +3,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :ratings
+  has_many :watchlists
   has_many :movies, through: :ratings
 
   def movie_ratings
