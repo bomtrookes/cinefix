@@ -1,0 +1,6 @@
+.watchlist {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(105px, 1fr));
+  grid-gap: 10px;
+  grid-auto-flow: row;
+}

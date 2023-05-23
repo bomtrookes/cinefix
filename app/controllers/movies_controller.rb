@@ -10,7 +10,7 @@ class MoviesController < ApplicationController
  end
 
  def show
-    @user = current_user
+   @user = current_user
    @movie = Tmdb::Movie.detail(params[:id])
 
    @tmdb_cast = Tmdb::Movie.cast(params[:id])
