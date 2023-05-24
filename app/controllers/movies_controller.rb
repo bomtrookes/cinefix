@@ -10,8 +10,9 @@ class MoviesController < ApplicationController
  end
 
  def show
-   @user = current_user
-   @movie = Tmdb::Movie.detail(params[:id])
+  @user = current_user
+  @watchlist = Watchlist.new
+  @movie = Tmdb::Movie.detail(params[:id])
 
    @tmdb_cast = Tmdb::Movie.cast(params[:id])
    @tmdb_crew = Tmdb::Movie.crew(params[:id])
@@ -19,16 +20,6 @@ class MoviesController < ApplicationController
    @tmdb_similar = Tmdb::Movie.similar(params[:id])["results"]
    @tmdb_recommend = Tmdb::Movie.recommendations(params[:id])["results"]
  end
-
-  # def create
-  #   @movie = Movie.find_or_initialize_by(api_id: params[:movie][:api_id])
-  #   @movie.assign_attributes(movie_params)
-  #   if @movie.save
-  #     redirect_to new_movie_rating_path(@movie)
-  #   else
-  #     render 'show'
-  #   end
-  # end
 
   private
 
