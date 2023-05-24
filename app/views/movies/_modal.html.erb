@@ -1,0 +1,24 @@
+<div class="modal">
+
+    <div class="modal-container">
+
+    <div id="modal-close">
+      <i class="bi bi-x-circle" data-action="click->modal#close"></i>
+    </div>
+
+      <div class="modal-btns">
+        <%= link_to "Rate", new_rating_path(api_id: @movie.id), class: "btn btn-success m-1" %>
+
+        <% if current_user.watchlists.exists?(api_id: @movie.id) %>
+          <%= button_to watchlist_path(@movie.id), method: :delete, class:"btn btn-danger m-1" do %>
+            <i class="bi bi-check"></i> Remove from Watchlist
+          <% end %>
+        <% else %>
+          <%= button_to watchlist_path(@movie.id), method: :post, class:"btn btn-primary m-1" do %>
+            <i class="bi bi-plus"></i> Add to Watchlist
+          <% end %>
+        <% end %>
+      </div>
+
+    </div>
+</div>
