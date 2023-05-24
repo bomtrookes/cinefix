@@ -68,10 +68,19 @@
   </section>
 </div>
 
-<% if current_user %>
-  <%# if @watchlist.include?(@movie.id) && @watchlist.include?(current_user.id) %>
-    <%= button_to "Add to Watchlist", watchlist_path(api_id: @movie.id), method: :post %>
-  <%# else %>
-    <%= button_to "Remove from Watchlist", watchlist_path(api_id: @movie.id), method: :delete %>
-  <%# end %>
+
+<% if user_signed_in? %>
+
+  <% if current_user.watchlists.exists?(api_id: @movie.id) %>
+    <%= button_to watchlist_path(@movie.id), method: :delete do %>
+      <i class="bi bi-check"></i> Remove from Watchlist
+    <% end %>
+
+  <% else %>
+
+    <%= button_to watchlist_path(@movie.id), method: :post do %>
+      <i class="bi bi-plus"></i> Add to Watchlist
+    <% end %>
+
+  <% end %>
 <% end %>
