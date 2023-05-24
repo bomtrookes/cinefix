@@ -9,11 +9,14 @@ class WatchlistsController < ApplicationController
     @movie = Tmdb::Movie.detail(params[:id])
     @watchlist = current_user.watchlists.build(api_id: params[:id])
     @watchlist.save
+    redirect_to movie_path(@movie)
   end
 
   def destroy
+    @movie = Tmdb::Movie.detail(params[:id])
     @watchlist = Watchlist.find_by(api_id: params[:id])
     @watchlist.destroy
+    redirect_to movie_path(@movie)
   end
 
   private

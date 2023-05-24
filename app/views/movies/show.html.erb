@@ -2,7 +2,7 @@
     <% if user_signed_in? && current_user.ratings.exclude?(@movie.id) %>
       <div id="rating" data-controller="modal">
         <i class="bi bi-three-dots btn btn-dark" data-action="click->modal#open"></i>
-        <%= render "modal", movie: @movie %>
+        <%= render "modal", api_id: @movie.id %>
       </div>
     <% end %>
 </div>
