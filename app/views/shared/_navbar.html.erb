@@ -10,7 +10,7 @@
     </span>
     <ul>
       <% if user_signed_in? %>
-        <li><%= link_to "Search", root_path %></li>
+        <li><%= link_to "Search", movies_path %></li>
         <li><%= link_to "Ratings", ratings_path%></li>
         <li><%= link_to "Watchlist", watchlists_path %></li>
       <% end %>

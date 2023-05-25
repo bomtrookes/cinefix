@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users
 
-  root 'movies#index'
+  root 'movies#home'
 
   resources :movies, only: [:index, :show]
   resources :ratings, only: [:index, :new, :create]

@@ -1,0 +1,78 @@
+.background {
+  position: relative;
+  min-height: 80dvh;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(5, 1fr);
+}
+#line1 {
+  background-image: url("/line1.jpg");
+}
+#line2 {
+  background-image: url("/line2.jpg");
+
+}
+#line3 {
+  background-image: url("/line3.jpg");
+
+}
+#line4 {
+  background-image: url("/line4.jpg");
+
+}
+#line5 {
+  background-image: url("/line5.jpg");
+}
+#line1, #line3, #line5 {
+  background-repeat: repeat;
+  background-position: 0 0;
+  background-size: auto 100%;
+  animation: rightToLeft 500s linear infinite;
+  overflow: hidden;
+}
+@keyframes rightToLeft {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: -10000px 0;
+  }
+}
+
+#line2, #line4 {
+  background-repeat: repeat;
+  background-position: 0 0;
+  background-size: auto 100%;
+  animation: leftToRight 500s linear infinite;
+  margin: 0.25rem 0;
+  overflow: hidden;
+}
+@keyframes leftToRight {
+  from {
+    background-position: -10000px 0;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
+
+main {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  place-items: center;
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  text-align: center;
+  h1 {
+    color: white;
+    font-family: 'Patua One';
+    font-size: 5rem;
+  }
+  h2 {
+    color: white;
+    font-family: 'Patua One';
+    font-size: 2.4rem;
+  }
+}
