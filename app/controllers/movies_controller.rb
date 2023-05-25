@@ -1,5 +1,12 @@
 class MoviesController < ApplicationController
 
+  def home
+    @movies = Tmdb::Movie.popular["results"]
+    # @top_rated = Tmdb::Movie.top_rated["results"]
+    # @upcoming = Tmdb::Movie.upcoming["results"]
+    # @now_playing = Tmdb::Movie.now_playing["results"]
+  end
+
   def index
     if params[:query].present?
      query = params[:query].presence || " "

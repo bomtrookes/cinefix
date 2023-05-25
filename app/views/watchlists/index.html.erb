@@ -1,7 +1,7 @@
 <div class="container mt-3">
   <h1>Watchlist</h1>
     <% if @watchlists.present? %>
-      <div class="watchlist">
+      <div class="watchlist mb-3">
         <% @watchlists.each do |movie| %>
           <%= link_to movie_path(movie.api_id) do %>
             <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2<%= Tmdb::Movie.detail(movie.api_id).poster_path %>" alt="">
