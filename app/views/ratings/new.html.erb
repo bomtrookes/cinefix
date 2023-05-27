@@ -1,17 +1,39 @@
-<div class="container mt-5">
+<div class="container my-5">
   <h1>Rating <%= @movie.title %></h1>
 
     <%= simple_form_for @rating do |f| %>
-      <%= f.input :story, label: false, placeholder: "Story?" %>
-      <%= f.input :acting, label: false, placeholder: "Acting?" %>
-      <%= f.input :dialog, label: false, placeholder: "Dialogue?" %>
-      <%= f.input :cinematography, label: false, placeholder: "Cinematography?" %>
-      <%= f.input :soundtrack, label: false, placeholder: "Soundtrack?" %>
-      <%= f.input :style, label: false, placeholder: "Aesthetics?" %>
-      <%= f.input :pacing, label: false, placeholder: "Pacing?" %>
-      <%= f.input :originality, label: false, placeholder: "Originality?" %>
-      <%= f.input :characters, label: false, placeholder: "Characters?" %>
-      <%= f.input :enjoyment, label: false, placeholder: "Enjoyment?" %>
+
+      <%# let label = document.querySelector('label[for="story"] span') %>
+      <label for="story">Story: <span>8</span></label>
+      <%= f.input :story, label: false, class: "form-range", input_html: { type: "range", min: "0", max: "10" } %>
+
+      <label for="acting">Acting: <span>8</span></label>
+      <%= f.input :acting, label: false, class: "form-range", input_html: { type: "range", min: "0", max: "10" } %>
+
+      <label for="dialogue">Dialogue: <span>8</span></label>
+      <%= f.input :dialog, label: false, class: "form-range", input_html: { type: "range", min: "0", max: "10" } %>
+
+      <label for="cinematography">Cinematography: <span>8</span></label>
+      <%= f.input :cinematography, label: false, class: "form-range", input_html: { type: "range", min: "0", max: "10" } %>
+
+      <label for="sountrack">Soundtrack: <span>8</span></label>
+      <%= f.input :soundtrack, label: false, class: "form-range", input_html: { type: "range", min: "0", max: "10" } %>
+
+      <label for="asthetics">Asthetics: <span>8</span></label>
+      <%= f.input :style, label: false, class: "form-range", input_html: { type: "range", min: "0", max: "10" } %>
+
+      <label for="pacing">Pacing: <span>8</span></label>
+      <%= f.input :pacing, label: false, class: "form-range", input_html: { type: "range", min: "0", max: "10" } %>
+
+      <label for="originality">Originality: <span>8</span></label>
+      <%= f.input :originality, label: false, class: "form-range", input_html: { type: "range", min: "0", max: "10" } %>
+
+      <label for="characters">Characters: <span>8</span></label>
+      <%= f.input :characters, label: false, class: "form-range", input_html: { type: "range", min: "0", max: "10" } %>
+
+      <label for="enjoyment">Enjoyment: <span>8</span></label>
+      <%= f.input :enjoyment, label: false, class: "form-range", input_html: { type: "range", min: "0", max: "10" } %>
+
       <%= f.hidden_field :api_id, value: @movie.id %>
       <%= f.hidden_field :user_id, value: current_user.id %>
       <%= f.submit %>
