@@ -1,0 +1,22 @@
+.stats {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  h4 {
+    text-align: center;
+    margin: 0 1rem;
+    min-width: 80px;
+  }
+  a {
+    display: flex;
+    flex-direction: column-reverse;
+    color: grey;
+    text-decoration: none;
+  }
+  small {
+    font-size: 0.8rem;
+  }
+  span {
+    color: white;
+  }
+}
