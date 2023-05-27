@@ -6,6 +6,8 @@ class User < ApplicationRecord
   has_many :watchlists
   has_many :movies, through: :ratings
 
+  validates :username, presence: true, uniqueness: true
+
   has_many :received_follows, foreign_key: :followed_user_id, class_name: "Follow"
   has_many :followers, through: :received_follows, source: :follower
   has_many :given_follows, foreign_key: :follower_id, class_name: "Follow"
