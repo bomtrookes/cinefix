@@ -1,3 +1,6 @@
 <div class="container">
-  <h1><%= @user.email %></h1>
+  <div class="user-info p-3">
+    <img id="user-avatar" src="<%= @user.avatar %>" alt="">
+    <h1><%= @user.username %></h1>
+  </div>
 </div>
