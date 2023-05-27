@@ -7,6 +7,7 @@ class UsersController < ApplicationController
     else
       @user = current_user
     end
+      @ratings = Rating.where(user_id: @user).sort_by { |r| -r.total_score }
   end
 
   def edit
