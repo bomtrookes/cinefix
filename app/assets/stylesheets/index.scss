@@ -1,14 +1,16 @@
+@import "components/avatar";
+@import "components/buttons";
 @import "components/navbar";
 @import "components/footer";
-@import "components/list_cards";
-@import "components/table";
-@import "components/buttons";
 @import "components/images";
-@import "components/tabs";
+@import "components/list_cards";
 @import "components/modal";
+@import "components/stats";
+@import "components/table";
+@import "components/tabs";
 
 @import "pages/global";
-@import "pages/movie_show";
 @import "pages/home";
+@import "pages/movie_show";
 
 @import "config/fonts.scss"

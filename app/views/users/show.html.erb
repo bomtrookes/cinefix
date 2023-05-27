@@ -1,0 +1,67 @@
+<div class="container">
+  <div class="user-info my-4">
+    <img id="user-avatar" src="<%= @user.avatar %>" alt="">
+    <h1><%= @user.username %></h1>
+  </div>
+
+  <div class="stats mb-4">
+    <h4>
+      <a href="#">
+        <small>FILMS</small>
+        <span>5</span>
+      </a>
+    </h4>
+
+    <h4>
+      <a href="#">
+        <small>LISTS</small>
+        <span>6</span>
+      </a>
+    </h4>
+
+    <h4>
+      <a href="#">
+        <small>FOLLOWING</small>
+        <span>46</span>
+      </a>
+    </h4>
+
+    <h4>
+      <a href="#">
+        <small>FOLLOWERS</small>
+        <span>34</span>
+      </a>
+    </h4>
+  </div>
+
+  <hr>
+
+  <div class="container mt-3">
+    <h1>Ratings</h1>
+
+    <% if @ratings.present? %>
+    <table class="table table-striped mt-3">
+      <thead>
+          <th>Rank</th>
+          <th>Movie</th>
+          <th>Year</th>
+          <th>Rating</th>
+        </tr>
+      </thead>
+        <tbody>
+          <% @ratings.each_with_index do |rating, index| %>
+            <tr>
+              <td><%= index + 1 %></td>
+              <td><%= link_to tmdb_movie(rating.api_id).title, movie_path(rating.api_id) %></td>
+              <td><%= format_date(tmdb_movie(rating.api_id).release_date) %></td>
+              <td><%= rating.total_score %></td>
+            </tr>
+          <% end %>
+      <% else %>
+          <p class="py-3">You have not rated any movies yet.</p>
+      <% end %>
+        </tbody>
+    </table>
+  </div>
+
+</div>
