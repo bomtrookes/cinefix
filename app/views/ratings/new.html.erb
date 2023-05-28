@@ -1,38 +1,58 @@
-<div class="container my-5">
+<div class="container my-5" data-controller="form">
   <h1>Rating <%= @movie.title %></h1>
 
     <%= simple_form_for @rating do |f| %>
 
       <%# let label = document.querySelector('label[for="story"] span') %>
-      <label for="story">Story: <span>8</span></label>
-      <%= f.input :story, label: false, class: "form-range", input_html: { type: "range", min: "0", max: "10" } %>
+      <div>
+        <label for="rating_story">Story: <span>5</span></label>
+        <%= f.input :story, label: false, class: "form-range", input_html: { type: "range", min: "0", max: "10", data: { action: "change->form#update", form_target: "slider" } } %>
+      </div>
 
-      <label for="acting">Acting: <span>8</span></label>
-      <%= f.input :acting, label: false, class: "form-range", input_html: { type: "range", min: "0", max: "10" } %>
+      <div>
+        <label for="rating_acting">Acting: <span>5</span></label>
+        <%= f.input :acting, label: false, class: "form-range", input_html: { type: "range", min: "0", max: "10", data: { action: "change->form#update", form_target: "slider" } } %>
+      </div>
 
-      <label for="dialogue">Dialogue: <span>8</span></label>
-      <%= f.input :dialog, label: false, class: "form-range", input_html: { type: "range", min: "0", max: "10" } %>
+      <div>
+        <label for="rating_dialog">Dialog: <span>5</span></label>
+        <%= f.input :dialog, label: false, class: "form-range", input_html: { type: "range", min: "0", max: "10", data: { action: "change->form#update", form_target: "slider" } } %>
+      </div>
 
-      <label for="cinematography">Cinematography: <span>8</span></label>
-      <%= f.input :cinematography, label: false, class: "form-range", input_html: { type: "range", min: "0", max: "10" } %>
+      <div>
+        <label for="rating_cinematography">Cinematography: <span>5</span></label>
+        <%= f.input :cinematography, label: false, class: "form-range", input_html: { type: "range", min: "0", max: "10", data: { action: "change->form#update", form_target: "slider" } } %>
+      </div>
 
-      <label for="sountrack">Soundtrack: <span>8</span></label>
-      <%= f.input :soundtrack, label: false, class: "form-range", input_html: { type: "range", min: "0", max: "10" } %>
+      <div>
+        <label for="rating_soundtrack">Soundtrack: <span>5</span></label>
+        <%= f.input :soundtrack, label: false, class: "form-range", input_html: { type: "range", min: "0", max: "10", data: { action: "change->form#update", form_target: "slider" } } %>
+      </div>
 
-      <label for="asthetics">Asthetics: <span>8</span></label>
-      <%= f.input :style, label: false, class: "form-range", input_html: { type: "range", min: "0", max: "10" } %>
+      <div>
+        <label for="rating_style">Asthetics: <span>5</span></label>
+        <%= f.input :style, label: false, class: "form-range", input_html: { type: "range", min: "0", max: "10", data: { action: "change->form#update", form_target: "slider" } } %>
+      </div>
 
-      <label for="pacing">Pacing: <span>8</span></label>
-      <%= f.input :pacing, label: false, class: "form-range", input_html: { type: "range", min: "0", max: "10" } %>
+      <div>
+        <label for="rating_pacing">Pacing: <span>5</span></label>
+        <%= f.input :pacing, label: false, class: "form-range", input_html: { type: "range", min: "0", max: "10", data: { action: "change->form#update", form_target: "slider" } } %>
+      </div>
 
-      <label for="originality">Originality: <span>8</span></label>
-      <%= f.input :originality, label: false, class: "form-range", input_html: { type: "range", min: "0", max: "10" } %>
+      <div>
+        <label for="rating_originality">Originality: <span>5</span></label>
+        <%= f.input :originality, label: false, class: "form-range", input_html: { type: "range", min: "0", max: "10", data: { action: "change->form#update", form_target: "slider" } } %>
+      </div>
 
-      <label for="characters">Characters: <span>8</span></label>
-      <%= f.input :characters, label: false, class: "form-range", input_html: { type: "range", min: "0", max: "10" } %>
+      <div>
+        <label for="rating_characters">Characters: <span>5</span></label>
+        <%= f.input :characters, label: false, class: "form-range", input_html: { type: "range", min: "0", max: "10", data: { action: "change->form#update", form_target: "slider" } } %>
+      </div>
 
-      <label for="enjoyment">Enjoyment: <span>8</span></label>
-      <%= f.input :enjoyment, label: false, class: "form-range", input_html: { type: "range", min: "0", max: "10" } %>
+      <div>
+        <label for="rating_enjoyment">Enjoyment: <span>5</span></label>
+        <%= f.input :enjoyment, label: false, class: "form-range", input_html: { type: "range", min: "0", max: "10", data: { action: "change->form#update", form_target: "slider" } } %>
+      </div>
 
       <%= f.hidden_field :api_id, value: @movie.id %>
       <%= f.hidden_field :user_id, value: current_user.id %>
