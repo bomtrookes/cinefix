@@ -14,5 +14,7 @@
  *= require_self
  */
 
+ $enable-validation-icons: false;
+
 @import "bootstrap";
 @import "index.scss"
