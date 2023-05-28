@@ -5,6 +5,9 @@ export default class extends Controller {
 
   connect() {
     console.log("Form controller connected.")
+    this.sliderTargets.forEach((slider) => {
+      slider.labels[0].firstElementChild.innerText = slider.value
+    })
   }
 
   update() {

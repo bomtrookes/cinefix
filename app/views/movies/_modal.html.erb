@@ -7,9 +7,17 @@
     </div>
 
       <div class="modal-btns">
-        <%= link_to new_rating_path(api_id: @movie.id), class: "btn btn-success m-1" do %>
-          <i class="bi bi-hand-thumbs-up"></i> Rate
+      <% if current_user %>
+        <% unless current_user.ratings.exists?(api_id: @movie.id) %>
+          <%= link_to new_rating_path(api_id: @movie.id), class: "btn btn-success m-1" do %>
+            <i class="bi bi-hand-thumbs-up"></i> Rate
+          <% end %>
+        <% else %>
+          <%= link_to edit_rating_path(api_id: @movie.id), class: "btn btn-light m-1" do %>
+            <i class="bi bi-hand-thumbs-up"></i> Update
+          <% end %>
         <% end %>
+      <% end %>
 
         <% if current_user.watchlists.exists?(api_id: @movie.id) %>
           <%= button_to watchlist_path(@movie.id), method: :delete, class: "btn btn-danger m-1" do %>

@@ -15,6 +15,7 @@ class Rating < ApplicationRecord
   numericality: { only_integer: true,
                   greater_than_or_equal_to: 0,
                   less_than_or_equal_to: 10 }
+  validates :api_id, uniqueness: { scope: :user_id }
 
   def total_score
     sum = self.story +

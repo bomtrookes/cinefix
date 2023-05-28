@@ -4,7 +4,6 @@ class RatingsController < ApplicationController
 
   def index
     @ratings = Rating.where(user_id: current_user).sort_by { |r| -r.total_score }
-    # @movie_ids = @ratings.pluck(:api_id)
   end
 
 
@@ -23,6 +22,21 @@ class RatingsController < ApplicationController
     end
   end
 
+  def edit
+    @user = current_user
+    @movie = Tmdb::Movie.detail(params[:id])
+    @rating = @user.ratings.where(api_id: params[:id]).first
+  end
+
+  def update
+    @movie = Tmdb::Movie.detail(params[:id])
+    @rating = Rating.find(@movie.id)
+    if @rating.update(rating_params)
+      redirect_to ratings_path
+    else
+      render :edit
+    end
+  end
 
   private
 
