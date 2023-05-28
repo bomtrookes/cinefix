@@ -1,10 +1,9 @@
-<div class="container my-5" data-controller="form">
+<div class="container mt-3 mb-5" data-controller="form">
   <h1>Rating <%= @movie.title %></h1>
 
     <%= simple_form_for @rating do |f| %>
 
-      <%# let label = document.querySelector('label[for="story"] span') %>
-      <div>
+      <div class="mt-3">
         <label for="rating_story">Story: <span>5</span></label>
         <%= f.input :story, label: false, class: "form-range", input_html: { type: "range", min: "0", max: "10", data: { action: "change->form#update", form_target: "slider" } } %>
       </div>
@@ -56,7 +55,7 @@
 
       <%= f.hidden_field :api_id, value: @movie.id %>
       <%= f.hidden_field :user_id, value: current_user.id %>
-      <%= f.submit %>
+      <%= f.submit class: "btn btn-primary mt-3" %>
     <% end %>
   </div>
 
