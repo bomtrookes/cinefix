@@ -2,11 +2,13 @@ class FollowsController < ApplicationController
   before_action :set_user
 
   def following
-    @followings = @user.followings.sort_by {|following| following.lists.size }.reverse!
+    @followings = @user.followings
+    # @followings = @user.followings.sort_by {|following| following.size }.reverse!
   end
 
   def followers
-    @followers = @user.followers.sort_by {|follower| follower.lists.size }.reverse!
+    @followers = @user.followers
+    # @followers = @user.followers.sort_by {|follower| follower.size }.reverse!
   end
 
   def create

@@ -1,7 +1,16 @@
 <div class="container">
   <div class="user-info my-4">
     <img id="user-avatar" src="<%= @user.avatar %>" alt="">
-    <h1><%= @user.username %></h1>
+    <div class="d-flex flex-column">
+      <h1><%= @user.username %></h1>
+      <% if @user != current_user %>
+        <% if @following %>
+          <%= button_to "Unfollow", user_follow_path(@user, @following), class: "btn btn-danger", method: :delete %>
+        <% else %>
+          <%= button_to "Follow", user_follows_path(@user), class: "btn btn-success", method: :post %>
+        <% end %>
+      <% end %>
+    </div>
   </div>
 
   <div class="stats mb-4">
@@ -20,14 +29,14 @@
     </h4>
 
     <h4>
-      <%= link_to following_user_path(current_user) do %>
+      <%= link_to user_following_path(current_user) do %>
         <small>FOLLOWING</small>
         <span><%= @user.followings.size %></span>
       <% end %>
     </h4>
 
     <h4>
-      <%= link_to followers_user_path(current_user) do %>
+      <%= link_to user_followers_path(current_user) do %>
         <small>FOLLOWERS</small>
         <span><%= @user.followers.size %></span>
       <% end %>
@@ -63,9 +72,3 @@
   </div>
 
 </div>
-
-<% if @following %>
-  <%= button_to "Unfollow", user_follow_path(@user, @following), class: "btn btn-danger", method: :delete %>
-<% else %>
-  <%= button_to "Follow", user_follows_path(@user), class: "btn btn-success", method: :post %>
-<% end %>

@@ -5,8 +5,8 @@ Rails.application.routes.draw do
 
   resources :users, only: [:index, :show] do
     resources :follows, only: [:create, :destroy]
-    get 'following', on: :member
-    get 'followers', on: :member
+    get 'following', action: :following, controller: 'follows'
+    get 'followers', action: :followers, controller: 'follows'
   end
   resources :movies, only: [:index, :show]
   resources :ratings, except: [:show, :destroy]
