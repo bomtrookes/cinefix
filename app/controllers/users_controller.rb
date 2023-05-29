@@ -1,6 +1,18 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
 
+  def following
+    @user = User.find(params[:id])
+    @users = @user.followings
+
+  end
+
+  def followers
+    @user = User.find(params[:id])
+    @users = @user.followers
+
+  end
+
   def show
     if current_user.id != params[:id].to_i
       @user = User.find(params[:id])

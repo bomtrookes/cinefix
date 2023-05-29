@@ -1,0 +1,10 @@
+<div class="container my-3">
+  <h1>Followers</h1>
+  <% if @followers.empty? %>
+    <p class="py-3">You have no followers.</p>
+  <% else %>
+    <% @followers.each do |follow| %>
+      <%= link_to follow.username, user_path(follow)%>
+    <% end %>
+  <% end %>
+</div>
