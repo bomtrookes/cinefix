@@ -13,7 +13,7 @@ class User < ApplicationRecord
   has_many :given_follows, foreign_key: :follower_id, class_name: "Follow"
   has_many :followings, through: :given_follows, source: :followed_user
 
-  def movie_ratings
-    MovieRating.joins(rating: :movie).where(ratings: { user_id: self.id })
-  end
+  # def movie_ratings
+  #   MovieRating.joins(rating: :movie).where(ratings: { user_id: self.id })
+  # end
 end

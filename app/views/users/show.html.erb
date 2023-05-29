@@ -5,7 +5,7 @@
   </div>
 
   <div class="stats mb-4">
-    <h4>
+    <h4 style="display: none">
       <a href="#">
         <small>FILMS</small>
         <span>5</span>
@@ -13,32 +13,30 @@
     </h4>
 
     <h4>
-      <a href="#">
-        <small>LISTS</small>
-        <span>6</span>
-      </a>
+      <p href="#">
+        <small>WATCHLIST</small>
+        <span><%= @user.watchlists.size %></span>
+      </p>
     </h4>
 
     <h4>
-      <a href="#">
+      <%= link_to following_user_path(current_user) do %>
         <small>FOLLOWING</small>
-        <span>46</span>
-      </a>
+        <span><%= @user.followings.size %></span>
+      <% end %>
     </h4>
 
     <h4>
-      <a href="#">
+      <%= link_to followers_user_path(current_user) do %>
         <small>FOLLOWERS</small>
-        <span>34</span>
-      </a>
+        <span><%= @user.followers.size %></span>
+      <% end %>
     </h4>
   </div>
 
   <hr>
 
-  <div class="container mt-3">
-    <h1>Ratings</h1>
-
+  <div class="container my-3">
     <% if @ratings.present? %>
     <table class="table table-striped mt-3">
       <thead>
@@ -65,3 +63,9 @@
   </div>
 
 </div>
+
+<% if @following %>
+  <%= button_to "Unfollow", user_follow_path(@user, @following), class: "btn btn-danger", method: :delete %>
+<% else %>
+  <%= button_to "Follow", user_follows_path(@user), class: "btn btn-success", method: :post %>
+<% end %>

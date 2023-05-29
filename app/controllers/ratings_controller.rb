@@ -16,7 +16,7 @@ class RatingsController < ApplicationController
     @movie = Tmdb::Movie.detail(params[:rating][:api_id])
     @rating = Rating.new(rating_params)
     if @rating.save
-      redirect_to ratings_path
+      redirect_to user_ratings_path(current_user)
     else
       render :new
     end
@@ -32,7 +32,7 @@ class RatingsController < ApplicationController
     @movie = Tmdb::Movie.detail(params[:id])
     @rating = Rating.find(@movie.id)
     if @rating.update(rating_params)
-      redirect_to ratings_path
+      redirect_to user_ratings_path(current_user)
     else
       render :edit
     end
