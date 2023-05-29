@@ -4,7 +4,7 @@
     <p class="py-3">You are not following anyone.</p>
   <% else %>
     <% @followings.each do |follow| %>
-      <%= follow.username %>
+      <%= link_to follow.username, user_path(follow) %>
     <% end %>
   <% end %>
 </div>
