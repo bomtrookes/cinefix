@@ -19,9 +19,8 @@ class FollowsController < ApplicationController
   end
 
   def destroy
-    @user
-    follow = Follow.find_by(follower_id: current_user.id, followed_id: @user.id)
-    follow.destroy
+    @follow = Follow.find_by(follower_id: current_user.id, followed_user_id: @user.id)
+    @follow.destroy
 
     session[:return_to] ||= request.referer
     redirect_to session.delete(:return_to)

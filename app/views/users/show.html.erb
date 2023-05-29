@@ -3,13 +3,13 @@
     <img id="user-avatar" src="<%= @user.avatar %>" alt="">
     <div class="d-flex flex-column">
       <h1><%= @user.username %></h1>
-      <% if @user != current_user %>
-        <% if @following %>
-          <%= button_to "Unfollow", user_follow_path(@user, @following), class: "btn btn-danger", method: :delete %>
-        <% else %>
-          <%= button_to "Follow", user_follows_path(@user), class: "btn btn-success", method: :post %>
-        <% end %>
-      <% end %>
+<% if @user != current_user %>
+  <% if current_user.followings.include?(@user) %>
+    <%= button_to "Unfollow", user_follow_path(@user), class: "btn btn-danger", method: :delete %>
+  <% else %>
+    <%= button_to "Follow", user_follows_path(@user), class: "btn btn-success", method: :post %>
+  <% end %>
+<% end %>
     </div>
   </div>
 
