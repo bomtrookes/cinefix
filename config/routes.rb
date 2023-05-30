@@ -3,7 +3,6 @@ Rails.application.routes.draw do
   root 'movies#home'
 
   devise_for :users
-  # devise_for :users, controllers: { registrations: "registrations" }
 
   resources :users, only: [:index, :show] do
     resources :ratings, only: [:destroy]
@@ -11,6 +10,7 @@ Rails.application.routes.draw do
     get 'following', action: :following, controller: 'follows'
     get 'followers', action: :followers, controller: 'follows'
   end
+
   resources :movies, only: [:index, :show]
   resources :ratings, except: [:show, :destroy]
   resources :watchlists, only: [:index, :create, :destroy]
