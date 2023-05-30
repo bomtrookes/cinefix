@@ -13,7 +13,11 @@
     <% @movies.first(10).each do |movie| %>
       <div class="list__card">
         <div class="img__wrapper">
-          <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2<%= movie.poster_path %>" alt="<%= movie.title %>">
+          <% if movie.poster_path.present? %>
+            <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2<%= movie.poster_path %>" alt="<%= movie.title %>">
+          <% else %>
+            <p class="no-poster">NO POSTER</p>
+          <% end %>
         </div>
         <div class="film__detail">
           <span class="title__wrapper">
