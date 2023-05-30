@@ -47,7 +47,13 @@
   <section class="cast" data-tabs-target="cast">
     <% @tmdb_cast.each do |cast| %>
       <div class="person-card">
+      <% if cast.profile_path.present? %>
         <img class="person-round" src="https://www.themoviedb.org/t/p/w276_and_h350_face/<%= cast.profile_path %>" alt="" loading="lazy">
+      <% else  %>
+        <div class="text-card">
+          <p><%= initials(cast.name) %></p>
+        </div>
+      <% end %>
         <p>
         <span><%= cast.name %></span><br>
         <%= cast.character %>
@@ -59,7 +65,13 @@
   <section class="crew" data-tabs-target="crew">
     <% @tmdb_crew.each do |crew| %>
       <div class="person-card">
-        <img class="person-round" src="https://www.themoviedb.org/t/p/w276_and_h350_face/<%= crew.profile_path %>" alt="" loading="lazy">
+        <% if crew.profile_path.present? %>
+          <img class="person-round" src="https://www.themoviedb.org/t/p/w276_and_h350_face/<%= crew.profile_path %>" alt="" loading="lazy">
+        <% else  %>
+          <div class="text-card">
+            <p><%= initials(crew.name) %></p>
+          </div>
+        <% end %>
         <p>
         <span><%= crew.name %></span><br>
         <%= crew.job %>
