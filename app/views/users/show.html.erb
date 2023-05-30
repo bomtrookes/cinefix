@@ -1,6 +1,10 @@
 <div class="container">
   <div class="user-info my-4">
-    <img id="user-avatar" src="<%= @user.avatar %>" alt="">
+    <% if @user.avatar.attached? %>
+      <%= cl_image_tag @user.avatar.key, id: "user-avatar" %>
+    <% else %>
+      <img id="user-avatar" src="<%= @default %>" alt="">
+    <% end %>
     <div class="d-flex flex-column">
       <h1><%= @user.username %></h1>
 <% if @user != current_user %>
@@ -9,6 +13,10 @@
   <% else %>
     <%= button_to "Follow", user_follows_path(@user), class: "btn btn-success", method: :post %>
   <% end %>
+
+<% else %>
+  <%= link_to "Edit profile", edit_user_registration_path, class: "btn btn-dark" %>
+
 <% end %>
     </div>
   </div>
