@@ -5,6 +5,7 @@ class User < ApplicationRecord
   has_many :ratings
   has_many :watchlists
   has_many :movies, through: :ratings
+  has_one_attached :avatar
 
   validates :username, presence: true, uniqueness: true
 
