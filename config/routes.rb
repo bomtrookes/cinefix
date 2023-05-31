@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   resources :ratings, except: [:show, :destroy]
   resources :watchlists, only: [:index, :create, :destroy]
 
+  resources :feedback, only: [:new, :create]
+
   match "*path", to: "application#handle_routing_error", via: :all
 
 
