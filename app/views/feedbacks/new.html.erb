@@ -1,0 +1,10 @@
+<div class="container pt-5">
+  <h1>Send Feedback</h1>
+  <hr>
+  <%= simple_form_for @feedback do |f| %>
+    <%= f.input :name %>
+    <%= f.input :email %>
+    <%= f.input :message, as: :text %>
+    <%= f.button :submit, "Send Feedback", class:"btn btn-dark" %>
+  <% end %>
+</div>
