@@ -38,7 +38,32 @@ Rails.application.configure do
   # config.action_dispatch.x_sendfile_header = "X-Accel-Redirect" # for NGINX
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
-  config.active_storage.service = :local
+  config.active_storage.service = :cloudinary
+
+  if Rails.root.join("tmp/caching-dev.txt").exist?
+    config.action_controller.perform_caching = true
+    config.action_controller.enable_fragment_cache_logging = true
+
+    config.cache_store = :memory_store
+    config.public_file_server.headers = {
+      "Cache-Control" => "public, max-age=#{2.days.to_i}"
+    }
+  else
+    config.action_controller.perform_caching = false
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+      address:              'smtp.gmail.com',
+      port:                 587,
+      domain:               'gmail.com',
+      user_name:            ENV['GMAIL_USERNAME'],
+      password:             ENV['GMAIL_PASSWORD'],
+      authentication:       'login',
+      enable_starttls_auto: true
+    }
+    config.cache_store = :null_store
+  end
+
+  config.action_mailer.raise_delivery_errors = true
 
   # Mount Action Cable outside main process or domain.
   # config.action_cable.mount_path = nil
@@ -86,6 +111,13 @@ Rails.application.configure do
     logger           = ActiveSupport::Logger.new(STDOUT)
     logger.formatter = config.log_formatter
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
+  end
+
+  Cloudinary.config do |config|
+    config.cloud_name = 'dzxuvey8d'
+    config.api_key = ENV["CLOUDINARY_API_KEY"]
+    config.api_secret = ENV["CLOUDINARY_SECRET"]
+    config.secure = true
   end
 
   # Do not dump schema after migrations.
