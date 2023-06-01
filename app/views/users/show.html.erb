@@ -1,4 +1,4 @@
-<div class="container">
+<div>
   <div class="user-info my-4">
     <% if @user.avatar.attached? %>
       <%= cl_image_tag @user.avatar.key, id: "user-avatar" %>
@@ -51,9 +51,7 @@
     </h4>
   </div>
 
-  <hr>
-
-  <div class="container my-3">
+  <div>
     <% if @ratings.present? %>
     <table class="table table-striped mt-3">
       <thead>
