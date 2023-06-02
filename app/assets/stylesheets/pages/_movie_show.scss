@@ -5,3 +5,20 @@
   background-size: cover;
   background-repeat: no-repeat;
 }
+.similar {
+  h6 {
+    border-top: 1px solid grey;
+    border-bottom: 1px solid grey;
+    padding: 0.4rem 0;
+    text-align: center;
+  }
+  a {
+    margin: 0 10px;
+    height: 150px;
+    min-width: 105px;
+  }
+  .movie-scroll {
+    overflow-x: scroll;
+    padding: 0.8rem 0.4rem;
+  }
+}

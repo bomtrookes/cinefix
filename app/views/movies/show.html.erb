@@ -87,4 +87,15 @@
       </div>
     <% end %>
   </section>
+
+  <section class="similar">
+    <h6>Movies Like This</h6>
+      <div class="d-flex movie-scroll">
+        <% @tmdb_similar.first(10).each do |movie| %>
+          <%= link_to movie_path(movie.id) do %>
+            <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2<%= movie.poster_path %>" alt="" class="poster-show" loading="lazy">
+          <% end %>
+        <% end %>
+      </div>
+  </section>
 </div>
