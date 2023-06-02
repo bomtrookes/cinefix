@@ -18,6 +18,9 @@
   overflow-x: scroll;
   scroll-behavior: smooth;
 }
+.genres {
+  min-height: 20vh;
+}
 
 .cast, .crew {
   display: flex;
@@ -38,6 +41,11 @@
 }
 .hidden {
   display: none;
+}
+.selected {
+  color: white;
+  transform: scale(1.2);
+  text-decoration: underline;
 }
 .text-card {
   height: 150px;
