@@ -40,9 +40,9 @@
 
 <div data-controller="tabs">
   <header class="movie-options">
-    <small id="cast-tab" data-action="click->tabs#showCast">Cast</small>
-    <small id="crew-tab" data-action="click->tabs#showCrew">Crew</small>
-    <small id="genre-tab" data-action="click->tabs#showGenres">Genres</small>
+    <small data-tabs-target="castTab" class="selected" data-action="click->tabs#showCast">Cast</small>
+    <small data-tabs-target="crewTab" data-action="click->tabs#showCrew">Crew</small>
+    <small data-tabs-target="genreTab" data-action="click->tabs#showGenres">Genres</small>
   </header>
 
   <section class="genres" data-tabs-target="genres">
