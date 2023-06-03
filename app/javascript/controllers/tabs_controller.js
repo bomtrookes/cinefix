@@ -1,41 +1,41 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["cast", "crew", "genres", "castTab", "crewTab", "genreTab"]
+  static targets = ["one", "two", "three", "oneTab", "twoTab", "threeTab"]
 
   connect() {
     console.log("Tabs Controller Connected")
-    this.genresTarget.classList.add("hidden");
-    this.crewTarget.classList.add("hidden");
+    this.threeTarget.classList.add("hidden");
+    this.twoTarget.classList.add("hidden");
   }
-  showCast() {
-    console.log("showCast")
-    this.castTarget.classList.remove("hidden");
-    this.castTabTarget.classList.add("selected");
+  showOne() {
+    console.log("showOne")
+    this.oneTarget.classList.remove("hidden");
+    this.oneTabTarget.classList.add("selected");
 
-    this.crewTarget.classList.add("hidden");
-    this.crewTabTarget.classList.remove("selected");
-    this.genresTarget.classList.add("hidden");
-    this.genreTabTarget.classList.remove("selected");
+    this.twoTarget.classList.add("hidden");
+    this.twoTabTarget.classList.remove("selected");
+    this.threeTarget.classList.add("hidden");
+    this.threeTabTarget.classList.remove("selected");
   }
-  showCrew() {
-    console.log("showCrew")
-    this.crewTarget.classList.remove("hidden");
-    this.crewTabTarget.classList.add("selected");
+  showTwo() {
+    console.log("showTwo")
+    this.twoTarget.classList.remove("hidden");
+    this.twoTabTarget.classList.add("selected");
 
-    this.castTarget.classList.add("hidden");
-    this.genresTarget.classList.add("hidden");
-    this.castTabTarget.classList.remove("selected");
-    this.genreTabTarget.classList.remove("selected");
+    this.oneTarget.classList.add("hidden");
+    this.threeTarget.classList.add("hidden");
+    this.oneTabTarget.classList.remove("selected");
+    this.threeTabTarget.classList.remove("selected");
   }
-  showGenres() {
-    console.log("showGenres")
-    this.genresTarget.classList.remove("hidden");
-    this.genreTabTarget.classList.add("selected");
+  showThree() {
+    console.log("showThree")
+    this.threeTarget.classList.remove("hidden");
+    this.threeTabTarget.classList.add("selected");
 
-    this.castTarget.classList.add("hidden");
-    this.crewTarget.classList.add("hidden");
-    this.castTabTarget.classList.remove("selected");
-    this.crewTabTarget.classList.remove("selected");
+    this.oneTarget.classList.add("hidden");
+    this.twoTarget.classList.add("hidden");
+    this.oneTabTarget.classList.remove("selected");
+    this.twoTabTarget.classList.remove("selected");
   }
 }

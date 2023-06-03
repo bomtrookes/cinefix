@@ -40,19 +40,19 @@
 
 <div data-controller="tabs">
   <header class="movie-options">
-    <small data-tabs-target="castTab" class="selected" data-action="click->tabs#showCast">Cast</small>
-    <small data-tabs-target="crewTab" data-action="click->tabs#showCrew">Crew</small>
-    <small data-tabs-target="genreTab" data-action="click->tabs#showGenres">Genres</small>
+    <small data-tabs-target="oneTab" class="selected" data-action="click->tabs#showOne">Cast</small>
+    <small data-tabs-target="twoTab" data-action="click->tabs#showTwo">Crew</small>
+    <small data-tabs-target="threeTab" data-action="click->tabs#showThree">Genres</small>
   </header>
 
-  <section class="genres" data-tabs-target="genres">
+  <section class="genres" data-tabs-target="three">
     <h4>Genres</h4>
       <% @movie.genres.each do |genre| %>
         <%= genre.name %>
       <% end %>
   </section>
 
-  <section class="cast" data-tabs-target="cast">
+  <section class="cast" data-tabs-target="one">
     <% @tmdb_cast.each do |cast| %>
       <div class="person-card">
       <% if cast.profile_path.present? %>
@@ -70,7 +70,7 @@
     <% end %>
   </section>
 
-  <section class="crew" data-tabs-target="crew">
+  <section class="crew" data-tabs-target="two">
     <% @tmdb_crew.each do |crew| %>
       <div class="person-card">
         <% if crew.profile_path.present? %>
