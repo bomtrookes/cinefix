@@ -1,5 +1,11 @@
 <div class="container mt-4">
 
+<div class="d-flex justify-content-around mb-3">
+  <p class="selected">Movies</p>
+  <p>Cast & Crew</p>
+  <p>Users</p>
+</div>
+
   <%= form_with url: movies_path, method: :get, class: "d-flex" do %>
     <%= text_field_tag :query,
       params[:query],
@@ -26,6 +32,28 @@
           </span>
         </div>
       </div>
+    <% end %>
+  </div>
+
+  <div class="my-3">
+    <h2 class="mb-3">People</h2>
+    <% @people.first(10).each do |person| %>
+      <% if person.name.present? %>
+        <p><%= person.name %></p>
+      <% else %>
+        <p class="no-poster">NO PEOPLE</p>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="my-3">
+    <h2 class="mb-3">Users</h2>
+    <% @users.first(10).each do |user| %>
+      <% if user.name.present? %>
+        <p><%= user.name %></p>
+      <% else %>
+        <p class="no-poster">NO USERS</p>
+      <% end %>
     <% end %>
   </div>
 
