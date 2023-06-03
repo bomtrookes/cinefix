@@ -1,7 +1,7 @@
 .person-round {
   border-radius: 8px;
 }
-.movie-options {
+.tab-options {
   display: flex;
   justify-content: space-around;
   margin: 1rem 0;
@@ -38,6 +38,9 @@
     max-width: 100px;
     object-fit: cover;
   }
+}
+.movies, .cast-crew, .users {
+  cursor: pointer;
 }
 .hidden {
   display: none;

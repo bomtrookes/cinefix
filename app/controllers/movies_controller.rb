@@ -11,9 +11,14 @@ class MoviesController < ApplicationController
     if params[:query].present?
      query = params[:query].presence || " "
      @movies = Tmdb::Search.movie("#{query}")["results"]
-   else
-     @movies = Tmdb::Movie.popular["results"]
-   end
+     @people = Tmdb::Search.person("#{query}")["results"]
+     @users = User.search_users("#{query}")
+    else
+      @movies = Tmdb::Movie.popular["results"]
+      @people = []
+      @users = []
+    end
+    @default = "https://res.cloudinary.com/dzxuvey8d/image/upload/v1660399373/default-user_cdb0ks.jpg"
  end
 
  def show

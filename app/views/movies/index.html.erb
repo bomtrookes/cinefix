@@ -1,4 +1,4 @@
-<div class="container mt-4">
+<div class="container mt-4" data-controller="tabs">
 
   <%= form_with url: movies_path, method: :get, class: "d-flex" do %>
     <%= text_field_tag :query,
@@ -8,7 +8,13 @@
     <%= submit_tag "Search", class: "btn btn-dark" %>
   <% end %>
 
-  <div class="my-3">
+  <div class="tab-options mb-3">
+    <small class="selected" data-tabs-target="oneTab" data-action="click->tabs#showOne">Movies</small>
+    <small data-tabs-target="twoTab" data-action="click->tabs#showTwo">Cast & Crew</small>
+    <small data-tabs-target="threeTab" data-action="click->tabs#showThree">Users</small>
+  </div>
+
+  <div class="movies my-3" data-tabs-target="one">
     <h2 class="mb-3">Recent Releases</h2>
     <% @movies.first(10).each do |movie| %>
       <div class="list__card">
@@ -26,6 +32,38 @@
           </span>
         </div>
       </div>
+    <% end %>
+  </div>
+
+  <div class="cast-crew my-3 hidden" data-tabs-target="two">
+    <h2 class="mb-3">People</h2>
+    <% if @people.any? %>
+      <% @people.first(10).each do |person| %>
+        <div class="person-card">
+          <img class="user-avatar" src="https://www.themoviedb.org/t/p/w276_and_h350_face/<%= person.profile_path %>" alt="" loading="lazy">
+          <p><%= person.name %></p>
+        </div>
+      <% end %>
+    <% else %>
+      <p>No Results</p>
+    <% end %>
+  </div>
+
+  <div class="users my-3 hidden" data-tabs-target="three">
+    <h2 class="mb-3">Users</h2>
+    <% if @users.present? %>
+      <% @users.first(10).each do |user| %>
+        <div class="user-card">
+          <% if user.avatar.attached?%>
+            <%= cl_image_tag user.avatar.key, class: "user-avatar" %>
+          <% else %>
+            <img class="user-avatar" src="<%= @default %>" alt="">
+          <% end %>
+          <p><%= link_to user.username, user_path(user) %></p>
+        </div>
+      <% end %>
+    <% else %>
+      <p>No Results</p>
     <% end %>
   </div>
 
