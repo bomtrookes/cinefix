@@ -12,12 +12,12 @@ class MoviesController < ApplicationController
      query = params[:query].presence || " "
      @movies = Tmdb::Search.movie("#{query}")["results"]
      @people = Tmdb::Search.person("#{query}")["results"]
-     @users = []
+     @users = User.search_users("#{query}")
     else
       @movies = Tmdb::Movie.popular["results"]
       @people = []
       @users = []
-   end
+    end
  end
 
  def show

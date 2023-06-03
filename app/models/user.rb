@@ -14,6 +14,13 @@ class User < ApplicationRecord
   has_many :given_follows, foreign_key: :follower_id, class_name: "Follow"
   has_many :followings, through: :given_follows, source: :followed_user
 
+  include PgSearch::Model
+    pg_search_scope :search_users,
+                    against: [ :username ],
+                    using: {
+                      tsearch: { prefix: true }
+                    }
+
   # def movie_ratings
   #   MovieRating.joins(rating: :movie).where(ratings: { user_id: self.id })
   # end
