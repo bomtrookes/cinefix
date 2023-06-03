@@ -38,7 +38,7 @@
   <div class="my-3">
     <h2 class="mb-3">People</h2>
     <% @people.first(10).each do |person| %>
-      <% if person.name.present? %>
+      <% if @people.any? %>
         <p><%= person.name %></p>
       <% else %>
         <p class="no-poster">NO PEOPLE</p>
@@ -49,7 +49,7 @@
   <div class="my-3">
     <h2 class="mb-3">Users</h2>
     <% @users.first(10).each do |user| %>
-      <% if user.name.present? %>
+      <% if @users.any? %>
         <p><%= user.name %></p>
       <% else %>
         <p class="no-poster">NO USERS</p>
