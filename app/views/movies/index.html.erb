@@ -37,23 +37,30 @@
 
   <div class="cast-crew my-3 hidden" data-tabs-target="two">
     <h2 class="mb-3">People</h2>
-    <% @people.first(10).each do |person| %>
-      <% if @people.any? %>
+    <% if @people.any? %>
+      <% @people.first(10).each do |person| %>
         <p><%= person.name %></p>
-      <% else %>
-        <p class="no-poster">NO PEOPLE</p>
       <% end %>
+    <% else %>
+      <p>No Results</p>
     <% end %>
   </div>
 
   <div class="users my-3 hidden" data-tabs-target="three">
     <h2 class="mb-3">Users</h2>
-    <% @users.first(10).each do |user| %>
-      <% if @users.any? %>
-        <p><%= link_to user.username, user_path(user) %></p>
-      <% else %>
-        <p class="no-poster">NO USERS</p>
+    <% if @users.present? %>
+      <% @users.first(10).each do |user| %>
+        <div class="user-card">
+          <% if user.avatar.attached?%>
+            <%= cl_image_tag user.avatar.key, class: "user-avatar" %>
+          <% else %>
+            <img class="user-avatar" src="<%= @default %>" alt="">
+          <% end %>
+          <p><%= link_to user.username, user_path(user) %></p>
+        </div>
       <% end %>
+    <% else %>
+      <p>No Results</p>
     <% end %>
   </div>
 

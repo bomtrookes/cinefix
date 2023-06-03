@@ -18,6 +18,7 @@ class MoviesController < ApplicationController
       @people = []
       @users = []
     end
+    @default = "https://res.cloudinary.com/dzxuvey8d/image/upload/v1660399373/default-user_cdb0ks.jpg"
  end
 
  def show
