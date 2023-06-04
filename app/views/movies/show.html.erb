@@ -1,18 +1,14 @@
 <% if @movie.backdrop_path.present? %>
   <div class="movie-cover" style="background: linear-gradient(180deg,rgba(20,24,28,0) 0,rgba(20,24,28,0) 50%,rgba(20,24,28,.75) 75%,#14181c),url(https://www.themoviedb.org/t/p/w1920_and_h1080_bestv2<%= @movie.backdrop_path %>) center/cover no-repeat">
-
 <% else %>
-
-<div class="movie-cover" style="background: linear-gradient(180deg,rgba(20,24,28,0) 0,rgba(20,24,28,0) 50%,rgba(20,24,28,.75) 75%,#14181c),url(https://images.unsplash.com/photo-1574267432553-4b4628081c31?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2831&q=80) center/cover no-repeat">
-
+  <div class="movie-cover" style="background: linear-gradient(180deg,rgba(20,24,28,0) 0,rgba(20,24,28,0) 50%,rgba(20,24,28,.75) 75%,#14181c),url(https://images.unsplash.com/photo-1574267432553-4b4628081c31?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2831&q=80) center/cover no-repeat">
 <% end %>
-
-    <% if user_signed_in? && current_user.ratings.exclude?(@movie.id) %>
-      <div id="rating" data-controller="modal">
-        <i class="bi bi-three-dots btn btn-dark" data-action="click->modal#open"></i>
-        <%= render "modal", api_id: @movie.id %>
-      </div>
-    <% end %>
+  <% if user_signed_in? && current_user.ratings.exclude?(@movie.id) %>
+    <div id="rating" data-controller="modal">
+      <i class="bi bi-three-dots btn btn-dark" data-action="click->modal#open"></i>
+      <%= render "modal", api_id: @movie.id %>
+    </div>
+  <% end %>
 </div>
 
 <section class="film__header d-flex justify-content-between p-2">
@@ -40,7 +36,6 @@
         <small>Your Score: <%= @rating.total_score %></small>
       <% end %>
     </div>
-
   </div>
   <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2<%= @movie.poster_path %>" alt="" class="poster-show">
 </section>
@@ -52,7 +47,6 @@
   <p><%= @movie.overview %></p>
 </section>
 
-
 <div data-controller="tabs">
   <header class="tab-options">
     <small data-tabs-target="oneTab" class="selected" data-action="click->tabs#showOne">Cast</small>
@@ -62,24 +56,24 @@
 
   <section class="genres" data-tabs-target="three">
     <h4>Genres</h4>
-      <% @movie.genres.each do |genre| %>
-        <%= genre.name %>
-      <% end %>
+    <% @movie.genres.each do |genre| %>
+      <%= genre.name %>
+    <% end %>
   </section>
 
   <section class="cast" data-tabs-target="one">
     <% @tmdb_cast.each do |cast| %>
       <div class="person-card">
-      <% if cast.profile_path.present? %>
-        <img class="person-round" src="https://www.themoviedb.org/t/p/w276_and_h350_face/<%= cast.profile_path %>" alt="" loading="lazy">
-      <% else  %>
-        <div class="text-card">
-          <p><%= initials(cast.name) %></p>
-        </div>
-      <% end %>
+        <% if cast.profile_path.present? %>
+          <img class="person-round" src="https://www.themoviedb.org/t/p/w276_and_h350_face/<%= cast.profile_path %>" alt="" loading="lazy">
+        <% else %>
+          <div class="text-card">
+            <p><%= initials(cast.name) %></p>
+          </div>
+        <% end %>
         <p>
-        <span><%= cast.name %></span><br>
-        <%= cast.character %>
+          <span><%= cast.name %></span><br>
+          <%= cast.character %>
         </p>
       </div>
     <% end %>
@@ -90,14 +84,14 @@
       <div class="person-card">
         <% if crew.profile_path.present? %>
           <img class="person-round" src="https://www.themoviedb.org/t/p/w276_and_h350_face/<%= crew.profile_path %>" alt="" loading="lazy">
-        <% else  %>
+        <% else %>
           <div class="text-card">
             <p><%= initials(crew.name) %></p>
           </div>
         <% end %>
         <p>
-        <span><%= crew.name %></span><br>
-        <%= crew.job %>
+          <span><%= crew.name %></span><br>
+          <%= crew.job %>
         </p>
       </div>
     <% end %>
@@ -105,17 +99,12 @@
 
   <section class="similar">
     <h6>Movies Like This</h6>
-      <div class="d-flex movie-scroll">
-        <% @tmdb_similar.first(10).each do |movie| %>
-          <%= link_to movie_path(movie.id) do %>
-            <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2<%= movie.poster_path %>" alt="" class="poster-show" loading="lazy">
-          <% end %>
+    <div class="d-flex movie-scroll">
+      <% @tmdb_similar.first(10).each do |movie| %>
+        <%= link_to movie_path(movie.id) do %>
+          <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2<%= movie.poster_path %>" alt="" class="poster-show" loading="lazy">
         <% end %>
-      </div>
+      <% end %>
+    </div>
   </section>
-</div>
-
-<div>
-
-
 </div>
