@@ -14,7 +14,7 @@ class MoviesController < ApplicationController
      @people = Tmdb::Search.person("#{query}")["results"]
      @users = User.search_users("#{query}")
     else
-      @movies = Tmdb::Movie.popular["results"]
+      @movies = Tmdb::Movie.popular["results"].sort_by { |movie| movie.popularity }.reverse
       @people = []
       @users = []
     end
