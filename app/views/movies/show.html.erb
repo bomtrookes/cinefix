@@ -18,14 +18,29 @@
 <section class="film__header d-flex justify-content-between p-2">
   <div>
     <h1><%= @movie.title %></h1>
-    <small><%= format_date(@movie.release_date) %> | DIRECTED BY</small>
-      <div class="mb-2">
-        <% @tmdb_crew.each do |crew| %>
-          <% if crew.job == "Director" %>
-            <%= crew.name %><br>
-          <% end %>
+    <small>DIRECTED BY</small>
+    <div class="mb-2">
+      <% @tmdb_crew.each do |crew| %>
+        <% if crew.job == "Director" %>
+          <%= crew.name %><br>
         <% end %>
-      </div>
+      <% end %>
+    </div>
+    <div class="d-flex">
+      <small><%= format_date(@movie.release_date) %></small>
+      <small><%= @movie.runtime %> mins</small>
+      <small><%= @movie.original_language.upcase %></small>
+    </div>
+
+    <div class="py-3">
+      <% if @movie.vote_average.present? %>
+        <small>Audience: <%= @movie.vote_average.round(1) %></small>
+      <% end %>
+      <% if @rating.present? %>
+        <small>Your Score: <%= @rating.total_score %></small>
+      <% end %>
+    </div>
+
   </div>
   <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2<%= @movie.poster_path %>" alt="" class="poster-show">
 </section>
@@ -98,4 +113,9 @@
         <% end %>
       </div>
   </section>
+</div>
+
+<div>
+
+
 </div>

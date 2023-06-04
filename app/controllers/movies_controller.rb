@@ -23,14 +23,16 @@ class MoviesController < ApplicationController
 
  def show
   @user = current_user
+  @rating = @user.ratings.where(api_id: params[:id]).sort_by { |r| -r.total_score }.first
   @watchlist = Watchlist.new
   @movie = Tmdb::Movie.detail(params[:id])
 
-   @tmdb_cast = Tmdb::Movie.cast(params[:id])
-   @tmdb_crew = Tmdb::Movie.crew(params[:id])
+  @tmdb_cast = Tmdb::Movie.cast(params[:id])
+  @tmdb_crew = Tmdb::Movie.crew(params[:id])
 
-   @tmdb_similar = Tmdb::Movie.similar(params[:id])["results"]
-   @tmdb_recommend = Tmdb::Movie.recommendations(params[:id])["results"]
+  @tmdb_similar = Tmdb::Movie.similar(params[:id])["results"]
+  @tmdb_recommend = Tmdb::Movie.recommendations(params[:id])["results"]
+  # @rating = Rating.where(user_id: current_user).sort_by { |r| -r.total_score }
  end
 
   private
