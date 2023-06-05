@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_31_120654) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_05_205027) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -101,6 +101,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_31_120654) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "watched_films", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.integer "api_id"
+    t.boolean "watched"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_watched_films_on_user_id"
+  end
+
   create_table "watchlists", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -112,5 +121,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_31_120654) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "ratings", "users"
+  add_foreign_key "watched_films", "users"
   add_foreign_key "watchlists", "users"
 end

@@ -51,9 +51,31 @@
     </h4>
   </div>
 
-  <div>
+  <% if @ratings.present? %>
+
+  <hr>
+
+  <div class="container">
+    <h3>Recent Ratings</h3>
+    <div class="movie-grid">
+      <% @recent.each do |movie| %>
+        <%# <p><%= link_to tmdb_movie(movie.api_id).title, movie_path(movie.api_id) %>
+        <%= link_to movie_path(movie.api_id) do %>
+              <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2<%= tmdb_movie(movie.api_id).poster_path %>">
+              <span><%= movie.total_score %></span>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+
+  <% end %>
+
+  <hr>
+
+  <div class="table-wrapper">
+    <h3>Ratings Table</h3>
     <% if @ratings.present? %>
-    <table class="table table-striped mt-3">
+    <table class="table table-striped">
       <thead>
           <th>Rank</th>
           <th>Movie</th>

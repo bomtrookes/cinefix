@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     resources :ratings, only: [:destroy]
     resources :follows, only: [:create, :destroy]
     resources :watchlists, only: [:index]
+    resources :watched_films, only: [:index]
     get 'following', action: :following, controller: 'follows'
     get 'followers', action: :followers, controller: 'follows'
   end
@@ -15,6 +16,7 @@ Rails.application.routes.draw do
   resources :movies, only: [:index, :show]
   resources :ratings, except: [:show, :destroy]
   resources :watchlists, only: [:index, :create, :destroy]
+  resources :watched_films, only: [:index, :create, :destroy]
 
   resources :feedbacks, only: [:new, :create]
 

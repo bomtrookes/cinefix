@@ -20,6 +20,8 @@ class UsersController < ApplicationController
       @user = current_user
     end
       @ratings = Rating.where(user_id: @user).sort_by { |r| -r.total_score }
+      @recent = @ratings.sort_by { |r| -r.created_at.to_i }.first(4)
+
       @default = "https://res.cloudinary.com/dzxuvey8d/image/upload/v1660399373/default-user_cdb0ks.jpg"
   end
 

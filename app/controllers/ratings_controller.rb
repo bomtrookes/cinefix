@@ -4,6 +4,7 @@ class RatingsController < ApplicationController
 
   def index
     @ratings = Rating.where(user_id: current_user).sort_by { |r| -r.total_score }
+    @recent = @ratings.sort_by { |r| -r.created_at.to_i }.reverse
   end
 
 

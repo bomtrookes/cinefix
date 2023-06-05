@@ -28,3 +28,26 @@
   width: 100%;
 
 }
+.movie-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 1rem;
+  a {
+    position: relative;
+  }
+  span {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: white;
+    padding: 0.2rem 0.5rem;
+    width: 2rem;
+    aspect-ratio: 1/1;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    color: black;
+    font-weight: bold;
+    padding: 0;
+  }
+}

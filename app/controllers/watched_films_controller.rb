@@ -1,0 +1,2 @@
+class WatchedFilmsController < ApplicationController
+end
