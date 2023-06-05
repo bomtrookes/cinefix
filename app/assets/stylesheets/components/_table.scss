@@ -1,7 +1,12 @@
+.table-wrapper {
+  margin: 1rem;
+  height: 55vh;
+  overflow-y: scroll;
+}
 table {
   background: white;
-  border-radius: 8px;
   margin-bottom: 0 !important;
+  border-radius: 4px;
   tr:last-child {
     border-bottom: unset;
   }
