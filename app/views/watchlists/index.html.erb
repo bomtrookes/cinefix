@@ -1,5 +1,9 @@
 <div class="container mt-3">
-  <h1>Watchlist</h1>
+  <% if @user == current_user %>
+    <h1>Your Watchlist</h1>
+  <% else %>
+    <h1>Watchlist | <%= @user.username %></h1>
+  <% end %>
     <% if @watchlists.present? %>
       <div class="watchlist mb-3">
         <% @watchlists.each do |movie| %>
@@ -9,6 +13,6 @@
         <% end %>
       </div>
     <% else %>
-      <p class="py-3">You have not saved any movies to your watchlist yet.</p>
+      <p class="py-3">No movies here yet.</p>
     <% end %>
 </div>
