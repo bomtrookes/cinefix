@@ -28,7 +28,12 @@ class Rating < ApplicationRecord
       self.originality +
       self.characters +
       self.enjoyment
-    return sum.to_f / 10
+
+    if sum.to_f / 10 == 10.0
+      return sum.to_i / 10
+    else
+      return (sum.to_f / 10).round(1)
+    end
   end
 
 end
