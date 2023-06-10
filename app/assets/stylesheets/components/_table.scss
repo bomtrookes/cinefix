@@ -3,6 +3,12 @@
   height: 55vh;
   overflow-y: scroll;
 }
+thead {
+  position: sticky;
+  top: 0;
+  background: white;
+  box-shadow: 1px 0 0 black;
+}
 table {
   background: white;
   margin-bottom: 0 !important;
