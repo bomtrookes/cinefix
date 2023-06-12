@@ -113,12 +113,12 @@ Rails.application.configure do
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
   end
 
-  Cloudinary.config do |config|
-    config.cloud_name = 'dzxuvey8d'
-    config.api_key = ENV["CLOUDINARY_API_KEY"]
-    config.api_secret = ENV["CLOUDINARY_SECRET"]
-    config.secure = true
-  end
+  # Cloudinary.config do |config|
+  #   config.cloud_name = 'dzxuvey8d'
+  #   config.api_key = ENV["CLOUDINARY_API_KEY"]
+  #   config.api_secret = ENV["CLOUDINARY_SECRET"]
+  #   config.secure = true
+  # end
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
