@@ -26,3 +26,12 @@ p {
 .alert {
   display: none;
 }
+// format link
+.x-a {
+  text-decoration: none;
+  color: black;
+  &:hover {
+    text-decoration: underline;
+    color: grey
+  }
+}

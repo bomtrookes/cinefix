@@ -4,7 +4,6 @@ class ApplicationController < ActionController::Base
 
   Tmdb::Api.key(ENV["API_KEY"])
 
-
   def handle_routing_error
     render plain: "404 Not Found", status: :not_found
   end
