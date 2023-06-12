@@ -37,14 +37,14 @@
     </h4>
 
     <h4>
-      <%= link_to user_following_path(current_user) do %>
+      <%= link_to user_following_path(@user) do %>
         <small>FOLLOWING</small>
         <span><%= @user.followings.size %></span>
       <% end %>
     </h4>
 
     <h4>
-      <%= link_to user_followers_path(current_user) do %>
+      <%= link_to user_followers_path(@user) do %>
         <small>FOLLOWERS</small>
         <span><%= @user.followers.size %></span>
       <% end %>

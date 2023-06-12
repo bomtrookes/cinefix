@@ -1,10 +1,28 @@
 <div class="container my-3">
-  <h1>Followers</h1>
+
+  <% if @user == current_user %>
+    <h1>Followers</h1>
+    <h3><%= @user.username %></h3>
+  <% else %>
+    <h1>My Followers</h1>
+  <% end %>
+
   <% if @followers.empty? %>
     <p class="py-3">You have no followers.</p>
   <% else %>
     <% @followers.each do |follow| %>
-      <%= link_to follow.username, user_path(follow)%>
+      <%= link_to user_path(follow), class: "x-a" do %>
+        <div class="follow-card">
+
+        <% if follow.avatar.attached? %>
+          <%= cl_image_tag follow.avatar.key %>
+        <% else %>
+          <img src="<%= @default %>" alt="">
+        <% end %>
+
+          <p><%= follow.username %></p>
+        </div>
+      <% end %>
     <% end %>
   <% end %>
 </div>
