@@ -12,6 +12,10 @@ class MoviesController < ApplicationController
       @users = []
     end
     @default = "https://res.cloudinary.com/dzxuvey8d/image/upload/v1660399373/default-user_cdb0ks.jpg"
+
+    # render json: { movies: render_to_string(partial: 'movies/movie_list', locals: { movies: @movies }),
+    #                castCrew: render_to_string(partial: 'movies/cast_crew_section', locals: { people: @people }),
+    #                users: render_to_string(partial: 'movies/users_section', locals: { users: @users }) }
  end
 
  def show
