@@ -16,8 +16,5 @@ application.register("modal", ModalController)
 import NavigationController from "./navigation_controller"
 application.register("navigation", NavigationController)
 
-import SearchController from "./search_controller"
-application.register("search", SearchController)
-
 import TabsController from "./tabs_controller"
 application.register("tabs", TabsController)
