@@ -15,56 +15,15 @@
   </div>
 
   <div class="movies my-3" data-tabs-target="one">
-    <h2 class="mb-3">Recent Releases</h2>
-    <% @movies.first(10).each do |movie| %>
-      <div class="list__card">
-        <div class="img__wrapper">
-          <% if movie.poster_path.present? %>
-            <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2<%= movie.poster_path %>" alt="<%= movie.title %>">
-          <% else %>
-            <p class="no-poster">NO POSTER</p>
-          <% end %>
-        </div>
-        <div class="film__detail">
-          <span class="title__wrapper">
-            <%= link_to movie.title, movie_path(movie.id), class: "card__link" %>
-            <small><%= format_date(movie.release_date) %></small>
-          </span>
-        </div>
-      </div>
-    <% end %>
+    <%= render "movie_tab" %>
   </div>
 
   <div class="cast-crew my-3 hidden" data-tabs-target="two">
-    <h2 class="mb-3">People</h2>
-    <% if @people.any? %>
-      <% @people.first(10).each do |person| %>
-        <div class="people-card">
-          <img class="user-avatar" src="https://www.themoviedb.org/t/p/w276_and_h350_face/<%= person.profile_path %>" alt="" loading="lazy">
-          <p><%= person.name %></p>
-        </div>
-      <% end %>
-    <% else %>
-      <p>No Results</p>
-    <% end %>
+    <%= render "people_tab" %>
   </div>
 
   <div class="users my-3 hidden" data-tabs-target="three">
-    <h2 class="mb-3">Users</h2>
-    <% if @users.present? %>
-      <% @users.first(10).each do |user| %>
-        <div class="user-card">
-          <% if user.avatar.attached?%>
-            <%= cl_image_tag user.avatar.key, class: "user-avatar" %>
-          <% else %>
-            <img class="user-avatar" src="<%= @default %>" alt="">
-          <% end %>
-          <p><%= link_to user.username, user_path(user) %></p>
-        </div>
-      <% end %>
-    <% else %>
-      <p>No Results</p>
-    <% end %>
+    <%= render "user_tab" %>
   </div>
 
 </div>

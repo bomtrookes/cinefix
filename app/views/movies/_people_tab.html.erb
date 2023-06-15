@@ -1,0 +1,11 @@
+<h2 class="mb-3">People</h2>
+<% if @people.any? %>
+  <% @people.first(10).each do |person| %>
+    <div class="people-card">
+      <img class="user-avatar" src="https://www.themoviedb.org/t/p/w276_and_h350_face/<%= person.profile_path %>" alt="" loading="lazy">
+      <p><%= person.name %></p>
+    </div>
+  <% end %>
+<% else %>
+  <p>No Results</p>
+<% end %>
