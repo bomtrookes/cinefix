@@ -1,0 +1,18 @@
+    <h2 class="mb-3">Recent Releases</h2>
+    <% @movies.first(10).each do |movie| %>
+      <div class="list__card">
+        <div class="img__wrapper">
+          <% if movie.poster_path.present? %>
+            <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2<%= movie.poster_path %>" alt="<%= movie.title %>">
+          <% else %>
+            <p class="no-poster">NO POSTER</p>
+          <% end %>
+        </div>
+        <div class="film__detail">
+          <span class="title__wrapper">
+            <%= link_to movie.title, movie_path(movie.id), class: "card__link" %>
+            <small><%= format_date(movie.release_date) %></small>
+          </span>
+        </div>
+      </div>
+    <% end %>
