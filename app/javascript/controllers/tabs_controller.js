@@ -41,10 +41,10 @@ export default class extends Controller {
   update(e) {
     e.preventDefault()
     fetch(`/movies?query=&commit=Search`, { headers: { "X-Requested-With": "XMLHttpRequest" } })
-      .then(response => response.json())
-      .then(data => {
+      //.then(response)
+      .then(response => {
         //this.resultsTarget.innerHTML = this.renderResults(data);
-        console.log(data)
+        console.log(response)
     })
     .catch(error => {
       console.error("Error:", error);

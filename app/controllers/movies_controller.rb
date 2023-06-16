@@ -1,6 +1,7 @@
 class MoviesController < ApplicationController
 
   def index
+
     if params[:query].present?
      query = params[:query].presence || " "
      @movies = Tmdb::Search.movie("#{query}")["results"]
