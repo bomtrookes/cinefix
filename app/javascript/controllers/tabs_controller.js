@@ -38,4 +38,16 @@ export default class extends Controller {
     this.oneTabTarget.classList.remove("selected")
     this.twoTabTarget.classList.remove("selected")
   }
+  update(e) {
+    e.preventDefault()
+    fetch(`/movies?query=&commit=Search`, { headers: { "X-Requested-With": "XMLHttpRequest" } })
+      //.then(response)
+      .then(response => {
+        //this.resultsTarget.innerHTML = this.renderResults(data);
+        console.log(response)
+    })
+    .catch(error => {
+      console.error("Error:", error);
+    });
+  }
 }
