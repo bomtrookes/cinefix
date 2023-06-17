@@ -5,7 +5,8 @@
       params[:query],
       class: "form-control",
       placeholder: "Search..." %>
-    <%= submit_tag "Search", class: "btn btn-dark", data: { action: "click->tabs#update"} %>
+    <%= submit_tag "Search", class: "btn btn-dark" %>
+    <%#= submit_tag "Search", class: "btn btn-dark", data: { action: "click->tabs#update"} %>
   <% end %>
 
   <div class="tab-options mb-3">
@@ -14,16 +15,6 @@
     <small data-tabs-target="threeTab" data-action="click->tabs#showThree">Users</small>
   </div>
 
-  <div class="movies my-3" data-tabs-target="one">
-    <%= render "movie_tab" %>
-  </div>
-
-  <div class="cast-crew my-3 hidden" data-tabs-target="two">
-    <%= render "people_tab" %>
-  </div>
-
-  <div class="users my-3 hidden" data-tabs-target="three">
-    <%= render "user_tab" %>
-  </div>
+  <%= render "results" %>
 
 </div>
