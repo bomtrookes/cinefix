@@ -1,5 +1,5 @@
 class RatingsController < ApplicationController
-  before_action :set_user, only: :create
+  before_action :set_user, only: [:create, :show]
   before_action :authenticate_user!, only: [:new, :create, :index]
 
   def new
@@ -15,6 +15,11 @@ class RatingsController < ApplicationController
     else
       render :new
     end
+  end
+
+  def show
+    @movie = Tmdb::Movie.detail(params[:id])
+    @rating = Rating.find(@movie.id)
   end
 
   def edit

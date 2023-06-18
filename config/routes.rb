@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   devise_for :users
 
   resources :users, only: [:index, :show] do
-    resources :ratings, only: [:destroy]
+    resources :ratings, only: [:show, :destroy]
     resources :follows, only: [:create, :destroy]
     resources :watchlists, only: [:index]
     resources :watched_films, only: [:index]
@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   end
 
   resources :movies, only: [:index, :show]
-  resources :ratings, except: [:show, :destroy]
+  resources :ratings, except: [:destroy]
   resources :watchlists, only: [:index, :create, :destroy]
   resources :watched_films, only: [:index, :create, :destroy]
 

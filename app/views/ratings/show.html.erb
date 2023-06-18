@@ -1,0 +1,15 @@
+<div class="container">
+  <h1><%= @user.username %>'s <br>Rating for <%= tmdb_movie(@rating.api_id).title %></h1>
+    <p>Acting: <%= @rating.acting %></p>
+    <p>Dialog: <%= @rating.dialog %></p>
+    <p>Cinematography: <%= @rating.cinematography %></p>
+    <p>Soundtrack: <%= @rating.soundtrack %></p>
+    <p>Style: <%= @rating.style %></p>
+    <p>Pacing: <%= @rating.pacing %></p>
+    <p>Originality: <%= @rating.originality %></p>
+    <p>Characters: <%= @rating.characters %></p>
+    <p>Enjoyment: <%= @rating.enjoyment %></p>
+
+    <h3>Overall Score: <%= @rating.total_score %></h3>
+
+</div>
