@@ -95,7 +95,7 @@
               <td><%= index + 1 %></td>
               <td><%= link_to tmdb_movie(rating.api_id).title, movie_path(rating.api_id) %></td>
               <td><%= format_date(tmdb_movie(rating.api_id).release_date) %></td>
-              <td><%= rating.total_score %></td>
+              <td><%= link_to rating.total_score, user_rating_path(@user) %></td>
             </tr>
           <% end %>
       <% else %>
