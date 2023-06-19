@@ -1,15 +1,48 @@
 <div class="container">
-  <h1><%= @user.username %>'s <br>Rating for <%= tmdb_movie(@rating.api_id).title %></h1>
-    <p>Acting: <%= @rating.acting %></p>
-    <p>Dialog: <%= @rating.dialog %></p>
-    <p>Cinematography: <%= @rating.cinematography %></p>
-    <p>Soundtrack: <%= @rating.soundtrack %></p>
-    <p>Style: <%= @rating.style %></p>
-    <p>Pacing: <%= @rating.pacing %></p>
-    <p>Originality: <%= @rating.originality %></p>
-    <p>Characters: <%= @rating.characters %></p>
-    <p>Enjoyment: <%= @rating.enjoyment %></p>
+  <%= render "users/user" %>
+  <hr>
+  <h1><%= tmdb_movie(@rating.api_id).title %></h1>
+  <table class="table table-striped">
+    <tbody>
+      <tr>
+        <td>Acting:</td>
+        <td><%= @rating.acting %></td>
+      </tr>
+      <tr>
+        <td>Dialog:</td>
+        <td><%= @rating.dialog %></td>
+      </tr>
+      <tr>
+        <td>Cinematography:</td>
+        <td><%= @rating.cinematography %></td>
+      </tr>
+      <tr>
+        <td>Soundtrack:</td>
+        <td><%= @rating.soundtrack %></td>
+      </tr>
+      <tr>
+        <td>Style:</td>
+        <td><%= @rating.style %></td>
+      </tr>
+      <tr>
+        <td>Pacing:</td>
+        <td><%= @rating.pacing %></td>
+      </tr>
+      <tr>
+        <td>Originality:</td>
+        <td><%= @rating.originality %></td>
+      </tr>
+      <tr>
+        <td>Characters:</td>
+        <td><%= @rating.characters %></td>
+      </tr>
+      <tr>
+        <td>Enjoyment:</td>
+        <td><%= @rating.enjoyment %></td>
+      </tr>
+    </tbody>
+  </table>
 
-    <h3>Overall Score: <%= @rating.total_score %></h3>
+    <h3 class="my-3">Overall Score: <%= @rating.total_score %></h3>
 
 </div>
