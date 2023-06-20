@@ -4,6 +4,8 @@ Rails.application.routes.draw do
 
   devise_for :users
 
+  get '/feed', to: 'activities#feed'
+
   resources :users, only: [:index, :show] do
     resources :ratings, only: [:show, :destroy]
     resources :follows, only: [:create, :destroy]
