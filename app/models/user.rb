@@ -21,7 +21,8 @@ class User < ApplicationRecord
                       tsearch: { prefix: true }
                     }
 
-  # def movie_ratings
-  #   MovieRating.joins(rating: :movie).where(ratings: { user_id: self.id })
-  # end
+  def feed_activities
+    Activity.where(user: followings + [self]).order(created_at: :desc)
+  end
+
 end
