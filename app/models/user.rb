@@ -14,15 +14,19 @@ class User < ApplicationRecord
   has_many :given_follows, foreign_key: :follower_id, class_name: "Follow"
   has_many :followings, through: :given_follows, source: :followed_user
 
+  include RatingsHelper
+
+  def feed_activities
+    followings = self.followings.includes(:ratings)
+    ratings = Rating.where(user_id: followings.map(&:id) + [self.id]).order(created_at: :desc).includes(:user)
+    ratings.map { |rating| { user: rating.user, rating: rating } }
+  end
+
+
   include PgSearch::Model
     pg_search_scope :search_users,
                     against: [ :username ],
                     using: {
                       tsearch: { prefix: true }
                     }
-
-  def feed_activities
-    Activity.where(user: followings + [self]).order(created_at: :desc)
-  end
-
 end
