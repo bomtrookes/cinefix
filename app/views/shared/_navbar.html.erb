@@ -1,5 +1,5 @@
 <header class="navbar d-flex justify-content-between p-3" data-controller="navigation">
-  <%= link_to root_path, class: "btn btn-dark" do %>
+  <%= link_to feed_path, class: "btn btn-dark" do %>
     <p>R<small>EEL</small>S<small>CORE</small></p>
   <% end %>
   <div class="navbar-menu" data-action="click->navigation#toggleMenu">
@@ -12,6 +12,7 @@
     </span>
     <ul>
       <% if user_signed_in? %>
+        <li><%= link_to "Feed", feed_path %></li>
         <li><%= link_to "Search", movies_path %></li>
         <li><%= link_to "Profile", user_path(current_user) %></li>
         <li><%= link_to "Watchlist", user_watchlists_path(current_user) %></li>
