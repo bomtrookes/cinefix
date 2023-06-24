@@ -5,6 +5,12 @@
   display: flex;
   border-bottom: 1px solid lightgray;
 }
+#feed-avatar {
+  width: 75px;
+  height: 75px;
+  margin-right: 12px;
+  border-radius: 50%;
+}
 small {
   color: gray;
 }

@@ -1,5 +1,5 @@
 class RatingsController < ApplicationController
-  before_action :set_user, only: [:create, :show]
+  before_action :set_user, only: :show
   before_action :authenticate_user!, only: [:new, :create, :index]
 
   def new
@@ -53,6 +53,14 @@ class RatingsController < ApplicationController
         :cinematography, :soundtrack,
         :style, :pacing, :originality,
         :characters, :enjoyment, :api_id, :user_id)
+  end
+
+  def set_user
+    if params[:user_id] == current_user.id
+      @user = current_user
+    else
+      @user = User.find(params[:user_id])
+    end
   end
 
 end
