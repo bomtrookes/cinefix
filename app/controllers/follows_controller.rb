@@ -1,9 +1,9 @@
 class FollowsController < ApplicationController
   before_action :set_user
 
-  def feed
-    @following = @user.followings
-  end
+  # def feed
+  #   @following = @user.followings
+  # end
 
   def following
     @followings = @user.followings

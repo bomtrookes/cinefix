@@ -1,5 +1,28 @@
 <div class="container">
-  <%= render "users/user" %>
+
+  <div class="user-info my-4">
+
+  <% if @user && @user.avatar.attached? %>
+    <%= cl_image_tag @user.avatar.key, id: "user-avatar" %>
+  <% else %>
+    <img id="user-avatar" src="<%= @default %>" alt="">
+  <% end %>
+
+  <div class="d-flex flex-column">
+    <h1><%= link_to @user.username, user_path(@user), style: "text-decoration:none;color:white" %></h1>
+    <% if @user != current_user %>
+
+      <% if current_user.followings.include?(@user) %>
+        <%= button_to "Unfollow", user_follow_path(@user), class: "btn btn-danger", method: :delete %>
+      <% else %>
+        <%= button_to "Follow", user_follows_path(@user), class: "btn btn-success", method: :post %>
+      <% end %>
+
+    <% end %>
+  </div>
+
+</div>
+
   <hr>
   <h1><%= tmdb_movie(@rating.api_id).title %></h1>
   <table class="table table-striped">
