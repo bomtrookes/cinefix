@@ -4,18 +4,13 @@
 <% @activities.each do |activity| %>
   <%= link_to user_rating_path(activity[:user].id, activity[:rating].id), style: "text-decoration:none" do %>
     <div class="card feed-card mb-1 p-2 flex-row" style="color:black">
-      <% if activity[:user].avatar %>
-        <%= cl_image_tag activity[:user].avatar.key, id: "feed-avatar" %>
+      <%# if activity[:user].avatar %>
+        <%#= cl_image_tag activity[:user].avatar.key, id: "feed-avatar" %>
         <div class="d-flex flex-column justify-content-center">
           <p><%= activity[:user].username %> gave <%= tmdb_movie(activity[:rating].api_id).title %> a rating of <%= activity[:rating].total_score %>.</p>
           <small style="color:grey"><%= activity[:rating].updated_at.strftime("%H:%M %d/%m/%y") %></small>
         </div>
-      <% else %>
-        <div class="d-flex flex-column justify-content-center">
-          <p><%= activity[:user].username %> gave <%= tmdb_movie(activity[:rating].api_id).title %> a rating of <%= activity[:rating].total_score %>.</p>
-          <small style="color:grey"><%= activity[:rating].updated_at.strftime("%H:%M %d/%m/%y") %></small>
-        </div>
-      <% end %>
+      <%# end %>
     </div>
   <% end %>
 <% end %>

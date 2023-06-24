@@ -20,6 +20,8 @@ class RatingsController < ApplicationController
   def show
     @movie = Tmdb::Movie.detail(params[:id])
     @rating = Rating.find(@movie.id)
+    @default = "https://res.cloudinary.com/dzxuvey8d/image/upload/v1660399373/default-user_cdb0ks.jpg"
+
   end
 
   def edit

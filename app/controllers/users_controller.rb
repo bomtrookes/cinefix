@@ -14,6 +14,7 @@ class UsersController < ApplicationController
   end
 
   def show
+    @default = "https://res.cloudinary.com/dzxuvey8d/image/upload/v1660399373/default-user_cdb0ks.jpg"
     if current_user.id != params[:id].to_i
       @user = User.find(params[:id])
     else
