@@ -55,12 +55,4 @@ class RatingsController < ApplicationController
         :characters, :enjoyment, :api_id, :user_id)
   end
 
-  def set_user
-    if params[:user_id] == current_user.id
-      @user = current_user
-    else
-      @user = User.find(params[:user_id])
-    end
-  end
-
 end
