@@ -24,5 +24,7 @@ Rails.application.routes.draw do
 
   match "*path", to: "application#handle_routing_error", via: :all
 
+  get '/404', to: 'errors#not_found'
+
 
 end
