@@ -26,7 +26,6 @@ class MoviesController < ApplicationController
 
   @tmdb_similar = Tmdb::Movie.similar(params[:id])["results"]
   @tmdb_recommend = Tmdb::Movie.recommendations(params[:id])["results"]
-  # @rating = Rating.where(user_id: current_user).sort_by { |r| -r.total_score }
  end
 
   private
