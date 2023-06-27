@@ -4,6 +4,7 @@ class User < ApplicationRecord
 
   has_many :ratings
   has_many :watchlists
+  has_many :watched_films
   has_many :movies, through: :ratings
   has_one_attached :avatar
 

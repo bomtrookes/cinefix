@@ -15,6 +15,7 @@
         <li><%= link_to "Feed", feed_path %></li>
         <li><%= link_to "Search", movies_path %></li>
         <li><%= link_to "Profile", user_path(current_user) %></li>
+        <li><%= link_to "Watched", user_watched_films_path(current_user) %></li>
         <li><%= link_to "Watchlist", user_watchlists_path(current_user) %></li>
         <li><%= link_to "Feedback", new_feedback_path %></li>
       <% end %>
