@@ -29,11 +29,11 @@
       </a>
     </h4>
 
-    <h4 style="display:none">
-      <a href="#">
+    <h4>
+      <%= link_to user_watched_films_path(@user) do %>
         <small>WATCHED</small>
-        <span>203</span>
-      </a>
+        <span><%= @user.watched_films.size %></span>
+      <% end %>
     </h4>
 
     <h4>

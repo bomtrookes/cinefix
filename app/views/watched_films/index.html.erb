@@ -1,0 +1,9 @@
+<div class="container">
+  <h1>Watched</h1>
+  <% @watched_films.each do |film| %>
+    <div class="card" style="color:black">
+      <p><%= tmdb_movie(film.api_id).title %></p>
+      <p><%= film.created_at %></p>
+    </div>
+  <% end %>
+</div>

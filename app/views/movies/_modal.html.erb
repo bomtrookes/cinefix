@@ -19,6 +19,10 @@
         <% end %>
       <% end %>
 
+      <%= link_to watched_path(api_id: @movie.id), class: "btn btn-dark" do %>
+        <p>Watched</p>
+      <% end %>
+
         <% if current_user.watchlists.exists?(api_id: @movie.id) %>
           <%= button_to watchlist_path(@movie.id), method: :delete, class: "btn btn-danger m-1" do %>
             <i class="bi bi-check"></i> Watchlist
