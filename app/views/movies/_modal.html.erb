@@ -19,10 +19,15 @@
         <% end %>
       <% end %>
 
-      <%= link_to watched_path(api_id: @movie.id), class: "btn btn-dark" do %>
-        <p>Watched</p>
+      <% if current_user.watched_films.where(watched: true).exists?(api_id: @movie.id) %>
+        <%= button_to watched_path(api_id: @movie.id), method: :delete, class: "btn btn-danger" do %>
+          <p>Unwatch</p>
+        <% end %>
+      <% else %>
+        <%= button_to watched_path(api_id: @movie.id), class: "btn btn-success" do %>
+          <p>Watched</p>
+        <% end %>
       <% end %>
-
 
         <% if current_user.watchlists.exists?(api_id: @movie.id) %>
           <%= button_to watchlist_path(@movie.id), method: :delete, class: "btn btn-danger m-1" do %>
