@@ -5,7 +5,8 @@ Rails.application.routes.draw do
   devise_for :users
 
   get '/feed', to: 'activities#feed'
-  get 'watched', to: 'watched_films#watched'
+  post 'watched', to: 'watched_films#watched'
+  delete 'watched', to: 'watched_films#unwatch'
 
   resources :users, only: [:index, :show] do
     resources :ratings, only: [:show, :destroy]
