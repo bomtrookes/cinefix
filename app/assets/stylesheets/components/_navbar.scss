@@ -33,8 +33,11 @@ nav {
     list-style: none;
     padding: 0;
     li {
-      padding: 2rem 1rem;
+      padding: 1.8rem 1rem;
       cursor: pointer;
+    }
+    li:last-child {
+      font-weight: 200;
     }
   }
   a {
