@@ -8,8 +8,9 @@
   .modal-container {
     display: flex;
     flex-direction: column;
-    height: 125px;
-    width: 275px;
+    height: 200px;
+    width: 350px;
+    padding: 12px;
     position: relative;
     align-items: center;
     justify-content: center;
@@ -19,9 +20,13 @@
   }
   .modal-btns {
     display: flex;
+    flex-direction: column;
     margin-top: 1.8rem;
     justify-content: space-around;
     width: 100%;
+    a, .btn {
+      width: 100%;
+    }
   }
 }
 #modal-close {
