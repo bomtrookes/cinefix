@@ -30,10 +30,13 @@ Rails.application.routes.draw do
 
   resources :feedbacks, only: [:new, :create]
 
-  match "*path", to: "application#handle_routing_error", via: :all,
-    constraints: ->(req) { !req.path.start_with?("/rails/") }
+  namespace :admin do
+    resources :users, only: [:new, :create]
+  end
 
   get '/404', to: 'errors#not_found'
 
+  match "*path", to: "application#handle_routing_error", via: :all,
+    constraints: ->(req) { !req.path.start_with?("/rails/") }
 
 end
