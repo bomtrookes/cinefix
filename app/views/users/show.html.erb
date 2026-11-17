@@ -15,7 +15,9 @@
   <% end %>
 
 <% else %>
-  <%= link_to "Edit profile", edit_user_registration_path, class: "btn btn-dark" %>
+    <% unless current_user&.demo? %>
+      <%= link_to "Edit profile", edit_user_registration_path, class: "btn btn-dark" %>
+    <% end %>
 
 <% end %>
     </div>

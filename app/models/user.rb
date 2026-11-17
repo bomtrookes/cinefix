@@ -2,6 +2,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  enum role: { member: 0, admin: 1, demo: 2 }
+
   has_many :ratings
   has_many :watchlists
   has_many :watched_films

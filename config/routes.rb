@@ -4,10 +4,10 @@ Rails.application.routes.draw do
 
   devise_for :users, skip: [:registrations]
   as :user do
-    get    "users/edit", to: "devise/registrations#edit",    as: :edit_user_registration
-    put    "users",      to: "devise/registrations#update",  as: :user_registration
-    patch  "users",      to: "devise/registrations#update"
-    delete "users",      to: "devise/registrations#destroy"
+    get    "users/edit", to: "users/registrations#edit",    as: :edit_user_registration
+    put    "users",      to: "users/registrations#update",  as: :user_registration
+    patch  "users",      to: "users/registrations#update"
+    delete "users",      to: "users/registrations#destroy"
   end
 
   get '/feed', to: 'activities#feed'
