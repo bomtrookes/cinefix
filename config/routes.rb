@@ -2,7 +2,13 @@ Rails.application.routes.draw do
 
   root 'movies#home'
 
-  devise_for :users
+  devise_for :users, skip: [:registrations]
+  as :user do
+    get    "users/edit", to: "devise/registrations#edit",    as: :edit_user_registration
+    put    "users",      to: "devise/registrations#update",  as: :user_registration
+    patch  "users",      to: "devise/registrations#update"
+    delete "users",      to: "devise/registrations#destroy"
+  end
 
   get '/feed', to: 'activities#feed'
   post 'watched', to: 'watched_films#watched'
