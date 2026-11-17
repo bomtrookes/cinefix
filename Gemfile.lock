@@ -104,6 +104,8 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
+    dockerfile-rails (1.7.10)
+      rails (>= 3.0.0)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
     dotenv (2.8.1)
@@ -283,6 +285,7 @@ DEPENDENCIES
   cloudinary
   debug
   devise
+  dockerfile-rails (>= 1.7)
   dotenv-rails
   httparty
   jsbundling-rails
