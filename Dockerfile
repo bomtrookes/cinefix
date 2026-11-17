@@ -2,8 +2,8 @@
 # check=error=true
 
 # Make sure RUBY_VERSION matches the Ruby version in .ruby-version
-ARG RUBY_VERSION=3.1.2
-FROM ruby:$RUBY_VERSION-slim AS base
+ARG RUBY_VERSION=3.1.7
+FROM ruby:$RUBY_VERSION-slim-bookworm AS base
 
 # Rails app lives here
 WORKDIR /rails
