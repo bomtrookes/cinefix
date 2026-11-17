@@ -1,7 +1,7 @@
 <div>
   <div class="user-info my-4">
     <% if @user.avatar.attached? %>
-      <%= cl_image_tag @user.avatar.key, id: "user-avatar" %>
+      <%= image_tag @user.avatar, id: "user-avatar" %>
     <% else %>
       <img id="user-avatar" src="<%= @default %>" alt="">
     <% end %>

@@ -15,7 +15,7 @@
         <div class="follow-card">
 
         <% if follow.avatar.attached? %>
-          <%= cl_image_tag follow.avatar.key %>
+          <%= image_tag follow.avatar %>
         <% else %>
           <img src="<%= @default %>" alt="">
         <% end %>
