@@ -13,7 +13,7 @@
               <i class="bi bi-hand-thumbs-up"></i> Rate
             <% end %>
           <% else %>
-            <%= link_to edit_rating_path(api_id: @movie.id), class: "btn btn-light m-1" do %>
+            <%= link_to edit_rating_path(@movie.id), class: "btn btn-light m-1" do %>
               <i class="bi bi-hand-thumbs-up"></i> Update
             <% end %>
           <% end %>

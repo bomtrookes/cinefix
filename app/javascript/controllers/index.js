@@ -21,3 +21,6 @@ application.register("navigation", NavigationController)
 
 import TabsController from "./tabs_controller"
 application.register("tabs", TabsController)
+
+import ToastController from "./toast_controller"
+application.register("toast", ToastController)

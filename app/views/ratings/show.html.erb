@@ -10,7 +10,7 @@
 
   <div class="d-flex flex-column">
     <h1><%= link_to @user.username, user_path(@user), style: "text-decoration:none;color:white" %></h1>
-    <% if @user != current_user %>
+    <% if user_signed_in? && @user != current_user %>
 
       <% if current_user.followings.include?(@user) %>
         <%= button_to "Unfollow", user_follow_path(@user), class: "btn btn-danger", method: :delete %>
@@ -27,6 +27,10 @@
   <h1><%= tmdb_movie(@rating.api_id).title %></h1>
   <table class="table table-striped">
     <tbody>
+      <tr>
+        <td>Story:</td>
+        <td><%= @rating.story %></td>
+      </tr>
       <tr>
         <td>Acting:</td>
         <td><%= @rating.acting %></td>

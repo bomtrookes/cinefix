@@ -1,6 +1,6 @@
 class RatingsController < ApplicationController
   before_action :set_user, only: :show
-  before_action :authenticate_user!, only: [:new, :create, :index]
+  before_action :authenticate_user!, only: [:new, :create, :index, :edit, :update]
 
   def new
     @movie = Tmdb::Movie.detail(params[:api_id])
@@ -9,7 +9,7 @@ class RatingsController < ApplicationController
 
   def create
     @movie = Tmdb::Movie.detail(params[:rating][:api_id])
-    @rating = Rating.new(rating_params)
+    @rating = current_user.ratings.new(rating_params)
     if @rating.save
       redirect_to user_path(current_user)
     else
@@ -18,8 +18,7 @@ class RatingsController < ApplicationController
   end
 
   def show
-    # @movie = Tmdb::Movie.detail(params[:id])
-    @rating = Rating.find(params[:id])
+    @rating = @user.ratings.find(params[:id])
     @default = helpers.asset_path("default-user.jpg")
   end
 
@@ -30,12 +29,13 @@ class RatingsController < ApplicationController
   end
 
   def update
-    @movie = Tmdb::Movie.detail(params[:id])
-    @rating = Rating.find(@movie.id)
+    @rating = current_user.ratings.find(params[:id])
+    @movie  = Tmdb::Movie.detail(@rating.api_id)
+
     if @rating.update(rating_params)
-      redirect_to user_path(current_user)
+      redirect_to movie_path(@rating.api_id), notice: "Rating updated"
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -53,15 +53,11 @@ class RatingsController < ApplicationController
         :story, :acting, :dialog,
         :cinematography, :soundtrack,
         :style, :pacing, :originality,
-        :characters, :enjoyment, :api_id, :user_id)
+        :characters, :enjoyment, :api_id)
   end
 
   def set_user
-    if params[:user_id] == current_user.id
-      @user = current_user
-    else
-      @user = User.find(params[:user_id])
-    end
+    @user = User.find(params[:user_id])
   end
 
 end

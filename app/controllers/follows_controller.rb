@@ -1,4 +1,5 @@
 class FollowsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_user
 
   # def feed
@@ -35,10 +36,6 @@ class FollowsController < ApplicationController
   private
 
   def set_user
-    if params[:user_id] == current_user.id
-      @user = current_user
-    else
-      @user = User.find(params[:user_id])
-    end
+    @user = User.find(params[:user_id])
   end
 end

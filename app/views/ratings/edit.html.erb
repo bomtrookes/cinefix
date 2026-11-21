@@ -1,6 +1,6 @@
 <div class="container mt-3 mb-5" data-controller="form">
 
-  <%= link_to "Delete", user_rating_path(@rating), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "btn btn-danger mb-3" %>
+  <%= link_to "Delete", user_rating_path(current_user, @movie.id), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "btn btn-danger mb-3" %>
 
   <h1>Rate <%= @movie.title %></h1>
 
@@ -57,7 +57,6 @@
       </div>
 
       <%= f.hidden_field :api_id, value: @movie.id %>
-      <%= f.hidden_field :user_id, value: current_user.id %>
       <%= f.submit class: "btn btn-primary mt-3" %>
     <% end %>
   </div>

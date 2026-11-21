@@ -1,14 +1,10 @@
 <div class="container my-3">
 
-  <% if @user == current_user %>
-    <h1>Followers</h1>
-    <h3><%= @user.username %></h3>
-  <% else %>
-    <h1>My Followers</h1>
-  <% end %>
+  <% mine = @user == current_user %>
+  <h1><%= mine ? "People you follow" : "People #{@user.username} follows" %></h1>
 
   <% if @followings.empty? %>
-    <p class="py-3">You are not following anyone.</p>
+    <p class="py-3"><%= mine ? "You're not following anyone yet. Find people in Search." : "#{@user.username} isn't following anyone yet." %></p>
   <% else %>
     <% @followings.each do |follow| %>
       <%= link_to user_path(follow), class: "x-a" do %>

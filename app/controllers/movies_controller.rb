@@ -1,7 +1,6 @@
 class MoviesController < ApplicationController
 
   def index
-
     if params[:query].present?
      query = params[:query].presence || " "
      @movies = Tmdb::Search.movie("#{query}")["results"]
@@ -17,7 +16,7 @@ class MoviesController < ApplicationController
 
  def show
   @user = current_user
-  @rating = @user.ratings.where(api_id: params[:id]).sort_by { |r| -r.total_score }.first
+  @rating = current_user&.ratings&.find_by(api_id: params[:id])
   @watchlist = Watchlist.new
   @movie = Tmdb::Movie.detail(params[:id])
 
