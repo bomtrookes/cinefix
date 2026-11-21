@@ -8,6 +8,13 @@
         <%#= image_tag activity[:user].avatar, id: "feed-avatar" %>
         <div class="d-flex flex-column justify-content-center">
           <p><%= activity[:user].username %> gave <%= tmdb_movie(activity[:rating].api_id).title %> a rating of <%= activity[:rating].total_score %>.</p>
+          <% if activity[:rating].review.present? %>
+            <% if activity[:rating].spoilers? %>
+              <p class="feed-review is-spoiler">Wrote a review (contains spoilers)</p>
+            <% else %>
+              <p class="feed-review">“<%= truncate(activity[:rating].review, length: 140) %>”</p>
+            <% end %>
+          <% end %>
           <small style="color:grey"><%= activity[:rating].updated_at.strftime("%H:%M %d/%m/%y") %></small>
         </div>
       <%# end %>
