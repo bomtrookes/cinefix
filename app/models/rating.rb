@@ -17,6 +17,8 @@ class Rating < ApplicationRecord
                   less_than_or_equal_to: 10 }
   validates :api_id, uniqueness: { scope: :user_id }
 
+  after_create :mark_as_watched
+
   def total_score
     sum = self.story +
       self.acting +
@@ -34,6 +36,13 @@ class Rating < ApplicationRecord
     else
       return (sum.to_f / 10).round(1)
     end
+  end
+
+  private
+
+  def mark_as_watched
+    user.watched_films.find_or_create_by(api_id: api_id) { |w| w.watched = true }
+    user.watchlists.where(api_id: api_id).destroy_all
   end
 
 end

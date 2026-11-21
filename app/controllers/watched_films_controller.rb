@@ -3,7 +3,7 @@ class WatchedFilmsController < ApplicationController
 
   def index
     @user = User.find(params[:user_id])
-    @watched_films = WatchedFilm.where(user_id: @user.id)
+    @watched_films = WatchedFilm.where(user_id: @user.id).order(created_at: :desc)
   end
 
   def watched

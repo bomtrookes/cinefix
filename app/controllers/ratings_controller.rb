@@ -11,7 +11,7 @@ class RatingsController < ApplicationController
     @movie = Tmdb::Movie.detail(params[:rating][:api_id])
     @rating = current_user.ratings.new(rating_params)
     if @rating.save
-      redirect_to user_path(current_user)
+      redirect_to movie_path(@rating.api_id), notice: "Rating saved and marked as watched"
     else
       render :new, status: :unprocessable_entity
     end
