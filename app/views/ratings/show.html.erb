@@ -21,53 +21,51 @@
 
 </div>
 
-  <hr>
-  <h1><%= tmdb_movie(@rating.api_id).title %></h1>
-  <table class="table table-striped">
-    <tbody>
-      <tr>
-        <td>Story:</td>
-        <td><%= @rating.story %></td>
-      </tr>
-      <tr>
-        <td>Acting:</td>
-        <td><%= @rating.acting %></td>
-      </tr>
-      <tr>
-        <td>Dialog:</td>
-        <td><%= @rating.dialog %></td>
-      </tr>
-      <tr>
-        <td>Cinematography:</td>
-        <td><%= @rating.cinematography %></td>
-      </tr>
-      <tr>
-        <td>Soundtrack:</td>
-        <td><%= @rating.soundtrack %></td>
-      </tr>
-      <tr>
-        <td>Style:</td>
-        <td><%= @rating.style %></td>
-      </tr>
-      <tr>
-        <td>Pacing:</td>
-        <td><%= @rating.pacing %></td>
-      </tr>
-      <tr>
-        <td>Originality:</td>
-        <td><%= @rating.originality %></td>
-      </tr>
-      <tr>
-        <td>Characters:</td>
-        <td><%= @rating.characters %></td>
-      </tr>
-      <tr>
-        <td>Enjoyment:</td>
-        <td><%= @rating.enjoyment %></td>
-      </tr>
-    </tbody>
-  </table>
+  <% movie = tmdb_movie(@rating.api_id) %>
+  <div class="rating-card">
+    <div class="rating-card-head">
+      <% if movie.poster_path.present? %>
+        <%= link_to movie_path(@rating.api_id) do %>
+          <%= image_tag "https://www.themoviedb.org/t/p/w185#{movie.poster_path}", class: "rating-card-poster", alt: "" %>
+        <% end %>
+      <% end %>
+      <div class="rating-card-title">
+        <h2><%= link_to movie.title, movie_path(@rating.api_id) %></h2>
+        <small><%= format_date(movie.release_date) %></small>
+        <% if @rating.documentary? %>
+          <span class="rating-chip">Scored as a documentary</span>
+        <% end %>
+      </div>
+      <div class="rating-card-score">
+        <strong><%= @rating.total_score %></strong>
+        <small>/ 10</small>
+      </div>
+    </div>
 
-    <h3 class="my-3">Overall Score: <%= @rating.total_score %></h3>
+    <% if @rating.review.present? %>
+      <% if @rating.spoilers? %>
+        <details class="rating-review is-spoiler">
+          <summary>Review contains spoilers. Tap to read.</summary>
+          <%= simple_format(h(@rating.review)) %>
+        </details>
+      <% else %>
+        <div class="rating-review"><%= simple_format(h(@rating.review)) %></div>
+      <% end %>
+    <% end %>
 
+    <ul class="rating-bars">
+      <% @rating.categories.each do |field, (label, _hint)| %>
+        <% score = @rating.public_send(field) %>
+        <li class="<%= 'is-na' if score.nil? %>">
+          <span class="rating-bar-label"><%= label %></span>
+          <span class="rating-bar-track"><span class="rating-bar-fill" style="width: <%= (score || 0) * 10 %>%"></span></span>
+          <span class="rating-bar-val"><%= score.nil? ? "N/A" : score %></span>
+        </li>
+      <% end %>
+    </ul>
+
+    <% if user_signed_in? && @user == current_user %>
+      <%= link_to "Edit your rating", edit_rating_path(@rating.api_id), class: "rating-edit" %>
+    <% end %>
+  </div>
 </div>

@@ -1,0 +1,87 @@
+<%# Shared rating form, used by new.html.erb and edit.html.erb %>
+<% sets = RatingCategories::SETS %>
+<% current_set = RatingCategories.for(@rating.film_type) %>
+
+<div class="rate-page"
+     data-controller="form"
+     data-form-max-na-value="<%= RatingCategories::MAX_NA %>">
+  <div class="rate-head">
+    <% if @movie.poster_path.present? %>
+      <%= image_tag "https://www.themoviedb.org/t/p/w185#{@movie.poster_path}", class: "rate-poster", alt: "" %>
+    <% end %>
+    <div>
+      <h1><%= @rating.persisted? ? "Edit your rating" : "Rate" %> <%= @movie.title %></h1>
+      <small><%= format_date(@movie.release_date) %></small>
+    </div>
+  </div>
+
+  <%= form_with model: @rating, class: "rate-form" do |f| %>
+    <% if @rating.errors.any? %>
+      <div class="rate-errors"><%= @rating.errors.full_messages.to_sentence %></div>
+    <% end %>
+
+    <fieldset class="rate-type">
+      <legend>Scoring as</legend>
+      <div class="rate-type-switch">
+        <% sets.each do |key, set| %>
+          <%= f.radio_button :film_type, key, data: { action: "change->form#switchType" } %>
+          <%= f.label :film_type, set[:name], value: key %>
+        <% end %>
+      </div>
+    </fieldset>
+
+    <div class="rate-total" aria-live="polite">
+      <div class="rate-total-big"><span data-form-target="avg">5</span><small> / 10</small></div>
+      <div class="rate-total-sub">
+        <span data-form-target="sum">50</span> of <span data-form-target="max">100</span> points
+      </div>
+    </div>
+
+    <div class="rate-cats">
+      <% RatingCategories::FIELDS.each do |field| %>
+        <% score = @rating.public_send(field) %>
+        <% na = @rating.persisted? && score.nil? %>
+        <% label, hint = current_set[field] %>
+        <div class="rate-cat<%= ' is-na' if na %>"
+             data-form-target="row"
+             <% sets.each do |key, set| %>
+               data-<%= key %>-label="<%= set[:categories][field][0] %>"
+               data-<%= key %>-hint="<%= set[:categories][field][1] %>"
+             <% end %>>
+          <div class="rate-cat-top">
+            <%= f.label field, label, data: { form_target: "label" } %>
+            <div class="rate-cat-right">
+              <button type="button" class="rate-na" data-form-target="na"
+                      data-action="form#toggleNa" aria-pressed="<%= na %>"
+                      title="Doesn't apply to this film">N/A</button>
+              <span class="rate-val" data-form-target="value"><%= na ? "–" : (score || 5) %></span>
+            </div>
+          </div>
+          <p class="rate-hint" data-form-target="hint"><%= hint %></p>
+          <%# Sent when the slider is disabled (N/A), so the score is saved as blank %>
+          <%= hidden_field_tag "rating[#{field}]", "", id: nil %>
+          <%= f.range_field field, min: 0, max: 10, step: 1, value: score || 5, disabled: na,
+                data: { form_target: "slider", action: "input->form#update" } %>
+        </div>
+      <% end %>
+    </div>
+    <p class="rate-na-note">Tap N/A on up to <%= RatingCategories::MAX_NA %> categories that don't fit this film. They're left out of the score.</p>
+
+    <div class="rate-review">
+      <%= f.label :review, "Your review" %> <span class="rate-optional">optional</span>
+      <%= f.text_area :review, rows: 4, maxlength: 5000,
+            placeholder: "What stuck with you? A line or two is plenty." %>
+      <label class="rate-spoilers">
+        <%= f.check_box :spoilers %>
+        Contains spoilers
+      </label>
+    </div>
+
+    <%= f.hidden_field :api_id, value: @movie.id %>
+
+    <div class="rate-actions">
+      <%= f.submit(@rating.persisted? ? "Update rating" : "Save rating", class: "rate-save") %>
+      <%= link_to "Cancel", movie_path(@movie.id), class: "rate-cancel" %>
+    </div>
+  <% end %>
+</div>

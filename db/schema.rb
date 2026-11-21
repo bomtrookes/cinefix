@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2026_11_17_164525) do
+ActiveRecord::Schema[7.0].define(version: 2026_11_21_120000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -95,6 +95,9 @@ ActiveRecord::Schema[7.0].define(version: 2026_11_17_164525) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
+    t.text "review"
+    t.boolean "spoilers", default: false, null: false
+    t.string "film_type", default: "feature", null: false
     t.index ["user_id"], name: "index_ratings_on_user_id"
   end
 
