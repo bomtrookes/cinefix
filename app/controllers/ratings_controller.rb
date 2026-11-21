@@ -13,7 +13,7 @@ class RatingsController < ApplicationController
     if @rating.save
       redirect_to user_path(current_user)
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
