@@ -2,7 +2,13 @@ Rails.application.routes.draw do
 
   root 'movies#home'
 
-  devise_for :users
+  devise_for :users, skip: [:registrations]
+  as :user do
+    get    "users/edit", to: "users/registrations#edit",    as: :edit_user_registration
+    put    "users",      to: "users/registrations#update",  as: :user_registration
+    patch  "users",      to: "users/registrations#update"
+    delete "users",      to: "users/registrations#destroy"
+  end
 
   get '/feed', to: 'activities#feed'
   post 'watched', to: 'watched_films#watched'
@@ -24,9 +30,13 @@ Rails.application.routes.draw do
 
   resources :feedbacks, only: [:new, :create]
 
-  match "*path", to: "application#handle_routing_error", via: :all
+  namespace :admin do
+    resources :users, only: [:new, :create]
+  end
 
   get '/404', to: 'errors#not_found'
 
+  match "*path", to: "application#handle_routing_error", via: :all,
+    constraints: ->(req) { !req.path.start_with?("/rails/") }
 
 end

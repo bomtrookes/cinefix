@@ -1,28 +1,19 @@
 class WatchedFilmsController < ApplicationController
+  before_action :authenticate_user!, except: :index
 
   def index
     @user = User.find(params[:user_id])
-    @watched_films = WatchedFilm.where(user_id: @user.id)
+    @watched_films = WatchedFilm.where(user_id: @user.id).order(created_at: :desc)
   end
 
   def watched
-    @movie = Tmdb::Movie.detail(params[:api_id])
-    @watched = current_user.watched_films.build(api_id: @movie.id, watched: true)
-    @watched.save
-    redirect_to movie_path(@movie.id)
+    current_user.watched_films.create(api_id: params[:api_id], watched: true)
+    redirect_to movie_path(params[:api_id]), notice: "Marked as watched"
   end
 
   def unwatch
-    @movie = Tmdb::Movie.detail(params[:api_id])
-    @watched = WatchedFilm.find_by(api_id: @movie.id)
-
-    if @watched
-      @watched.destroy!
-      redirect_to movie_path(@movie)
-    else
-      # Handle the case when the watched film is not found
-      redirect_to movie_path(@movie), alert: "Film not found in watched list."
-    end
+    current_user.watched_films.find_by(api_id: params[:api_id])&.destroy
+    redirect_to movie_path(params[:api_id]), notice: "Removed from watched"
   end
 
 end

@@ -1,0 +1,9 @@
+<div class="container my-5">
+  <h2 class="mb-3">Add a friend</h2>
+
+  <%= simple_form_for [:admin, @user], html: { data: { turbo: false } } do |f| %>
+    <%= f.input :email %>
+    <%= f.input :username %>
+    <%= f.button :submit, "Create account", class: "btn btn-dark" %>
+  <% end %>
+</div>

@@ -1,6 +1,14 @@
 <div class="container my-4">
   <h2 class="mb-3">Edit <%= resource_name.to_s.humanize %></h2>
 
+  <% temporary = resource.must_change_password? %>
+
+  <% if temporary %>
+    <div class="p-3 mb-3 rounded border bg-dark text-white">
+      Welcome to ReelScore! Please replace your temporary password before continuing.
+    </div>
+  <% end %>
+
   <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
     <%= f.error_notification %>
 
@@ -10,26 +18,41 @@
       <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
         <p>Currently waiting confirmation for: <%= resource.unconfirmed_email %></p>
       <% end %>
+
+      <% if temporary %>
+        <%= f.input :current_password,
+                    label: "Temporary password",
+                    hint: "the password you were given",
+                    required: true,
+                    input_html: { autocomplete: "current-password" } %>
+      <% end %>
+
       <%= f.input :password,
-                  hint: "leave it blank if you don't want to change it",
-                  required: false,
+                  label: (temporary ? "New password" : "Password"),
+                  hint: (temporary ? "choose your own password" : "leave it blank if you don't want to change it"),
+                  required: temporary,
                   input_html: { autocomplete: "new-password" } %>
       <%= f.input :password_confirmation,
-                  required: false,
+                  required: temporary,
                   input_html: { autocomplete: "new-password" } %>
       <%= f.input :avatar, as: :file, label: "Profile image" %>
-      <%= f.input :current_password,
-              hint: "we need your current password to confirm your changes",
-              required: true,
-              input_html: { autocomplete: "current-password" } %>
 
+      <% unless temporary %>
+        <%= f.input :current_password,
+                    hint: "we need your current password to confirm your changes",
+                    required: true,
+                    input_html: { autocomplete: "current-password" } %>
+      <% end %>
     </div>
 
-    <div class="form-actions d-flex justify-content-between">
+    <div class="form-actions">
       <%= f.button :submit, "Update", class: "btn btn-success" %>
-      <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete, class: "btn btn-danger" %>
     </div>
   <% end %>
 
-
+  <% unless temporary %>
+    <div class="mt-4 d-flex justify-content-end">
+      <%= button_to "Delete my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete, class: "btn btn-danger" %>
+    </div>
+  <% end %>
 </div>

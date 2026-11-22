@@ -1,4 +1,5 @@
 class FollowsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_user
 
   # def feed
@@ -7,13 +8,13 @@ class FollowsController < ApplicationController
 
   def following
     @followings = @user.followings
-    @default = "https://res.cloudinary.com/dzxuvey8d/image/upload/v1660399373/default-user_cdb0ks.jpg"
+    @default = helpers.asset_path("default-user.jpg")
     # @followings = @user.followings.sort_by {|following| following.size }.reverse!
   end
 
   def followers
     @followers = @user.followers
-    @default = "https://res.cloudinary.com/dzxuvey8d/image/upload/v1660399373/default-user_cdb0ks.jpg"
+    @default = helpers.asset_path("default-user.jpg")
     # @followers = @user.followers.sort_by {|follower| follower.size }.reverse!
   end
 
@@ -35,10 +36,6 @@ class FollowsController < ApplicationController
   private
 
   def set_user
-    if params[:user_id] == current_user.id
-      @user = current_user
-    else
-      @user = User.find(params[:user_id])
-    end
+    @user = User.find(params[:user_id])
   end
 end

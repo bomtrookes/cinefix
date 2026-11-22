@@ -1,0 +1,47 @@
+<%# Rate / Watchlist / Seen bar on the movie page %>
+<div class="movie-actions">
+  <% if user_signed_in? %>
+    <% if @rating.present? %>
+      <%= link_to edit_rating_path(@movie.id), class: "rate-cta is-rated" do %>
+        <span class="rate-cta-score"><%= @rating.total_score %></span>
+        <span>Your score · Edit</span>
+      <% end %>
+    <% else %>
+      <%= link_to new_rating_path(api_id: @movie.id), class: "rate-cta" do %>
+        <i class="bi bi-star-fill" aria-hidden="true"></i>
+        <span>Rate this film</span>
+      <% end %>
+    <% end %>
+
+    <% on_list = current_user.watchlists.exists?(api_id: @movie.id) %>
+    <% if on_list %>
+      <%= button_to watchlist_path(@movie.id), method: :delete, class: "movie-toggle is-on",
+            form: { class: "movie-toggle-form" }, title: "Remove from your watchlist" do %>
+        <i class="bi bi-bookmark-check-fill" aria-hidden="true"></i><span>Watchlist</span>
+      <% end %>
+    <% else %>
+      <%= button_to watchlists_path, method: :post, params: { id: @movie.id }, class: "movie-toggle",
+            form: { class: "movie-toggle-form" }, title: "Add to your watchlist" do %>
+        <i class="bi bi-bookmark-plus" aria-hidden="true"></i><span>Watchlist</span>
+      <% end %>
+    <% end %>
+
+    <% seen = current_user.watched_films.where(watched: true).exists?(api_id: @movie.id) %>
+    <% if seen %>
+      <%= button_to watched_path(api_id: @movie.id), method: :delete, class: "movie-toggle is-on",
+            form: { class: "movie-toggle-form" }, title: "Mark as not seen" do %>
+        <i class="bi bi-eye-fill" aria-hidden="true"></i><span>Seen</span>
+      <% end %>
+    <% else %>
+      <%= button_to watched_path(api_id: @movie.id), class: "movie-toggle",
+            form: { class: "movie-toggle-form" }, title: "Mark as seen" do %>
+        <i class="bi bi-eye" aria-hidden="true"></i><span>Seen it</span>
+      <% end %>
+    <% end %>
+  <% else %>
+    <%= link_to new_user_session_path, class: "rate-cta" do %>
+      <i class="bi bi-star-fill" aria-hidden="true"></i>
+      <span>Log in to rate</span>
+    <% end %>
+  <% end %>
+</div>

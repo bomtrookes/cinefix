@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_20_164003) do
+ActiveRecord::Schema[7.0].define(version: 2026_11_21_120000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -95,6 +95,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_20_164003) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
+    t.text "review"
+    t.boolean "spoilers", default: false, null: false
+    t.string "film_type", default: "feature", null: false
     t.index ["user_id"], name: "index_ratings_on_user_id"
   end
 
@@ -108,6 +111,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_20_164003) do
     t.datetime "updated_at", null: false
     t.string "username"
     t.string "avatar", default: "https://res.cloudinary.com/dzxuvey8d/image/upload/v1660399373/default-user_cdb0ks.jpg"
+    t.integer "role", default: 0, null: false
+    t.boolean "must_change_password", default: false, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

@@ -3,7 +3,7 @@
   <% @users.first(10).each do |user| %>
     <div class="user-card">
       <% if user.avatar.attached?%>
-        <%= cl_image_tag user.avatar.key, class: "user-avatar" %>
+        <%= image_tag user.avatar, class: "user-avatar" %>
       <% else %>
         <img class="user-avatar" src="<%= @default %>" alt="">
       <% end %>

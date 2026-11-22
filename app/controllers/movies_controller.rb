@@ -1,7 +1,6 @@
 class MoviesController < ApplicationController
 
   def index
-
     if params[:query].present?
      query = params[:query].presence || " "
      @movies = Tmdb::Search.movie("#{query}")["results"]
@@ -12,12 +11,12 @@ class MoviesController < ApplicationController
       @people = []
       @users = []
     end
-    @default = "https://res.cloudinary.com/dzxuvey8d/image/upload/v1660399373/default-user_cdb0ks.jpg"
+    @default = helpers.asset_path("default-user.jpg")
  end
 
  def show
   @user = current_user
-  @rating = @user.ratings.where(api_id: params[:id]).sort_by { |r| -r.total_score }.first
+  @rating = current_user&.ratings&.find_by(api_id: params[:id])
   @watchlist = Watchlist.new
   @movie = Tmdb::Movie.detail(params[:id])
 

@@ -1,23 +1,19 @@
 class WatchlistsController < ApplicationController
+  before_action :authenticate_user!, except: :index
 
   def index
     @user = User.find(params[:user_id])
-    @watchlists = Watchlist.where(user_id: @user.id)
+     @watchlists = Watchlist.where(user_id: @user.id).order(created_at: :desc)
   end
 
   def create
-    @watchlist = current_user.watchlists
-    @movie = Tmdb::Movie.detail(params[:id])
-    @watchlist = current_user.watchlists.build(api_id: params[:id])
-    @watchlist.save
-    redirect_to movie_path(@movie)
+    current_user.watchlists.create(api_id: params[:id])
+    redirect_to movie_path(params[:id]), notice: "Added to your watchlist"
   end
 
   def destroy
-    @movie = Tmdb::Movie.detail(params[:id])
-    @watchlist = Watchlist.find_by(api_id: params[:id])
-    @watchlist.destroy
-    redirect_to movie_path(@movie)
+    current_user.watchlists.find_by(api_id: params[:id])&.destroy
+    redirect_to movie_path(params[:id]), notice: "Removed from your watchlist"
   end
 
   private

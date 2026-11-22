@@ -23,9 +23,30 @@ p {
 .hidden {
   display: none;
 }
-.alert {
-  display: none;
+.toasts {
+  position: fixed;
+  left: 16px;
+  right: 16px;
+  bottom: 24px;
+  z-index: 2000;
+  display: grid;
+  gap: 8px;
+  max-width: 420px;
+  margin: 0 auto;
 }
+.toast-msg { padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 14px;
+  background: #2c3b31;
+  border: 1px solid #4caf7a;
+  color: #d5f5e1;
+  transition: opacity .4s;
+}
+.toast-alert { background: #3b2c2c;
+  border-color: #c0605a;
+  color: #f5d5d5;
+}
+.toast-msg.hide { opacity: 0; }
 // format link
 .x-a {
   text-decoration: none;

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <rect width="512" height="512" fill="#141414"/>
+  <circle cx="256" cy="256" r="172" fill="#198754"/>
+  <circle cx="256" cy="256" r="172" fill="none" stroke="#2fb171" stroke-width="10"/>
+  <circle cx="256.0" cy="126.0" r="27" fill="#141414"/><circle cx="368.6" cy="191.0" r="27" fill="#141414"/><circle cx="368.6" cy="321.0" r="27" fill="#141414"/><circle cx="256.0" cy="386.0" r="27" fill="#141414"/><circle cx="143.4" cy="321.0" r="27" fill="#141414"/><circle cx="143.4" cy="191.0" r="27" fill="#141414"/>
+  <text x="256" y="289" text-anchor="middle" font-family="DejaVu Sans, Arial, sans-serif" font-weight="bold" font-size="90" letter-spacing="-2" fill="#ffc107">RS</text>
+</svg>
