@@ -8,12 +8,12 @@ class WatchlistsController < ApplicationController
 
   def create
     current_user.watchlists.create(api_id: params[:id])
-    redirect_to movie_path(params[:id]), notice: "Added to your watchlist"
+    redirect_back_or_to movie_path(params[:id]), notice: "Added to your watchlist"
   end
 
   def destroy
     current_user.watchlists.find_by(api_id: params[:id])&.destroy
-    redirect_to movie_path(params[:id]), notice: "Removed from your watchlist"
+    redirect_back_or_to movie_path(params[:id]), notice: "Removed from your watchlist"
   end
 
   private

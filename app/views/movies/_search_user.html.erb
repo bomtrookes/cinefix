@@ -1,0 +1,24 @@
+<%# One user row: avatar, name, rank and a Follow button %>
+<% extra = local_assigns[:extra] %>
+<div class="search-row<%= ' extra' if extra %>">
+  <%= link_to user_path(user), class: "search-row-main", data: { turbo_frame: "_top" } do %>
+    <% if user.avatar.attached? %>
+      <%= image_tag user.avatar, alt: "", class: "search-face search-face-user" %>
+    <% else %>
+      <span class="search-face search-face-user search-initials"><%= user.username.first.upcase %></span>
+    <% end %>
+    <span class="search-row-text">
+      <span class="search-row-title"><%= match ? highlight(user.username, match) : user.username %></span>
+      <span class="search-row-meta"><%= user.rank %> · <%= pluralize(user.ratings.size, "film") %> rated</span>
+    </span>
+  <% end %>
+  <% if user_signed_in? && user != current_user %>
+    <% if @following_ids.include?(user.id) %>
+      <%= button_to "Following", user_follow_path(user, user), method: :delete, class: "search-follow is-on",
+            form: { data: { turbo_frame: "_top" } } %>
+    <% else %>
+      <%= button_to "Follow", user_follows_path(user), method: :post, class: "search-follow",
+            form: { data: { turbo_frame: "_top" } } %>
+    <% end %>
+  <% end %>
+</div>

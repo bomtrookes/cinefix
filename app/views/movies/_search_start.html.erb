@@ -1,0 +1,28 @@
+<%# What the search page shows before anything is typed %>
+<div class="search-start">
+  <section>
+    <h2 class="search-h">Popular this week</h2>
+    <div class="search-posters">
+      <% @popular.each do |movie| %>
+        <%= link_to movie_path(movie.id), class: "search-poster", data: { turbo_frame: "_top" } do %>
+          <% if movie.poster_path.present? %>
+            <%= image_tag "https://www.themoviedb.org/t/p/w342#{movie.poster_path}", alt: "", loading: "lazy" %>
+          <% else %>
+            <span class="search-poster-blank"><%= movie.title %></span>
+          <% end %>
+          <span class="search-poster-title"><%= movie.title %></span>
+          <small><%= movie.release_date.to_s[0, 4] %></small>
+        <% end %>
+      <% end %>
+    </div>
+  </section>
+
+  <% if @suggested.any? %>
+    <section>
+      <h2 class="search-h"><%= user_signed_in? ? "People you might follow" : "People on ReelScore" %></h2>
+      <% @suggested.each do |user| %>
+        <%= render "search_user", user: user, match: nil %>
+      <% end %>
+    </section>
+  <% end %>
+</div>
