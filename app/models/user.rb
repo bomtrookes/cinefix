@@ -19,6 +19,10 @@ class User < ApplicationRecord
 
   include RatingsHelper
 
+  def rank
+    Rank.for(ratings.size)
+  end
+
   def feed_activities
     followings = self.followings.includes(:ratings)
     ratings = Rating.where(user_id: followings.map(&:id)).order(created_at: :desc).includes(:user)

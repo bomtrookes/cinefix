@@ -1,18 +1,27 @@
 class MoviesController < ApplicationController
 
   def index
-    if params[:query].present?
-     query = params[:query].presence || " "
-     @movies = Tmdb::Search.movie("#{query}")["results"]
-     @people = Tmdb::Search.person("#{query}")["results"]
-     @users = User.search_users("#{query}")
-    else
-      @movies = Tmdb::Movie.popular["results"].sort_by { |movie| movie.popularity }.reverse
-      @people = []
-      @users = []
-    end
+    @query = params[:query].to_s.strip
     @default = helpers.asset_path("default-user.jpg")
- end
+    @following_ids = current_user ? current_user.followings.pluck(:id) : []
+
+    if @query.present?
+      @movies = Array(Tmdb::Search.movie(@query)["results"]).first(20)
+      @people = Array(Tmdb::Search.person(@query)["results"]).first(20)
+      @users  = User.search_users(@query).limit(20).to_a
+
+      movie_ids = @movies.map(&:id)
+      if current_user
+        @my_scores = current_user.ratings.where(api_id: movie_ids).to_h { |r| [r.api_id, r.total_score] }
+        @my_watchlist = current_user.watchlists.where(api_id: movie_ids).pluck(:api_id)
+      end
+    else
+      @popular = Array(Tmdb::Movie.popular["results"]).sort_by { |movie| -movie.popularity.to_f }.first(12)
+      @suggested = suggested_users
+    end
+    @my_scores ||= {}
+    @my_watchlist ||= []
+  end
 
  def show
   @user = current_user
@@ -28,6 +37,16 @@ class MoviesController < ApplicationController
  end
 
   private
+
+  # Most active raters the current user doesn't already follow
+  def suggested_users
+    excluded = @following_ids + [current_user&.id].compact
+    User.where.not(id: excluded)
+        .left_joins(:ratings)
+        .group("users.id")
+        .order(Arel.sql("COUNT(ratings.id) DESC"))
+        .limit(4)
+  end
 
   def movie_params
     params.require(:movie).permit(:title, :synopsis, :year, :poster_url)

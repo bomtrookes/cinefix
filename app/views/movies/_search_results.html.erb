@@ -1,0 +1,103 @@
+<%# Live search results; tabs switch between all and one kind %>
+<% total = @movies.size + @people.size + @users.size %>
+<% limit = 4 %>
+<div class="search-results" data-controller="search-tabs" data-mode="all">
+  <div class="search-tabs" role="tablist" aria-label="Result type">
+    <% [["all", "All", total], ["films", "Films", @movies.size], ["people", "Cast & crew", @people.size], ["users", "Users", @users.size]].each do |kind, label, count| %>
+      <button type="button" role="tab" class="search-tab" data-kind="<%= kind %>"
+              data-search-tabs-target="tab" data-action="search-tabs#pick"
+              aria-selected="<%= kind == "all" %>"><%= label %> (<%= count %>)</button>
+    <% end %>
+  </div>
+
+  <% if total.zero? %>
+    <p class="search-empty">No films, people or users match “<%= @query %>”.</p>
+  <% end %>
+
+  <div class="search-cols">
+    <% if @movies.any? %>
+      <section class="search-section search-films" data-kind="films">
+        <div class="search-section-head">
+          <h2 class="search-h">Films</h2>
+          <% if @movies.size > limit %>
+            <button type="button" class="search-see-all" data-kind="films" data-action="search-tabs#pick">See all <%= @movies.size %></button>
+          <% end %>
+        </div>
+        <% @movies.each_with_index do |movie, i| %>
+          <% on_list = @my_watchlist.include?(movie.id) %>
+          <div class="search-row<%= ' extra' if i >= limit %>">
+            <%= link_to movie_path(movie.id), class: "search-row-main", data: { turbo_frame: "_top" } do %>
+              <% if movie.poster_path.present? %>
+                <%= image_tag "https://www.themoviedb.org/t/p/w154#{movie.poster_path}", alt: "", class: "search-thumb", loading: "lazy" %>
+              <% else %>
+                <span class="search-thumb search-thumb-blank"></span>
+              <% end %>
+              <span class="search-row-text">
+                <span class="search-row-title"><%= highlight(movie.title, @query) %></span>
+                <span class="search-row-meta"><%= movie.release_date.to_s[0, 4].presence || "Year unknown" %></span>
+                <span class="search-row-meta">
+                  <% if movie.vote_average.to_f > 0 %>Audience <%= movie.vote_average.to_f.round(1) %><% end %>
+                  <% if @my_scores[movie.id] %><span class="search-mine"> · You <%= @my_scores[movie.id] %></span><% end %>
+                </span>
+              </span>
+            <% end %>
+            <% if user_signed_in? %>
+              <% if on_list %>
+                <%= button_to watchlist_path(movie.id), method: :delete, class: "search-list-btn is-on",
+                      form: { data: { turbo_frame: "_top" } }, aria: { label: "Remove #{movie.title} from your watchlist", pressed: true } do %>
+                  <i class="bi bi-bookmark-check-fill" aria-hidden="true"></i>
+                <% end %>
+              <% else %>
+                <%= button_to watchlists_path, method: :post, params: { id: movie.id }, class: "search-list-btn",
+                      form: { data: { turbo_frame: "_top" } }, aria: { label: "Add #{movie.title} to your watchlist", pressed: false } do %>
+                  <i class="bi bi-bookmark-plus" aria-hidden="true"></i>
+                <% end %>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
+      </section>
+    <% end %>
+
+    <div class="search-side">
+      <% if @people.any? %>
+        <section class="search-section" data-kind="people">
+          <div class="search-section-head">
+            <h2 class="search-h">Cast &amp; crew</h2>
+            <% if @people.size > limit %>
+              <button type="button" class="search-see-all" data-kind="people" data-action="search-tabs#pick">See all <%= @people.size %></button>
+            <% end %>
+          </div>
+          <% @people.each_with_index do |person, i| %>
+            <% known_for = Array(person.known_for).map { |k| k.title || k.name }.compact.first(2).join(", ") %>
+            <div class="search-row<%= ' extra' if i >= limit %>">
+              <% if person.profile_path.present? %>
+                <%= image_tag "https://www.themoviedb.org/t/p/w185#{person.profile_path}", alt: "", class: "search-face", loading: "lazy" %>
+              <% else %>
+                <span class="search-face search-initials"><%= initials(person.name.to_s)[0, 2] %></span>
+              <% end %>
+              <span class="search-row-text">
+                <span class="search-row-title"><%= highlight(person.name, @query) %></span>
+                <span class="search-row-meta"><%= [person.known_for_department, known_for.presence].compact.join(" · ") %></span>
+              </span>
+            </div>
+          <% end %>
+        </section>
+      <% end %>
+
+      <% if @users.any? %>
+        <section class="search-section" data-kind="users">
+          <div class="search-section-head">
+            <h2 class="search-h">Users</h2>
+            <% if @users.size > limit %>
+              <button type="button" class="search-see-all" data-kind="users" data-action="search-tabs#pick">See all <%= @users.size %></button>
+            <% end %>
+          </div>
+          <% @users.each_with_index do |user, i| %>
+            <%= render "search_user", user: user, match: @query, extra: i >= limit %>
+          <% end %>
+        </section>
+      <% end %>
+    </div>
+  </div>
+</div>
