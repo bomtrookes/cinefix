@@ -68,7 +68,9 @@ main {
   h1 {
     color: white;
     font-family: 'Patua One';
-    font-size: 5rem;
+    font-size: clamp(3rem, 15vw, 5rem); // fits on phones without running off the edge
+    // keeps the gold readable over the moving posters
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.85), 0 0 2px rgba(0, 0, 0, 0.9);
   }
   h2 {
     color: white;

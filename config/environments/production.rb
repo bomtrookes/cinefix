@@ -65,6 +65,28 @@ Rails.application.configure do
 
   config.action_mailer.raise_delivery_errors = true
 
+  # Email (password reset). Set these in the server's env file:
+  #   APP_HOST       reelscore.tombrookes.dev (used to build links in emails)
+  #   SMTP_ADDRESS   e.g. smtp.gmail.com, smtp.resend.com, smtp-relay.brevo.com
+  #   SMTP_PORT      587 (default)
+  #   SMTP_USERNAME / SMTP_PASSWORD
+  #   MAIL_FROM      e.g. "ReelScore <no-reply@tombrookes.dev>"
+  # Until SMTP_ADDRESS is set, "Forgot password?" links stay hidden.
+  config.action_mailer.default_url_options = { host: ENV.fetch("APP_HOST", "reelscore.tombrookes.dev"), protocol: "https" }
+  config.x.mail_enabled = ENV["SMTP_ADDRESS"].present?
+  if config.x.mail_enabled
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+      address:              ENV["SMTP_ADDRESS"],
+      port:                 ENV.fetch("SMTP_PORT", 587).to_i,
+      domain:               ENV.fetch("APP_HOST", "reelscore.tombrookes.dev"),
+      user_name:            ENV["SMTP_USERNAME"],
+      password:             ENV["SMTP_PASSWORD"],
+      authentication:       :plain,
+      enable_starttls_auto: true
+    }
+  end
+
   # Mount Action Cable outside main process or domain.
   # config.action_cable.mount_path = nil
   # config.action_cable.url = "wss://example.com/cable"

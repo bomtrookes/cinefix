@@ -28,7 +28,7 @@
       <div class="profile-actions">
         <% if own %>
           <% unless current_user.demo? %>
-            <%= link_to "Edit profile", edit_user_registration_path, class: "profile-btn profile-btn-ghost" %>
+            <%= link_to "Settings", settings_path, class: "profile-btn profile-btn-ghost" %>
           <% end %>
         <% elsif @following %>
           <%= button_to "Unfollow", user_follow_path(@user), method: :delete, class: "profile-btn profile-btn-ghost" %>

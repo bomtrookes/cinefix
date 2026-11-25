@@ -1,0 +1,16 @@
+<%= render layout: "settings/frame", locals: { current: :email } do %>
+  <h2 class="settings-heading">Email</h2>
+  <%= form_with model: @user, url: email_settings_path, method: :patch, class: "settings-form" do |f| %>
+    <div class="settings-field">
+      <%= f.label :email %>
+      <%= f.email_field :email, class: "settings-input", autocomplete: "email", required: true %>
+      <%= settings_field_error(@user, :email) %>
+    </div>
+    <div class="settings-field">
+      <%= f.label :current_password %>
+      <%= f.password_field :current_password, class: "settings-input", autocomplete: "current-password", required: true %>
+      <%= settings_field_error(@user, :current_password) || tag.small("Needed to change your email", class: "settings-hint") %>
+    </div>
+    <%= f.submit "Save email", class: "settings-btn" %>
+  <% end %>
+<% end %>

@@ -1,18 +1,18 @@
-<h2>Forgot your password?</h2>
+<div class="auth-page">
+  <div class="auth-card">
+    <%= link_to new_session_path(resource_name), class: "settings-back" do %>
+      <i class="bi bi-chevron-left" aria-hidden="true"></i>Log in
+    <% end %>
+    <h1 class="settings-title">Reset your password</h1>
+    <p class="auth-lead">Enter your email and we'll send you a link to choose a new password.</p>
 
-<%= simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-  <%= f.error_notification %>
-
-  <div class="form-inputs">
-    <%= f.input :email,
-                required: true,
-                autofocus: true,
-                input_html: { autocomplete: "email" } %>
+    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post, class: "settings-form" }) do |f| %>
+      <div class="settings-field">
+        <%= f.label :email %>
+        <%= f.email_field :email, class: "settings-input", autofocus: true, autocomplete: "email", required: true %>
+        <%= settings_field_error(resource, :email) %>
+      </div>
+      <%= f.submit "Send reset link", class: "settings-btn settings-btn-full" %>
+    <% end %>
   </div>
-
-  <div class="form-actions">
-    <%= f.button :submit, "Send me reset password instructions" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</div>

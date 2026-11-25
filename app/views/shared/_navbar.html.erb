@@ -1,7 +1,7 @@
 <header class="navbar d-flex justify-content-between p-3" data-controller="navigation">
   <%= link_to movies_path, class: "navbar-brand-link", aria: { label: "ReelScore home" } do %>
     <img src="/icons/icon-192.png" alt="" class="navbar-icon" width="32" height="32">
-    <p class="navbar-wordmark">R<small>EEL</small>S<small>CORE</small></p>
+    <p class="navbar-wordmark">R<small>EEL</small><span class="wordmark-gold">S<small>CORE</small></span></p>
   <% end %>
   <button type="button" class="navbar-menu" aria-label="Open menu" aria-controls="site-menu" aria-expanded="false"
           data-navigation-target="button" data-action="navigation#open">
@@ -13,7 +13,7 @@
     <div class="site-menu-head">
       <%= link_to movies_path, class: "navbar-brand-link", tabindex: -1, aria: { hidden: true } do %>
         <img src="/icons/icon-192.png" alt="" class="navbar-icon" width="32" height="32">
-        <p class="navbar-wordmark">R<small>EEL</small>S<small>CORE</small></p>
+        <p class="navbar-wordmark">R<small>EEL</small><span class="wordmark-gold">S<small>CORE</small></span></p>
       <% end %>
       <button type="button" class="site-menu-close" aria-label="Close menu" data-action="navigation#close">
         <i class="bi bi-x-lg" aria-hidden="true"></i>

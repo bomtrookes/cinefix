@@ -51,6 +51,9 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
 
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  # Emails aren't sent in development; they're printed in the server log.
+  config.action_mailer.delivery_method = :test
+  config.x.mail_enabled = true
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log

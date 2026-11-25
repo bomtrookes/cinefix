@@ -1,9 +1,20 @@
-<div class="container my-5">
-  <h2 class="mb-3">Add a friend</h2>
+<div class="auth-page">
+  <div class="auth-card">
+    <h1 class="settings-title">Add a friend</h1>
+    <p class="auth-lead">They'll get a temporary password, and choose their own the first time they log in.</p>
 
-  <%= simple_form_for [:admin, @user], html: { data: { turbo: false } } do |f| %>
-    <%= f.input :email %>
-    <%= f.input :username %>
-    <%= f.button :submit, "Create account", class: "btn btn-dark" %>
-  <% end %>
+    <%= form_with model: [:admin, @user], class: "settings-form", data: { turbo: false } do |f| %>
+      <div class="settings-field">
+        <%= f.label :email %>
+        <%= f.email_field :email, class: "settings-input", required: true, autofocus: true %>
+        <%= settings_field_error(@user, :email) %>
+      </div>
+      <div class="settings-field">
+        <%= f.label :username %>
+        <%= f.text_field :username, class: "settings-input", required: true %>
+        <%= settings_field_error(@user, :username) || tag.small("They can change this on their first login", class: "settings-hint") %>
+      </div>
+      <%= f.submit "Create account", class: "settings-btn settings-btn-full" %>
+    <% end %>
+  </div>
 </div>

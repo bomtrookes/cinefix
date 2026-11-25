@@ -1,0 +1,24 @@
+<%= render layout: "settings/frame", locals: { current: :profile } do %>
+  <h2 class="settings-heading">Profile</h2>
+  <%= form_with model: @user, url: profile_settings_path, method: :patch, class: "settings-form",
+                data: { controller: "avatar-preview" } do |f| %>
+    <div class="settings-photo">
+      <%= settings_avatar(@user, big: true) %>
+      <div class="settings-photo-pick">
+        <%= f.label :avatar, "Choose photo", class: "settings-btn settings-btn-ghost" %>
+        <%= f.file_field :avatar, accept: "image/*", class: "visually-hidden",
+                         data: { avatar_preview_target: "input", action: "avatar-preview#pick" } %>
+        <small data-avatar-preview-target="name">JPG or PNG</small>
+      </div>
+    </div>
+    <%= settings_field_error(@user, :avatar) %>
+
+    <div class="settings-field">
+      <%= f.label :username %>
+      <%= f.text_field :username, class: "settings-input", autocomplete: "username", required: true %>
+      <%= settings_field_error(@user, :username) || tag.small("Shown on your profile and in friends' feeds", class: "settings-hint") %>
+    </div>
+
+    <%= f.submit "Save profile", class: "settings-btn" %>
+  <% end %>
+<% end %>
