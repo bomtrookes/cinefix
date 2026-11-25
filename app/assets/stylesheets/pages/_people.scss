@@ -1,0 +1,253 @@
+// Person page (people#show) and the Cast / Crew sections on the movie page.
+// Poster grid reuses .watched-grid / .watched-card from _feed.scss.
+$p-gold: #f2b632;
+$p-ink: #161616;
+$p-panel: #222222;
+$p-line: #3a3a3a;
+$p-muted: #a7a7a7;
+
+// ---------- Person page ----------
+.person-head {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 4px 0 14px;
+  h1 { font-family: 'Patua One', Georgia, serif; font-size: 2rem; line-height: 1.1; margin: 0; }
+}
+.person-photo {
+  width: 96px;
+  height: 96px;
+  flex: none;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #2b2b2b;
+  border: 2px solid $p-gold;
+}
+.person-initials {
+  display: grid;
+  place-items: center;
+  font-size: 28px;
+  font-weight: 600;
+  color: #e0e0e0;
+}
+.person-id { min-width: 0; }
+.person-dept {
+  color: $p-gold;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-top: 4px;
+}
+.person-born {
+  display: flex;
+  flex-direction: column;
+  color: $p-muted;
+  font-size: 13px;
+  line-height: 1.4;
+  margin-top: 4px;
+}
+.person-bio {
+  font-size: 14px;
+  line-height: 1.55;
+  color: #dcdcdc;
+}
+.person-bio-text {
+  max-height: 4.65em; // three lines
+  overflow: hidden;
+  p + p { margin-top: .8em; }
+  &.is-open { max-height: none; }
+}
+.person-bio-more {
+  background: none;
+  border: 0;
+  padding: 0;
+  margin-top: 4px;
+  color: $p-gold;
+  font-size: 13px;
+}
+.person-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 16px;
+  background: $p-panel;
+  border: 1px solid $p-line;
+  border-radius: 14px;
+  div { padding: 10px 6px; text-align: center; border-left: 1px solid $p-line; }
+  div:first-child { border-left: 0; }
+  b { display: block; font-size: 18px; line-height: 1.3; font-variant-numeric: tabular-nums; }
+  small { color: $p-muted; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; }
+  .is-gold { color: $p-gold; }
+}
+.person-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 20px 0 12px;
+}
+.person-jobs { display: flex; flex-wrap: wrap; gap: 6px; }
+.person-job {
+  font-size: 13px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid $p-line;
+  background: $p-panel;
+  color: $p-muted;
+  span { opacity: .7; font-variant-numeric: tabular-nums; }
+  &:hover { color: #fff; }
+  &[aria-pressed="true"] { background: $p-gold; border-color: $p-gold; color: $p-ink; font-weight: 600; }
+}
+.person-films-h {
+  font-family: 'Patua One', Georgia, serif;
+  font-size: 1.3rem;
+  margin: 0;
+  span { color: $p-muted; font-family: system-ui, sans-serif; font-size: 14px; }
+}
+.person-sort {
+  align-self: flex-end;
+  font-size: 12px;
+  color: $p-muted;
+  button { background: none; border: 0; padding: 2px 4px; color: $p-muted; }
+  button[aria-pressed="true"] { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+}
+.person-grid[hidden] { display: none; }
+.person-seen, .person-soon {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 1px 6px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, .5);
+}
+.person-seen { background: #2c3b31; color: #7fdca6; border: 1px solid #4caf7a; }
+.person-soon { background: rgba(0, 0, 0, .75); color: #fff; border: 1px solid $p-line; }
+.person-empty { margin-top: 20px; }
+
+// ---------- Movie page: genres, cast, crew ----------
+.film-directors a {
+  color: #fff;
+  text-decoration: none;
+  &:hover { color: $p-gold; }
+}
+.genre-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 0 .5rem .75rem;
+}
+.genre-chip {
+  font-size: 12px;
+  border: 1px solid $p-line;
+  border-radius: 999px;
+  padding: 2px 10px;
+  color: $p-muted;
+}
+.credits { margin: 8px 0 18px; }
+.credits-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0 .5rem 8px;
+  h2 { font-family: 'Patua One', Georgia, serif; font-size: 1.3rem; margin: 0; }
+}
+.credits-more-link {
+  background: none;
+  border: 0;
+  padding: 0;
+  color: $p-gold;
+  font-size: 13px;
+}
+.cast-row {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding: 0 .5rem 4px;
+  scrollbar-width: none;
+}
+.cast-card {
+  width: 84px;
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  text-align: center;
+  color: #fff;
+  text-decoration: none;
+  b { font-size: 12px; font-weight: 600; line-height: 1.25; }
+  small { font-size: 11px; color: $p-muted; line-height: 1.25; }
+  &:hover, &:focus-visible {
+    color: #fff;
+    .cast-face { border-color: $p-gold; }
+    b { color: $p-gold; }
+  }
+}
+.cast-face {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #2b2b2b;
+  border: 2px solid transparent;
+  transition: border-color .15s;
+}
+.cast-initials {
+  display: grid;
+  place-items: center;
+  font-size: 20px;
+  font-weight: 600;
+  color: #e0e0e0;
+}
+// "See all" turns the row into a wrapping grid with everyone in it
+.cast-card.extra { display: none; }
+.credits.is-open {
+  .cast-row { flex-wrap: wrap; overflow-x: visible; row-gap: 16px; }
+  .cast-card.extra { display: flex; }
+}
+.crew-list {
+  margin: 0 .5rem;
+  background: $p-panel;
+  border: 1px solid $p-line;
+  border-radius: 14px;
+  overflow: hidden;
+}
+.crew-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  column-gap: 10px;
+  align-items: center;
+  padding: 10px 14px;
+  border-top: 1px solid $p-line;
+  color: #fff;
+  text-decoration: none;
+  &:first-child { border-top: 0; }
+  i { grid-column: 2; grid-row: 1 / 3; color: $p-muted; }
+  &:hover, &:focus-visible {
+    color: #fff;
+    .crew-name { color: $p-gold; }
+    i { color: $p-gold; }
+  }
+}
+.crew-job {
+  grid-column: 1;
+  min-width: 0;
+  font-size: 11px;
+  color: $p-muted;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+.crew-name { grid-column: 1; min-width: 0; font-size: 14px; font-weight: 600; }
+.crew-row.extra { display: none; }
+.credits.is-open .crew-row.extra { display: grid; }
+.crew-more {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background: none;
+  border: 0;
+  border-top: 1px solid $p-line;
+  color: $p-gold;
+  font-size: 13px;
+}

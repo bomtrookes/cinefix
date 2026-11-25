@@ -71,6 +71,7 @@
           <% @people.each_with_index do |person, i| %>
             <% known_for = Array(person.known_for).map { |k| k.title || k.name }.compact.first(2).join(", ") %>
             <div class="search-row<%= ' extra' if i >= limit %>">
+              <%= link_to person_path(person.id), class: "search-row-main", data: { turbo_frame: "_top" } do %>
               <% if person.profile_path.present? %>
                 <%= image_tag "https://www.themoviedb.org/t/p/w185#{person.profile_path}", alt: "", class: "search-face", loading: "lazy" %>
               <% else %>
@@ -80,6 +81,8 @@
                 <span class="search-row-title"><%= highlight(person.name, @query) %></span>
                 <span class="search-row-meta"><%= [person.known_for_department, known_for.presence].compact.join(" · ") %></span>
               </span>
+              <i class="bi bi-chevron-right search-chevron" aria-hidden="true"></i>
+              <% end %>
             </div>
           <% end %>
         </section>

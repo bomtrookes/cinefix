@@ -9,14 +9,15 @@
 <section class="film__header d-flex justify-content-between p-2">
   <div>
     <h1><%= @movie.title %></h1>
-    <small>DIRECTED BY</small>
-    <div class="mb-2">
-      <% @tmdb_crew.each do |crew| %>
-        <% if crew.job == "Director" %>
-          <%= crew.name %><br>
+    <% directors = @tmdb_crew.select { |crew| crew.job == "Director" }.uniq(&:id) %>
+    <% if directors.any? %>
+      <small>DIRECTED BY</small>
+      <div class="mb-2 film-directors">
+        <% directors.each do |crew| %>
+          <%= link_to crew.name, person_path(crew.id) %><br>
         <% end %>
-      <% end %>
-    </div>
+      </div>
+    <% end %>
     <div class="d-flex">
       <small><%= format_date(@movie.release_date) %></small>
       <small><%= @movie.runtime %> mins</small>
@@ -32,6 +33,14 @@
   <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2<%= @movie.poster_path %>" alt="" class="poster-show">
 </section>
 
+<% if Array(@movie.genres).any? %>
+  <div class="genre-chips">
+    <% @movie.genres.each do |genre| %>
+      <span class="genre-chip"><%= genre.name %></span>
+    <% end %>
+  </div>
+<% end %>
+
 <%= render "actions" %>
 
 <section class="p-2">
@@ -41,64 +50,15 @@
   <p><%= @movie.overview %></p>
 </section>
 
-<div data-controller="tabs">
-  <header class="tab-options">
-    <small data-tabs-target="oneTab" class="selected" data-action="click->tabs#showOne">Cast</small>
-    <small data-tabs-target="twoTab" data-action="click->tabs#showTwo">Crew</small>
-    <small data-tabs-target="threeTab" data-action="click->tabs#showThree">Genres</small>
-  </header>
+<%= render "credits" %>
 
-  <section class="genres" data-tabs-target="three">
-    <h4>Genres</h4>
-    <% @movie.genres.each do |genre| %>
-      <%= genre.name %>
-    <% end %>
-  </section>
-
-  <section class="cast" data-tabs-target="one">
-    <% @tmdb_cast.each do |cast| %>
-      <div class="person-card">
-        <% if cast.profile_path.present? %>
-          <img class="person-round" src="https://www.themoviedb.org/t/p/w276_and_h350_face/<%= cast.profile_path %>" alt="" loading="lazy">
-        <% else %>
-          <div class="text-card">
-            <p><%= initials(cast.name) %></p>
-          </div>
-        <% end %>
-        <p>
-          <span><%= cast.name %></span><br>
-          <%= cast.character %>
-        </p>
-      </div>
-    <% end %>
-  </section>
-
-  <section class="crew" data-tabs-target="two">
-    <% @tmdb_crew.each do |crew| %>
-      <div class="person-card">
-        <% if crew.profile_path.present? %>
-          <img class="person-round" src="https://www.themoviedb.org/t/p/w276_and_h350_face/<%= crew.profile_path %>" alt="" loading="lazy">
-        <% else %>
-          <div class="text-card">
-            <p><%= initials(crew.name) %></p>
-          </div>
-        <% end %>
-        <p>
-          <span><%= crew.name %></span><br>
-          <%= crew.job %>
-        </p>
-      </div>
-    <% end %>
-  </section>
-
-  <section class="similar">
-    <h6>Movies Like This</h6>
-    <div class="d-flex movie-scroll">
-      <% @tmdb_similar.first(10).each do |movie| %>
-        <%= link_to movie_path(movie.id) do %>
-          <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2<%= movie.poster_path %>" alt="" class="poster-show" loading="lazy">
-        <% end %>
+<section class="similar">
+  <h6>Movies Like This</h6>
+  <div class="d-flex movie-scroll">
+    <% @tmdb_similar.first(10).each do |movie| %>
+      <%= link_to movie_path(movie.id) do %>
+        <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2<%= movie.poster_path %>" alt="" class="poster-show" loading="lazy">
       <% end %>
-    </div>
-  </section>
-</div>
+    <% end %>
+  </div>
+</section>

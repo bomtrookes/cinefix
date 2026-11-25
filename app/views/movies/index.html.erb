@@ -6,7 +6,6 @@
     <%= search_field_tag :query, @query,
           placeholder: "Films, cast & crew or users",
           autocomplete: "off",
-          autofocus: @query.blank?,
           data: { search_target: "input", action: "input->search#type" } %>
     <button type="button" class="search-clear" aria-label="Clear search"
             data-search-target="clear" data-action="search#clear" hidden>
