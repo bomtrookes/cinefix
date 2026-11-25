@@ -7,7 +7,7 @@
       <%# if activity[:user].avatar %>
         <%#= image_tag activity[:user].avatar, id: "feed-avatar" %>
         <div class="d-flex flex-column justify-content-center">
-          <p><%= activity[:user].username %> gave <%= tmdb_movie(activity[:rating].api_id).title %> a rating of <%= activity[:rating].total_score %>.</p>
+          <p><%= activity[:user].username %> gave <%= @films[activity[:rating].api_id]&.title || "a film" %> a rating of <%= activity[:rating].total_score %>.</p>
           <% if activity[:rating].review.present? %>
             <% if activity[:rating].spoilers? %>
               <p class="feed-review is-spoiler">Wrote a review (contains spoilers)</p>

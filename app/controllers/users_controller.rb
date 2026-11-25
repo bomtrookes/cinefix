@@ -20,8 +20,10 @@ class UsersController < ApplicationController
     else
       @user = current_user
     end
-      @ratings = Rating.where(user_id: @user).sort_by { |r| -r.total_score }
-      @recent = @ratings.sort_by { |r| -r.created_at.to_i }.first(4)
+    @ratings = @user.ratings.to_a.sort_by { |r| -r.total_score }
+    @recent = @ratings.sort_by { |r| -r.created_at.to_i }.first(4)
+    @films = FilmDetail.for(@ratings.map(&:api_id))
+    @following = current_user.followings.exists?(@user.id)
   end
 
   def edit

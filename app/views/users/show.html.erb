@@ -8,7 +8,7 @@
     <div class="d-flex flex-column">
       <h1><%= @user.username %></h1>
 <% if @user != current_user %>
-  <% if current_user.followings.include?(@user) %>
+  <% if @following %>
     <%= button_to "Unfollow", user_follow_path(@user), class: "btn btn-danger", method: :delete %>
   <% else %>
     <%= button_to "Follow", user_follows_path(@user), class: "btn btn-success", method: :post %>
@@ -68,9 +68,8 @@
     <h3>Recent Ratings</h3>
     <div class="movie-grid">
       <% @recent.each do |movie| %>
-        <%# <p><%= link_to tmdb_movie(movie.api_id).title, movie_path(movie.api_id) %>
         <%= link_to movie_path(movie.api_id) do %>
-              <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2<%= tmdb_movie(movie.api_id).poster_path %>">
+              <img src="<%= @films[movie.api_id]&.poster_url %>" alt="<%= @films[movie.api_id]&.title %>">
               <span><%= movie.total_score %></span>
         <% end %>
       <% end %>
@@ -95,8 +94,9 @@
           <% @ratings.each_with_index do |rating, index| %>
             <tr>
               <td><%= index + 1 %></td>
-              <td><%= link_to tmdb_movie(rating.api_id).title, movie_path(rating.api_id) %></td>
-              <td><%= format_date(tmdb_movie(rating.api_id).release_date) %></td>
+              <td><% film = @films[rating.api_id] %>
+              <%= link_to film&.title || "Unknown film", movie_path(rating.api_id) %></td>
+              <td><%= film&.year %></td>
               <td><%= link_to rating.total_score, user_rating_path(@user, rating) %></td>
             </tr>
           <% end %>

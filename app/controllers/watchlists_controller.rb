@@ -3,7 +3,8 @@ class WatchlistsController < ApplicationController
 
   def index
     @user = User.find(params[:user_id])
-     @watchlists = Watchlist.where(user_id: @user.id).order(created_at: :desc)
+    @watchlists = Watchlist.where(user_id: @user.id).order(created_at: :desc).to_a
+    @films = FilmDetail.for(@watchlists.map(&:api_id))
   end
 
   def create
