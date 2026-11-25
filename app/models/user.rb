@@ -24,7 +24,8 @@ class User < ApplicationRecord
   end
 
   def feed_activities
-    ratings = Rating.where(user_id: followings.select(:id)).order(created_at: :desc).includes(:user)
+    ratings = Rating.where(user_id: followings.select(:id)).order(created_at: :desc)
+                    .includes(user: { avatar_attachment: :blob })
     ratings.map { |rating| { user: rating.user, rating: rating } }
   end
 
