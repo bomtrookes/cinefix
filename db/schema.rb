@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2026_11_21_120000) do
+ActiveRecord::Schema[7.0].define(version: 2026_11_25_010100) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -61,11 +61,23 @@ ActiveRecord::Schema[7.0].define(version: 2026_11_21_120000) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "film_details", force: :cascade do |t|
+    t.integer "api_id", null: false
+    t.string "title", null: false
+    t.date "release_date"
+    t.string "poster_path"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["api_id"], name: "index_film_details_on_api_id", unique: true
+  end
+
   create_table "follows", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "follower_id"
     t.integer "followed_user_id"
+    t.index ["followed_user_id"], name: "index_follows_on_followed_user_id"
+    t.index ["follower_id", "followed_user_id"], name: "index_follows_on_follower_id_and_followed_user_id"
   end
 
   create_table "movies", force: :cascade do |t|
@@ -98,6 +110,7 @@ ActiveRecord::Schema[7.0].define(version: 2026_11_21_120000) do
     t.text "review"
     t.boolean "spoilers", default: false, null: false
     t.string "film_type", default: "feature", null: false
+    t.index ["user_id", "api_id"], name: "index_ratings_on_user_id_and_api_id"
     t.index ["user_id"], name: "index_ratings_on_user_id"
   end
 
@@ -123,6 +136,7 @@ ActiveRecord::Schema[7.0].define(version: 2026_11_21_120000) do
     t.boolean "watched"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id", "api_id"], name: "index_watched_films_on_user_id_and_api_id"
     t.index ["user_id"], name: "index_watched_films_on_user_id"
   end
 
@@ -131,6 +145,7 @@ ActiveRecord::Schema[7.0].define(version: 2026_11_21_120000) do
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
     t.integer "api_id"
+    t.index ["user_id", "api_id"], name: "index_watchlists_on_user_id_and_api_id"
     t.index ["user_id"], name: "index_watchlists_on_user_id"
   end
 

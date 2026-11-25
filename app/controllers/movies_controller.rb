@@ -6,9 +6,10 @@ class MoviesController < ApplicationController
     @following_ids = current_user ? current_user.followings.pluck(:id) : []
 
     if @query.present?
-      @movies = Array(Tmdb::Search.movie(@query)["results"]).first(20)
-      @people = Array(Tmdb::Search.person(@query)["results"]).first(20)
-      @users  = User.search_users(@query).limit(20).to_a
+      # TMDB orders by popularity; SearchRank moves close name matches to the top.
+      @movies = SearchRank.sort(Array(Tmdb::Search.movie(@query)["results"]).first(20), @query) { |m| [m.title, m.original_title] }
+      @people = SearchRank.sort(Array(Tmdb::Search.person(@query)["results"]).first(20), @query, &:name)
+      @users  = SearchRank.sort(User.search_users(@query).limit(20).to_a, @query, &:username)
 
       movie_ids = @movies.map(&:id)
       if current_user

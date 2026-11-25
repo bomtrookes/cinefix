@@ -8,7 +8,7 @@
       <div class="watchlist mb-3">
         <% @watchlists.each do |movie| %>
           <%= link_to movie_path(movie.api_id) do %>
-            <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2<%= Tmdb::Movie.detail(movie.api_id).poster_path %>" alt="">
+            <img src="<%= @films[movie.api_id]&.poster_url %>" alt="<%= @films[movie.api_id]&.title %>">
           <% end %>
         <% end %>
       </div>

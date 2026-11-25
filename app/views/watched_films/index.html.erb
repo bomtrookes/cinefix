@@ -3,7 +3,7 @@
   <% @watched_films.each do |film| %>
     <%= link_to movie_path(film.api_id), style: "text-decoration:none" do %>
       <div class="card mb-1 p-1" style="color:black">
-        <h4><%= tmdb_movie(film.api_id).title %></h4>
+        <h4><%= @films[film.api_id]&.title || "Unknown film" %></h4>
         <p><%= film.created_at.strftime("%d/%m/%y") %></p>
       </div>
     <% end %>

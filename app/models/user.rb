@@ -24,8 +24,7 @@ class User < ApplicationRecord
   end
 
   def feed_activities
-    followings = self.followings.includes(:ratings)
-    ratings = Rating.where(user_id: followings.map(&:id)).order(created_at: :desc).includes(:user)
+    ratings = Rating.where(user_id: followings.select(:id)).order(created_at: :desc).includes(:user)
     ratings.map { |rating| { user: rating.user, rating: rating } }
   end
 
