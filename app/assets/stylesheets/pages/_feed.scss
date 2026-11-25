@@ -1,4 +1,5 @@
-// Feed (activities#feed) and Watched (watched_films#index).
+// Feed (activities#feed), Watched (watched_films#index) and Watchlist (watchlists#index).
+// Watched and Watchlist share the .watched-* poster grid.
 // Same dark panels and gold accent as _search.scss and _ratings.scss.
 $l-gold: #f2b632;
 $l-ink: #161616;

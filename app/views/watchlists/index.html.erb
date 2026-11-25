@@ -1,18 +1,33 @@
-<div class="container mt-3">
-  <% if @user == current_user %>
-    <h1>Your Watchlist</h1>
+<div class="list-page">
+  <header class="list-head">
+    <h1><%= @user == current_user ? "Watchlist" : "#{@user.username}’s watchlist" %></h1>
+    <p><%= pluralize(@watchlists.size, "film") %> to watch</p>
+  </header>
+
+  <% if @watchlists.empty? %>
+    <div class="list-empty">
+      <i class="bi bi-bookmark"></i>
+      <p>No films on this watchlist yet.</p>
+      <% if @user == current_user %>
+        <%= link_to "Find a film", movies_path, class: "list-empty-btn" %>
+      <% end %>
+    </div>
   <% else %>
-    <h1>Watchlist | <%= @user.username %></h1>
-  <% end %>
-    <% if @watchlists.present? %>
-      <div class="watchlist mb-3">
-        <% @watchlists.each do |movie| %>
-          <%= link_to movie_path(movie.api_id) do %>
-            <img src="<%= @films[movie.api_id]&.poster_url %>" alt="<%= @films[movie.api_id]&.title %>">
-          <% end %>
+    <div class="watched-grid">
+      <% @watchlists.each do |item| %>
+        <% film = @films[item.api_id] %>
+        <%= link_to movie_path(item.api_id), class: "watched-card" do %>
+          <span class="watched-poster">
+            <% if film&.poster_url %>
+              <img src="<%= film.poster_url %>" alt="" loading="lazy">
+            <% else %>
+              <span class="watched-poster-blank"><%= film&.title || "Unknown film" %></span>
+            <% end %>
+          </span>
+          <span class="watched-title"><%= film&.title || "Unknown film" %></span>
+          <small class="watched-date">Added <%= item.created_at.strftime(item.created_at.year == Date.current.year ? "%-d %b" : "%-d %b %Y") %></small>
         <% end %>
-      </div>
-    <% else %>
-      <p class="py-3">No movies here yet.</p>
-    <% end %>
+      <% end %>
+    </div>
+  <% end %>
 </div>
