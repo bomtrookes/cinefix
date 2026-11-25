@@ -14,7 +14,10 @@ class SettingsController < ApplicationController
   def profile; end
 
   def update_profile
-    if @user.update(profile_params)
+    attrs = with_processed_avatar(profile_params)
+    return render(:profile, status: :unprocessable_entity) unless attrs
+
+    if @user.update(attrs)
       redirect_to profile_settings_path, notice: "Profile updated."
     else
       render :profile, status: :unprocessable_entity
@@ -62,7 +65,9 @@ class SettingsController < ApplicationController
   def update_welcome
     return redirect_to(root_path) unless @user.must_change_password?
 
-    attrs = welcome_params
+    attrs = with_processed_avatar(welcome_params)
+    return render(:welcome, status: :unprocessable_entity) unless attrs
+
     if attrs[:password].blank?
       @user.assign_attributes(attrs.except(:current_password, :password, :password_confirmation))
       @user.errors.add(:password, "can't be blank")
@@ -84,6 +89,18 @@ class SettingsController < ApplicationController
   # doesn't leak into the navbar, which reads current_user.
   def set_user
     @user = User.find(current_user.id)
+  end
+
+  # Swaps the uploaded photo for a small processed copy. Returns nil (with the
+  # error on @user) when the file is too big or isn't a photo.
+  def with_processed_avatar(attrs)
+    return attrs if attrs[:avatar].blank?
+
+    attrs.merge(avatar: AvatarUpload.process(attrs[:avatar]))
+  rescue AvatarUpload::Error => e
+    @user.assign_attributes(attrs.slice(:username))
+    @user.errors.add(:avatar, e.message)
+    nil
   end
 
   def profile_params
