@@ -1,4 +1,4 @@
-# The title, release date and poster of a TMDB film, stored locally.
+# The title, release date, poster and genres of a TMDB film, stored locally.
 #
 # List pages (profile, ratings, watchlist, watched, feed) used to ask TMDB
 # for every film on every page load, one request after another. Now they
@@ -12,7 +12,9 @@ class FilmDetail < ApplicationRecord
   # Returns { api_id => FilmDetail } for the given TMDB ids.
   def self.for(api_ids)
     ids = Array(api_ids).compact.map(&:to_i).uniq
-    found = where(api_id: ids).index_by(&:api_id)
+    # Rows saved before genres were stored have genres = NULL: refetch those
+    # once so they pick up their genres.
+    found = where(api_id: ids).where.not(genres: nil).index_by(&:api_id)
     missing = ids - found.keys
     return found if missing.empty?
 
@@ -33,7 +35,8 @@ class FilmDetail < ApplicationRecord
 
     { api_id: id, title: movie.title,
       release_date: movie.release_date.presence,
-      poster_path: movie.poster_path }
+      poster_path: movie.poster_path,
+      genres: Array(movie.genres).map { |genre| genre.name }.compact }
   rescue StandardError => e
     Rails.logger.warn("FilmDetail: TMDB lookup failed for #{id}: #{e.message}")
     nil
@@ -42,6 +45,10 @@ class FilmDetail < ApplicationRecord
 
   def year
     release_date&.year
+  end
+
+  def genre_names
+    genres || []
   end
 
   def poster_url

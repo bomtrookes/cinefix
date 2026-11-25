@@ -36,3 +36,6 @@ application.register("person", PersonController)
 
 import RevealController from "./reveal_controller"
 application.register("reveal", RevealController)
+
+import ProfileController from "./profile_controller"
+application.register("profile", ProfileController)
