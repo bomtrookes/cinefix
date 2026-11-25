@@ -5,6 +5,8 @@ class WatchedFilmsController < ApplicationController
     @user = User.find(params[:user_id])
     @watched_films = WatchedFilm.where(user_id: @user.id).order(created_at: :desc).to_a
     @films = FilmDetail.for(@watched_films.map(&:api_id))
+    @scores = @user.ratings.where(api_id: @watched_films.map(&:api_id))
+                   .to_h { |rating| [rating.api_id, rating.total_score] }
   end
 
   def watched

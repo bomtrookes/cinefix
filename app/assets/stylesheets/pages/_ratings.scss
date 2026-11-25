@@ -311,11 +311,3 @@ $rate-muted: #a7a7a7;
   .rating-bars li { grid-template-columns: 7.5rem 1fr 2.2rem; font-size: 13px; }
 }
 
-// ---------- Feed ----------
-.feed-review {
-  color: #444;
-  font-style: italic;
-  margin: 0 0 4px;
-  font-size: 14px;
-  &.is-spoiler { font-style: normal; color: #777; }
-}
