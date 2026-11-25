@@ -13,7 +13,7 @@ RUN gem install -N bundler -v 2.3.20
 
 # Install base packages needed to install nodejs
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl libjemalloc2 postgresql-client && \
+    apt-get install --no-install-recommends -y curl libjemalloc2 libvips42 postgresql-client && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Set production environment

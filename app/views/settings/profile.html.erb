@@ -6,9 +6,9 @@
       <%= settings_avatar(@user, big: true) %>
       <div class="settings-photo-pick">
         <%= f.label :avatar, "Choose photo", class: "settings-btn settings-btn-ghost" %>
-        <%= f.file_field :avatar, accept: "image/*", class: "visually-hidden",
+        <%= f.file_field :avatar, accept: "image/jpeg,image/png,image/webp,image/heic,image/heif", class: "visually-hidden",
                          data: { avatar_preview_target: "input", action: "avatar-preview#pick" } %>
-        <small data-avatar-preview-target="name">JPG or PNG</small>
+        <small data-avatar-preview-target="name">JPG, PNG or HEIC, up to 10 MB</small>
       </div>
     </div>
     <%= settings_field_error(@user, :avatar) %>
