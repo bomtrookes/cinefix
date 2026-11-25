@@ -39,3 +39,6 @@ application.register("reveal", RevealController)
 
 import ProfileController from "./profile_controller"
 application.register("profile", ProfileController)
+
+import AvatarPreviewController from "./avatar_preview_controller"
+application.register("avatar-preview", AvatarPreviewController)

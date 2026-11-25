@@ -1,0 +1,300 @@
+// Settings menu (settings#*), first-login welcome, log in, password reset
+// and the admin "Add a friend" pages. Same dark panels and gold as _profile.scss.
+$s-gold: #f2b632;
+$s-ink: #161616;
+$s-panel: #222222;
+$s-card: #1d1d1d;
+$s-line: #3a3a3a;
+$s-muted: #a7a7a7;
+$s-danger: #e5604f;
+$s-serif: 'Patua One', Georgia, serif;
+
+// ---------- Layout ----------
+.settings-page {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 20px 16px 48px;
+  @media (min-width: 768px) {
+    display: grid;
+    grid-template-columns: 260px minmax(0, 1fr);
+    gap: 40px;
+    padding: 32px 24px 56px;
+  }
+}
+// Phones: the menu is a page of its own; sections hide it and show a back link.
+.settings-side { display: flex; flex-direction: column; gap: 16px; }
+.settings-page:not(.is-menu) .settings-side { display: none; }
+@media (min-width: 768px) {
+  .settings-page:not(.is-menu) .settings-side { display: flex; }
+  .settings-page.is-menu { grid-template-columns: minmax(0, 420px); }
+  .settings-back { display: none !important; }
+}
+.settings-main { display: flex; flex-direction: column; gap: 16px; min-width: 0; max-width: 440px; }
+
+.settings-title {
+  font-family: $s-serif;
+  font-weight: 400;
+  font-size: 1.65rem;
+  line-height: 1.15;
+  margin: 0;
+  @media (min-width: 768px) { font-size: 2rem; }
+}
+.settings-heading {
+  font-family: $s-serif;
+  font-weight: 400;
+  font-size: 1.5rem;
+  line-height: 1.15;
+  margin: 0;
+}
+.settings-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: $s-muted;
+  font-size: 14px;
+  text-decoration: none;
+  align-self: flex-start;
+  &:hover, &:focus { color: $s-gold; }
+}
+
+// ---------- Avatar ----------
+.settings-who {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  div { min-width: 0; line-height: 1.3; }
+  strong, small { display: block; overflow-wrap: anywhere; }
+  small { color: $s-muted; font-size: 12px; }
+}
+.settings-avatar {
+  width: 52px;
+  height: 52px;
+  flex: none;
+  border-radius: 50%;
+  border: 2px solid $s-gold;
+  background: #2b2b2b;
+  object-fit: cover;
+}
+.settings-avatar-big { width: 88px; height: 88px; }
+.settings-initials {
+  display: grid;
+  place-items: center;
+  font-family: $s-serif;
+  font-size: 22px;
+  color: #fff;
+  &.settings-avatar-big { font-size: 34px; }
+}
+
+// ---------- Menu ----------
+.settings-menu {
+  background: $s-panel;
+  border: 1px solid $s-line;
+  border-radius: 14px;
+  overflow: hidden;
+}
+.settings-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  color: #fff;
+  text-decoration: none;
+  & + & { border-top: 1px solid $s-line; }
+  &:hover, &:focus-visible { background: #2a2a2a; color: #fff; }
+  &.is-current { background: #29261d; }
+}
+.settings-row-icon {
+  width: 34px;
+  height: 34px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  background: #2d2a22;
+  color: $s-gold;
+  font-size: 16px;
+}
+.settings-row-text {
+  flex: 1;
+  min-width: 0;
+  line-height: 1.3;
+  strong { display: block; font-weight: 600; }
+  small { display: block; color: $s-muted; font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+}
+.settings-row-chev { color: $s-muted; }
+
+// ---------- Delete ----------
+.settings-delete { display: flex; flex-direction: column; gap: 10px; }
+.settings-delete-link {
+  align-self: flex-start;
+  background: none;
+  border: 0;
+  padding: 4px 0;
+  color: $s-danger;
+  font-size: 14px;
+  cursor: pointer;
+  &:hover, &:focus-visible { text-decoration: underline; }
+}
+.settings-delete-confirm {
+  display: none;
+  background: #2a1b19;
+  border: 1px solid #5a2f29;
+  border-radius: 12px;
+  padding: 12px;
+  p { color: #f0c9c3; font-size: 13px; line-height: 1.5; margin: 0 0 10px; }
+}
+.settings-delete.is-open .settings-delete-confirm { display: block; }
+.settings-delete.is-open .settings-delete-link { color: $s-muted; }
+
+// ---------- Forms ----------
+.settings-form { display: flex; flex-direction: column; gap: 16px; }
+.settings-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  label { font-size: 14px; font-weight: 500; margin: 0; }
+}
+.settings-label-row { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.settings-input {
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid $s-line;
+  background: $s-card;
+  color: #fff;
+  font-size: 16px; // stops iOS zooming in on focus
+  &:focus { outline: none; border-color: $s-gold; box-shadow: 0 0 0 3px rgba($s-gold, .2); }
+}
+.settings-hint { color: $s-muted; font-size: 12px; }
+.settings-error { color: #ff8a7a; font-size: 12px; }
+.settings-link {
+  background: none;
+  border: 0;
+  padding: 0;
+  color: $s-gold;
+  font-size: 13px;
+  text-decoration: none;
+  cursor: pointer;
+  &:hover, &:focus-visible { color: $s-gold; text-decoration: underline; }
+}
+.settings-forgot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+  padding-top: 12px;
+  border-top: 1px solid #262626;
+  color: $s-muted;
+  font-size: 13px;
+  form { display: inline; }
+}
+.settings-photo { display: flex; align-items: center; gap: 16px; }
+.settings-photo-pick {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  small { color: $s-muted; font-size: 12px; overflow-wrap: anywhere; }
+}
+.settings-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: $s-gold;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  &::after { content: ""; flex: 1; border-top: 1px solid $s-line; }
+}
+
+// ---------- Buttons ----------
+.settings-btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  align-self: flex-start;
+  min-height: 42px;
+  padding: 0 20px;
+  border-radius: 999px;
+  border: 1px solid $s-gold;
+  background: $s-gold;
+  color: $s-ink;
+  font-weight: 600;
+  font-size: 15px;
+  text-decoration: none;
+  cursor: pointer;
+  &:hover, &:focus-visible { color: $s-ink; filter: brightness(1.08); }
+}
+.settings-btn-full { align-self: stretch; width: 100%; }
+.settings-btn-ghost {
+  background: transparent;
+  color: #fff;
+  border-color: $s-line;
+  font-weight: 500;
+  min-height: 36px;
+  padding: 0 14px;
+  font-size: 14px;
+  &:hover, &:focus-visible { color: $s-gold; border-color: $s-gold; filter: none; }
+}
+.settings-btn-danger {
+  background: transparent;
+  border-color: $s-danger;
+  color: $s-danger;
+  &:hover, &:focus-visible { background: $s-danger; color: #fff; filter: none; }
+}
+
+// ---------- Auth pages (log in, reset, welcome, add a friend) ----------
+.auth-page {
+  display: flex;
+  justify-content: center;
+  padding: 24px 16px 56px;
+  @media (min-width: 768px) { padding-top: 48px; }
+}
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.auth-card-wide { max-width: 460px; }
+.auth-gold { color: $s-gold; }
+.auth-lead { color: $s-muted; line-height: 1.5; margin: 0; }
+.auth-note { color: $s-muted; font-size: 13px; line-height: 1.5; margin: 0; }
+.auth-demo, .auth-alert {
+  background: #1f1c14;
+  border: 1px solid #4a3d1c;
+  border-radius: 10px;
+  padding: 10px 12px;
+  color: #e9d9ae;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.auth-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  input { accent-color: $s-gold; width: 16px; height: 16px; }
+}
+.auth-quiet {
+  align-self: center;
+  color: $s-muted;
+  font-size: 13px;
+  text-decoration: none;
+  &:hover, &:focus-visible { color: $s-gold; }
+}
+.auth-temp {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  background: $s-panel;
+  border: 1px solid $s-line;
+  border-radius: 12px;
+  padding: 12px 14px;
+  code { color: $s-gold; font-size: 1.3rem; letter-spacing: .04em; overflow-wrap: anywhere; }
+}

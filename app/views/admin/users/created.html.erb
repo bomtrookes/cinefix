@@ -1,10 +1,14 @@
-<div class="container my-5">
-  <h2 class="mb-3">Account created</h2>
-  <p><strong><%= @user.username %></strong> (<%= @user.email %>) can now log in with this temporary password:</p>
-  <div data-controller="clipboard" class="d-flex align-items-center gap-2 mb-3">
-    <code class="fs-4" data-clipboard-target="source"><%= @temp_password %></code>
-    <button type="button" class="btn btn-outline-dark btn-sm" data-action="clipboard#copy" data-clipboard-target="button">Copy</button>
+<div class="auth-page">
+  <div class="auth-card">
+    <h1 class="settings-title">Account created</h1>
+    <p class="auth-lead"><strong><%= @user.username %></strong> (<%= @user.email %>) can now log in with this temporary password:</p>
+
+    <div class="auth-temp" data-controller="clipboard">
+      <code data-clipboard-target="source"><%= @temp_password %></code>
+      <button type="button" class="settings-btn settings-btn-ghost" data-action="clipboard#copy" data-clipboard-target="button">Copy</button>
+    </div>
+
+    <p class="auth-note">Send it to them privately. It won't be shown again. They'll choose their own password when they first log in.</p>
+    <%= link_to "Add another friend", new_admin_user_path, class: "settings-btn settings-btn-ghost" %>
   </div>
-  <p class="text-muted">Send it to them privately. It won't be shown again. They'll be asked to choose their own password when they first log in.</p>
-  <%= link_to "Add another friend", new_admin_user_path, class: "btn btn-dark" %>
 </div>

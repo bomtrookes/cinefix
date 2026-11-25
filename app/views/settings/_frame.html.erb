@@ -1,0 +1,47 @@
+<%# Wraps every settings section. Phones: the menu is its own page (settings#show)
+    and sections show a back link. Laptops: menu on the left, section on the right. %>
+<div class="settings-page <%= 'is-menu' if current == :menu %>">
+  <aside class="settings-side">
+    <h1 class="settings-title">Settings</h1>
+    <div class="settings-who">
+      <%= settings_avatar(current_user) %>
+      <div>
+        <strong><%= current_user.username %></strong>
+        <small><%= current_user.email %></small>
+      </div>
+    </div>
+    <nav class="settings-menu" aria-label="Settings">
+      <% [
+           [:profile,  "Profile",  "Photo and username",   profile_settings_path,  "bi-person-circle"],
+           [:email,    "Email",    current_user.email,     email_settings_path,    "bi-envelope"],
+           [:password, "Password", "Change your password", password_settings_path, "bi-key"]
+         ].each do |key, label, sub, path, icon| %>
+        <%= link_to path, class: ["settings-row", ("is-current" if current == key)],
+                          aria: { current: (current == key ? "page" : nil) } do %>
+          <span class="settings-row-icon"><i class="bi <%= icon %>" aria-hidden="true"></i></span>
+          <span class="settings-row-text"><strong><%= label %></strong><small><%= sub %></small></span>
+          <i class="bi bi-chevron-right settings-row-chev" aria-hidden="true"></i>
+        <% end %>
+      <% end %>
+    </nav>
+    <div class="settings-delete" data-controller="reveal"
+         data-reveal-more-value="Delete my account" data-reveal-less-value="Keep my account">
+      <button type="button" class="settings-delete-link" aria-expanded="false"
+              data-reveal-target="button" data-action="reveal#toggle">Delete my account</button>
+      <div class="settings-delete-confirm">
+        <p>This removes your ratings, watchlist and follows for good. It can't be undone.</p>
+        <%= button_to "Yes, delete my account", user_registration_path, method: :delete,
+                      class: "settings-btn settings-btn-danger" %>
+      </div>
+    </div>
+  </aside>
+
+  <% unless current == :menu %>
+    <section class="settings-main">
+      <%= link_to settings_path, class: "settings-back" do %>
+        <i class="bi bi-chevron-left" aria-hidden="true"></i>Settings
+      <% end %>
+      <%= yield %>
+    </section>
+  <% end %>
+</div>

@@ -56,3 +56,9 @@ p {
     color: grey
   }
 }
+
+// Wordmark: "REEL" in white, "SCORE" in ReelScore gold (navbar, footer, landing page)
+.wordmark-gold,
+.wordmark-gold small {
+  color: #f2b632 !important;
+}

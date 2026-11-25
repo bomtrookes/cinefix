@@ -26,6 +26,6 @@ class ApplicationController < ActionController::Base
   def require_password_change
     return unless user_signed_in? && current_user.must_change_password?
     return if devise_controller?
-    redirect_to edit_user_registration_path, alert: "Please choose your own password to continue."
+    redirect_to welcome_path
   end
 end
