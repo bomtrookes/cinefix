@@ -1,110 +1,145 @@
-<div>
-  <div class="user-info my-4">
+<% own = @user == current_user %>
+<% owner = own ? "Your" : "#{@user.username}’s" %>
+<div class="profile-page" data-controller="profile" data-profile-owner-value="<%= owner %>">
+
+  <header class="profile-head">
     <% if @user.avatar.attached? %>
-      <%= image_tag @user.avatar, id: "user-avatar" %>
+      <%= image_tag @user.avatar, alt: "", class: "profile-avatar" %>
     <% else %>
-      <img id="user-avatar" src="<%= @default %>" alt="">
+      <span class="profile-avatar profile-initials" aria-hidden="true"><%= @user.username.first.upcase %></span>
     <% end %>
-    <div class="d-flex flex-column">
+
+    <div class="profile-id">
       <h1><%= @user.username %></h1>
-<% if @user != current_user %>
-  <% if @following %>
-    <%= button_to "Unfollow", user_follow_path(@user), class: "btn btn-danger", method: :delete %>
-  <% else %>
-    <%= button_to "Follow", user_follows_path(@user), class: "btn btn-success", method: :post %>
-  <% end %>
+      <p class="profile-rank">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9a2 2 0 0 0 2-2V5h14v2a2 2 0 0 0 0 4v2a2 2 0 0 0 0 4v2H5v-2a2 2 0 0 0-2-2v-2a2 2 0 0 0 0-4z"/></svg>
+        <%= @rank.name %>
+      </p>
+      <div class="profile-progress-row">
+        <% if @rank.top? %>
+          <div class="profile-progress" role="progressbar" aria-label="Rank progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100"><span style="width: 100%"></span></div>
+          <small><%= pluralize(@rank.count, "film") %> rated · top rank reached</small>
+        <% else %>
+          <div class="profile-progress" role="progressbar" aria-label="Progress to <%= @rank.next_name %>" aria-valuemin="<%= @rank.min %>" aria-valuemax="<%= @rank.next_min %>" aria-valuenow="<%= @rank.count %>"><span style="width: <%= @rank.percent %>%"></span></div>
+          <small><%= pluralize(@rank.count, "film") %> rated · <%= @rank.remaining %> more to <%= @rank.next_name %></small>
+        <% end %>
+      </div>
 
-<% else %>
-    <% unless current_user&.demo? %>
-      <%= link_to "Edit profile", edit_user_registration_path, class: "btn btn-dark" %>
+      <div class="profile-actions">
+        <% if own %>
+          <% unless current_user.demo? %>
+            <%= link_to "Edit profile", edit_user_registration_path, class: "profile-btn profile-btn-ghost" %>
+          <% end %>
+        <% elsif @following %>
+          <%= button_to "Unfollow", user_follow_path(@user), method: :delete, class: "profile-btn profile-btn-ghost" %>
+        <% else %>
+          <%= button_to "Follow", user_follows_path(@user), method: :post, class: "profile-btn" %>
+        <% end %>
+      </div>
+    </div>
+
+    <nav class="profile-stats" aria-label="<%= owner %> lists">
+      <%= link_to user_watched_films_path(@user), class: "profile-stat" do %>
+        <b><%= @user.watched_films.size %></b><span>Watched</span>
+      <% end %>
+      <%= link_to user_watchlists_path(@user), class: "profile-stat" do %>
+        <b><%= @user.watchlists.size %></b><span>Watchlist</span>
+      <% end %>
+      <%= link_to user_following_path(@user), class: "profile-stat" do %>
+        <b><%= @user.followings.size %></b><span>Following</span>
+      <% end %>
+      <%= link_to user_followers_path(@user), class: "profile-stat" do %>
+        <b><%= @user.followers.size %></b><span>Followers</span>
+      <% end %>
+    </nav>
+  </header>
+
+  <% if @ratings.empty? %>
+    <div class="list-empty">
+      <i class="bi bi-star"></i>
+      <p><%= own ? "You haven’t rated any films yet." : "#{@user.username} hasn’t rated any films yet." %></p>
+      <% if own %>
+        <%= link_to "Find a film", movies_path, class: "list-empty-btn" %>
+      <% end %>
+    </div>
+  <% else %>
+
+    <% if @genres.any? %>
+      <div class="profile-genres" role="group" aria-label="Filter by genre">
+        <span class="profile-genres-label">Genre</span>
+        <% (["All"] + @genres).each do |genre| %>
+          <button type="button" class="profile-pill" aria-pressed="<%= genre == "All" %>"
+                  data-profile-target="genre" data-genre="<%= genre %>" data-action="profile#pickGenre"><%= genre %></button>
+        <% end %>
+      </div>
     <% end %>
 
-<% end %>
-    </div>
-  </div>
-
-  <div class="stats mb-4">
-    <h4 style="display: none">
-      <a href="#">
-        <small>FILMS</small>
-        <span>5</span>
-      </a>
-    </h4>
-
-    <h4>
-      <%= link_to user_watched_films_path(@user) do %>
-        <small>WATCHED</small>
-        <span><%= @user.watched_films.size %></span>
-      <% end %>
-    </h4>
-
-    <h4>
-      <%= link_to user_watchlists_path(@user) do %>
-        <small>WATCHLIST</small>
-        <span><%= @user.watchlists.size %></span>
-      <% end %>
-    </h4>
-
-    <h4>
-      <%= link_to user_following_path(@user) do %>
-        <small>FOLLOWING</small>
-        <span><%= @user.followings.size %></span>
-      <% end %>
-    </h4>
-
-    <h4>
-      <%= link_to user_followers_path(@user) do %>
-        <small>FOLLOWERS</small>
-        <span><%= @user.followers.size %></span>
-      <% end %>
-    </h4>
-  </div>
-
-  <% if @ratings.present? %>
-
-  <hr>
-
-  <div class="container">
-    <h3>Recent Ratings</h3>
-    <div class="movie-grid">
-      <% @recent.each do |movie| %>
-        <%= link_to movie_path(movie.api_id) do %>
-              <img src="<%= @films[movie.api_id]&.poster_url %>" alt="<%= @films[movie.api_id]&.title %>">
-              <span><%= movie.total_score %></span>
-        <% end %>
-      <% end %>
-    </div>
-  </div>
-
-  <% end %>
-
-  <hr>
-
-  <div class="table-wrapper">
-    <h3>Ratings Table</h3>
-    <% if @ratings.present? %>
-    <table class="table table-striped">
-      <thead>
-          <th>Rank</th>
-          <th>Movie</th>
-          <th>Year</th>
-          <th>Rating</th>
-      </thead>
-        <tbody>
-          <% @ratings.each_with_index do |rating, index| %>
-            <tr>
-              <td><%= index + 1 %></td>
-              <td><% film = @films[rating.api_id] %>
-              <%= link_to film&.title || "Unknown film", movie_path(rating.api_id) %></td>
-              <td><%= film&.year %></td>
-              <td><%= link_to rating.total_score, user_rating_path(@user, rating) %></td>
-            </tr>
+    <section class="profile-highlights">
+      <div class="profile-highlights-head">
+        <h2 data-profile-target="stripTitle"><%= owner %> top 5 films</h2>
+        <div class="profile-tabs" role="tablist" aria-label="Highlights">
+          <% [["top", "Top 5"], ["recent", "Recent"], ["low", "Lowest 5"]].each do |id, label| %>
+            <button type="button" role="tab" class="profile-tab" aria-selected="<%= id == "top" %>"
+                    data-profile-target="tab" data-tab="<%= id %>" data-action="profile#pickTab"><%= label %></button>
           <% end %>
-      <% else %>
-          <p class="py-3">You have not rated any movies yet.</p>
-      <% end %>
-        </tbody>
-    </table>
-  </div>
+        </div>
+      </div>
 
+      <div class="profile-strip" data-profile-target="strip">
+        <% @ratings.each_with_index do |rating, index| %>
+          <% film = @films[rating.api_id] %>
+          <%= link_to user_rating_path(@user, rating), class: "profile-card", hidden: index >= 5,
+                data: { profile_target: "card", score: rating.total_score, date: rating.created_at.to_i,
+                        genres: film&.genre_names&.join("|"), when: rated_on(rating.created_at) } do %>
+            <span class="profile-card-poster">
+              <% if film&.poster_url %>
+                <img src="<%= film.poster_url %>" alt="" loading="lazy">
+              <% else %>
+                <span class="watched-poster-blank"><%= film&.title || "Unknown film" %></span>
+              <% end %>
+              <span class="profile-card-rank" data-label>#<%= index + 1 %></span>
+              <span class="profile-card-score"><%= rating.total_score %></span>
+            </span>
+            <span class="profile-card-title"><%= film&.title || "Unknown film" %></span>
+            <small class="profile-card-year"><%= film&.year %></small>
+          <% end %>
+        <% end %>
+      </div>
+      <p class="profile-none" data-profile-target="stripEmpty" hidden>No ratings in this genre yet.</p>
+    </section>
+
+    <section class="profile-all">
+      <div class="profile-all-head">
+        <h2>All ratings <span>(<span data-profile-target="count"><%= @ratings.size %></span>)</span></h2>
+        <div class="profile-sorts" role="group" aria-label="Sort by">
+          <span class="profile-genres-label">Sort</span>
+          <% [["score", "Score"], ["date", "Date"], ["title", "A–Z"]].each do |id, label| %>
+            <button type="button" class="profile-pill profile-pill-sm" aria-pressed="<%= id == "score" %>"
+                    data-profile-target="sort" data-sort="<%= id %>" data-action="profile#pickSort"><%= label %></button>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="profile-list" data-profile-target="list">
+        <% @ratings.each do |rating| %>
+          <% film = @films[rating.api_id] %>
+          <%= link_to user_rating_path(@user, rating), class: "profile-row",
+                data: { profile_target: "row", score: rating.total_score, date: rating.created_at.to_i,
+                        genres: film&.genre_names&.join("|"), title: title_sort_key(film&.title) } do %>
+            <span class="profile-row-poster">
+              <% if film&.poster_url %>
+                <img src="<%= film.poster_url %>" alt="" loading="lazy">
+              <% end %>
+            </span>
+            <span class="profile-row-body">
+              <span class="profile-row-title"><%= film&.title || "Unknown film" %></span>
+              <small><%= [film&.year, film&.genre_names&.first(2)&.join(", ").presence].compact.join(" · ") %></small>
+              <small>Rated <%= rated_on(rating.created_at) %></small>
+            </span>
+            <span class="profile-row-score"><%= rating.total_score %></span>
+          <% end %>
+        <% end %>
+      </div>
+    </section>
+  <% end %>
 </div>
