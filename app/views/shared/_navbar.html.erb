@@ -1,34 +1,70 @@
 <header class="navbar d-flex justify-content-between p-3" data-controller="navigation">
-  <%= link_to movies_path, class: "btn btn-dark" do %>
-    <p>R<small>EEL</small>S<small>CORE</small></p>
+  <%= link_to movies_path, class: "navbar-brand-link", aria: { label: "ReelScore home" } do %>
+    <img src="/icons/icon-192.png" alt="" class="navbar-icon" width="32" height="32">
+    <p class="navbar-wordmark">R<small>EEL</small>S<small>CORE</small></p>
   <% end %>
-  <div class="navbar-menu" data-action="click->navigation#toggleMenu">
-    <i class="bi bi-list"></i>
-  </div>
+  <button type="button" class="navbar-menu" aria-label="Open menu" aria-controls="site-menu" aria-expanded="false"
+          data-navigation-target="button" data-action="navigation#open">
+    <i class="bi bi-list" aria-hidden="true"></i>
+  </button>
 
-  <nav>
-    <span id="close-menu" data-action="click->navigation#toggleMenu">
-      <i class="bi bi-x-circle"></i>
-    </span>
-    <ul>
-      <% if user_signed_in? %>
-        <li><%= link_to "Feed", feed_path %></li>
-        <li><%= link_to "Search", movies_path %></li>
-        <li><%= link_to "Profile", user_path(current_user) %></li>
-        <li><%= link_to "Watched", user_watched_films_path(current_user) %></li>
-        <li><%= link_to "Watchlist", user_watchlists_path(current_user) %></li>
-        <% if current_user&.admin? %>
-          <li><%= link_to "Add a friend", new_admin_user_path %></li>
+  <nav id="site-menu" class="site-menu" aria-label="Main menu" aria-hidden="true"
+       data-navigation-target="menu" data-action="keydown.esc->navigation#close">
+    <div class="site-menu-head">
+      <%= link_to movies_path, class: "navbar-brand-link", tabindex: -1, aria: { hidden: true } do %>
+        <img src="/icons/icon-192.png" alt="" class="navbar-icon" width="32" height="32">
+        <p class="navbar-wordmark">R<small>EEL</small>S<small>CORE</small></p>
+      <% end %>
+      <button type="button" class="site-menu-close" aria-label="Close menu" data-action="navigation#close">
+        <i class="bi bi-x-lg" aria-hidden="true"></i>
+      </button>
+    </div>
+
+    <% if user_signed_in? %>
+      <%
+        links = [
+          ["Feed", feed_path, "bi-house"],
+          ["Search", movies_path, "bi-search"],
+          ["Profile", user_path(current_user), "bi-person"],
+          ["Watched", user_watched_films_path(current_user), "bi-eye"],
+          ["Watchlist", user_watchlists_path(current_user), "bi-bookmark"]
+        ]
+      %>
+      <ul class="site-menu-links">
+        <% links.each do |label, path, icon| %>
+          <% here = current_page?(path) %>
+          <li>
+            <%= link_to path, class: ["site-menu-link", ("is-current" if here)], aria: { current: (here ? "page" : nil) } do %>
+              <i class="bi <%= icon %>" aria-hidden="true"></i><span><%= label %></span>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+
+      <% if current_user.admin? %>
+        <%= link_to new_admin_user_path, class: "site-menu-extra" do %>
+          <i class="bi bi-person-plus" aria-hidden="true"></i>Add a friend
         <% end %>
       <% end %>
-      <li>
-        <% if user_signed_in? %>
-          <%= link_to "Log out", destroy_user_session_path, data: {turbo_method: :delete} %>
-        <% else %>
-          <li><%= link_to "Log in", new_user_session_path %></li>
-        <% end %>
-      </li>
-    </ul>
-  </nav>
 
+      <div class="site-menu-user">
+        <%= link_to user_path(current_user), class: "site-menu-who" do %>
+          <% if current_user.avatar.attached? %>
+            <%= image_tag current_user.avatar, alt: "", class: "site-menu-face" %>
+          <% else %>
+            <span class="site-menu-face site-menu-initials"><%= current_user.username.to_s.first.upcase %></span>
+          <% end %>
+          <span class="site-menu-name">
+            <strong><%= current_user.username %></strong>
+            <small><%= current_user.rank %></small>
+          </span>
+        <% end %>
+        <%= link_to "Log out", destroy_user_session_path, class: "site-menu-logout", data: { turbo_method: :delete } %>
+      </div>
+    <% else %>
+      <div class="site-menu-guest">
+        <%= link_to "Log in", new_user_session_path, class: "site-menu-login" %>
+      </div>
+    <% end %>
+  </nav>
 </header>
