@@ -30,3 +30,9 @@ application.register("search", SearchController)
 
 import SearchTabsController from "./search_tabs_controller"
 application.register("search-tabs", SearchTabsController)
+
+import PersonController from "./person_controller"
+application.register("person", PersonController)
+
+import RevealController from "./reveal_controller"
+application.register("reveal", RevealController)

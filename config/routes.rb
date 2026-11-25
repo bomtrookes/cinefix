@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   end
 
   resources :movies, only: [:index, :show]
+  resources :people, only: [:show]
   resources :ratings, except: [:destroy]
   resources :watchlists, only: [:index, :create, :destroy]
   resources :watched_films, only: [:index, :create, :destroy]

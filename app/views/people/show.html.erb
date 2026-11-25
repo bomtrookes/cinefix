@@ -1,0 +1,99 @@
+<%# Cast & crew member: photo, bio, your stats, then their films as posters %>
+<% group_label = ->(dept) { Filmography::LABELS.fetch(dept.to_s, dept.to_s) } %>
+<div class="list-page person-page" data-controller="person">
+  <header class="person-head">
+    <% if @person.profile_path.present? %>
+      <%= image_tag "https://www.themoviedb.org/t/p/w185#{@person.profile_path}", alt: "", class: "person-photo" %>
+    <% else %>
+      <span class="person-photo person-initials"><%= initials(@person.name.to_s)[0, 2] %></span>
+    <% end %>
+    <div class="person-id">
+      <h1><%= @person.name %></h1>
+      <% if @person.known_for_department.present? %>
+        <div class="person-dept"><%= group_label.call(@person.known_for_department) %></div>
+      <% end %>
+      <% born = [(@person.birthday.present? ? "Born #{@person.birthday.to_date.strftime('%-d %b %Y')}" : nil), @person.place_of_birth.presence].compact %>
+      <% if born.any? || @person.deathday.present? %>
+        <div class="person-born">
+          <% born.each do |line| %><span><%= line %></span><% end %>
+          <% if @person.deathday.present? %><span>Died <%= @person.deathday.to_date.strftime('%-d %b %Y') %></span><% end %>
+        </div>
+      <% end %>
+    </div>
+  </header>
+
+  <% if @person.biography.present? %>
+    <div class="person-bio">
+      <div class="person-bio-text" data-person-target="bio">
+        <% @person.biography.split(/\n\s*\n/).each do |para| %>
+          <p><%= para.strip %></p>
+        <% end %>
+      </div>
+      <button type="button" class="person-bio-more" data-person-target="bioToggle"
+              data-action="person#toggleBio" aria-expanded="false">Read more</button>
+    </div>
+  <% end %>
+
+  <% if user_signed_in? && !@filmography.empty? %>
+    <% avg = @my_scores.any? ? (@my_scores.values.sum.to_f / @my_scores.size).round(1) : nil %>
+    <div class="person-stats">
+      <div><b><%= @my_watched.size %></b><small>Watched</small></div>
+      <div><b><%= @my_scores.size %></b><small>Rated</small></div>
+      <div><b class="is-gold"><%= avg || "–" %></b><small>Your avg</small></div>
+    </div>
+  <% end %>
+
+  <% if @filmography.empty? %>
+    <div class="list-empty person-empty">
+      <i class="bi bi-film" aria-hidden="true"></i>
+      <p>TMDB doesn't list any films for <%= @person.name %> yet.</p>
+    </div>
+  <% else %>
+    <div class="person-bar">
+      <% if @filmography.groups.size > 1 %>
+        <div class="person-jobs" role="group" aria-label="Show films by job">
+          <% @filmography.groups.each do |group| %>
+            <button type="button" class="person-job" data-person-target="job" data-job="<%= group.key %>"
+                    data-action="person#pick" aria-pressed="<%= group == @default_group %>">
+              <%= group.label %> <span><%= group.credits.size %></span>
+            </button>
+          <% end %>
+        </div>
+      <% else %>
+        <h2 class="person-films-h"><%= @default_group.label %> <span><%= @default_group.credits.size %></span></h2>
+      <% end %>
+      <div class="person-sort" role="group" aria-label="Sort films">
+        <button type="button" data-person-target="sort" data-sort="newest" data-action="person#sort" aria-pressed="true">Newest</button>
+        <span aria-hidden="true">·</span>
+        <button type="button" data-person-target="sort" data-sort="popular" data-action="person#sort" aria-pressed="false">Popular</button>
+      </div>
+    </div>
+
+    <% @filmography.groups.each do |group| %>
+      <div class="watched-grid person-grid" data-person-target="grid" data-job="<%= group.key %>"<%= " hidden" unless group == @default_group %>>
+        <% group.credits.each do |credit| %>
+          <% score = @my_scores[credit.id] %>
+          <%= link_to movie_path(credit.id), class: "watched-card", title: [credit.title, credit.roles_text].compact.join(" · "),
+                data: { newest: credit.sort_date, popular: credit.popularity } do %>
+            <span class="watched-poster">
+              <% if credit.poster_path.present? %>
+                <%= image_tag "https://www.themoviedb.org/t/p/w342#{credit.poster_path}", alt: "", loading: "lazy" %>
+              <% else %>
+                <span class="watched-poster-blank"><%= credit.title %></span>
+              <% end %>
+              <% if score %>
+                <span class="watched-score" aria-label="Your score <%= score %>"><%= score %></span>
+              <% elsif @my_watched.include?(credit.id) %>
+                <span class="person-seen" aria-label="Seen"><i class="bi bi-check-lg" aria-hidden="true"></i></span>
+              <% elsif credit.upcoming? %>
+                <span class="person-soon">Coming</span>
+              <% end %>
+            </span>
+            <span class="watched-title"><%= credit.title %></span>
+            <span class="watched-date"><%= [credit.year || "TBA", credit.roles_text].compact.join(" · ") %></span>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+  <% end %>
+</div>

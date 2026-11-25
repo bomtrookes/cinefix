@@ -1,0 +1,52 @@
+<%# Cast row, key crew list and full crew for the movie page. Every name links to the person's page. %>
+<% cast_shown = 12 %>
+<% if @tmdb_cast.any? %>
+  <section class="credits" data-controller="reveal" data-reveal-more-value="See all <%= @tmdb_cast.size %>" data-reveal-less-value="Show less">
+    <div class="credits-head">
+      <h2>Cast</h2>
+      <% if @tmdb_cast.size > cast_shown %>
+        <button type="button" class="credits-more-link" data-reveal-target="button" data-action="reveal#toggle" aria-expanded="false">See all <%= @tmdb_cast.size %></button>
+      <% end %>
+    </div>
+    <div class="cast-row">
+      <% @tmdb_cast.each_with_index do |cast, i| %>
+        <%= link_to person_path(cast.id), class: "cast-card#{' extra' if i >= cast_shown}" do %>
+          <% if cast.profile_path.present? %>
+            <%= image_tag "https://www.themoviedb.org/t/p/w185#{cast.profile_path}", alt: "", class: "cast-face", loading: "lazy" %>
+          <% else %>
+            <span class="cast-face cast-initials"><%= initials(cast.name.to_s)[0, 2] %></span>
+          <% end %>
+          <b><%= cast.name %></b>
+          <% if cast.character.present? %><small><%= cast.character %></small><% end %>
+        <% end %>
+      <% end %>
+    </div>
+  </section>
+<% end %>
+
+<% key = key_crew(@tmdb_crew) %>
+<% rest = other_crew(@tmdb_crew, key) %>
+<% if key.any? || rest.any? %>
+  <section class="credits" data-controller="reveal" data-reveal-more-value="Full crew (<%= rest.size %>)" data-reveal-less-value="Show less">
+    <div class="credits-head"><h2>Crew</h2></div>
+    <div class="crew-list">
+      <% key.each do |label, person| %>
+        <%= link_to person_path(person.id), class: "crew-row" do %>
+          <span class="crew-job"><%= label %></span>
+          <b class="crew-name"><%= person.name %></b>
+          <i class="bi bi-chevron-right" aria-hidden="true"></i>
+        <% end %>
+      <% end %>
+      <% rest.each do |jobs, person| %>
+        <%= link_to person_path(person.id), class: "crew-row extra" do %>
+          <span class="crew-job"><%= jobs %></span>
+          <b class="crew-name"><%= person.name %></b>
+          <i class="bi bi-chevron-right" aria-hidden="true"></i>
+        <% end %>
+      <% end %>
+      <% if rest.any? %>
+        <button type="button" class="crew-more" data-reveal-target="button" data-action="reveal#toggle" aria-expanded="false">Full crew (<%= rest.size %>)</button>
+      <% end %>
+    </div>
+  </section>
+<% end %>

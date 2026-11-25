@@ -30,8 +30,9 @@ class MoviesController < ApplicationController
   @watchlist = Watchlist.new
   @movie = Tmdb::Movie.detail(params[:id])
 
-  @tmdb_cast = Tmdb::Movie.cast(params[:id])
-  @tmdb_crew = Tmdb::Movie.crew(params[:id])
+  credits = Tmdb::Resource.new("/movie/#{params[:id]}/credits").get
+  @tmdb_cast = Array(credits["cast"]).map { |entry| Tmdb::Person.new(entry) }
+  @tmdb_crew = Array(credits["crew"]).map { |entry| Tmdb::Person.new(entry) }
 
   @tmdb_similar = Tmdb::Movie.similar(params[:id])["results"]
   @tmdb_recommend = Tmdb::Movie.recommendations(params[:id])["results"]
